@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="theme_color">#03a9f4</color>
+    <color name="trans5">#0d000000</color><!--5透明-->
+    <color name="trans10">#1a000000</color><!--10透明-->
+    <color name="trans80">#cc000000</color><!--80透明-->
+    <color name="trans5_white">#0dffffff</color><!--5透明白-->
+    <color name="trans15_white">#26ffffff</color><!--15透明白-->
 </resources>

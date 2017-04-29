@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity {
                     switchContent(mFragHome);
                     break;
                 case R.id.index_tendency:// 趋势
-
                     break;
                 case R.id.index_discover:// 发现
                     if (mFragFind == null) {
