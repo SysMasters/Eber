@@ -8,12 +8,16 @@ import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.base.BaseFragment;
 import com.eber.fragment.HomeFragment;
+import com.eber.ui.find.FindFragment;
+import com.eber.ui.my.MyFragment;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class MainActivity extends BaseActivity {
 
     private BaseFragment mContent;
     private BaseFragment mFragHome;
+    private BaseFragment mFragFind;
+    private BaseFragment mFragMy;
 
     @ViewInject(R.id.index_radioGroup)
     private RadioGroup radioGroup;
@@ -50,10 +54,16 @@ public class MainActivity extends BaseActivity {
 
                     break;
                 case R.id.index_discover:// 发现
-
+                    if (mFragFind == null) {
+                        mFragFind = new FindFragment();
+                    }
+                    switchContent(mFragFind);
                     break;
-                case R.id.index_setting:// 设置
-
+                case R.id.index_setting:// 我的
+                    if (mFragMy == null) {
+                        mFragMy = new MyFragment();
+                    }
+                    switchContent(mFragMy);
                     break;
             }
         }

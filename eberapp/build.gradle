@@ -31,4 +31,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:design:25.0.0'
     compile 'com.zhy:okhttputils:2.6.2'
+    compile project(':base-adapter-library')
 }
