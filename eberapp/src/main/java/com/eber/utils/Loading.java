@@ -19,9 +19,6 @@ public class Loading {
     private static Dialog loading;
     private static Context mContext;
 
-    public static void init(Context context) {
-        mContext = context;
-    }
 
     public static void show() {
         if (loading == null) {
@@ -33,12 +30,14 @@ public class Loading {
             loading.show();
             View loadingView = ((LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.loading_process_dialog, null);
             w.setContentView(loadingView);
+            int width = DisplayUtil.dp2px(activity, 80);
+            w.setLayout(width, width);
             //            w.setContentView(R.layout.loading_process_dialog_color);
             loading.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     Loading.dismiss();
-//                    NetUtils.cancelCurHandler();
+                    //                    NetUtils.cancelCurHandler();
                 }
             });
         } else {

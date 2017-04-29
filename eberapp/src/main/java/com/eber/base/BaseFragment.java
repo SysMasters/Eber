@@ -1,6 +1,7 @@
 package com.eber.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -41,5 +42,10 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (BaseActivity) context;
+    }
+
+    protected void startActivity(Class<? extends BaseActivity> cls) {
+        Intent intent = new Intent(mActivity, cls);
+        startActivity(intent);
     }
 }

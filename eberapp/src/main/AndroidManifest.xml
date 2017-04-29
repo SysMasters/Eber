@@ -30,6 +30,7 @@
         <activity android:name=".ui.binddevice.BindDeviceActivity2"></activity>
         <activity android:name=".ui.register.FillInformationActivity">
         </activity>
+        <activity android:name=".ui.home.LocalMemberActivity"></activity>
     </application>
 
 </manifest>
