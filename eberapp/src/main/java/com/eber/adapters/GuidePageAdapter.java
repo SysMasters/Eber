@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * 首次启动滑屏适配器 是是是事实上
+ * 首次启动滑屏适配器
  */
 public class GuidePageAdapter extends PagerAdapter {
 
