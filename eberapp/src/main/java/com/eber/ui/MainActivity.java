@@ -2,16 +2,23 @@ package com.eber.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.RadioGroup;
 
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.base.BaseFragment;
 import com.eber.fragment.HomeFragment;
+import com.eber.http.HttpUrls;
+import com.eber.http.ObjectCallback;
 import com.eber.ui.find.FindFragment;
 import com.eber.ui.my.MyFragment;
 import com.eber.ui.tendency.TendencyFragment;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity {
 
@@ -33,6 +40,17 @@ public class MainActivity extends BaseActivity {
 
     private void init() {
         initContent();
+        Map map = new HashMap();
+        map.put("", "");
+        map.put("", "");
+        map.put("", "");
+
+        netUtils.get(HttpUrls.FINDEQUIPARRAY, true, null, new ObjectCallback<String>("equipTypeArray") {
+            @Override
+            public void onSuccess(List<String> result) {
+                Log.i("", "====" + result.toString());
+            }
+        });
     }
 
 

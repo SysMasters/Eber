@@ -10,6 +10,8 @@ import android.view.Window;
 
 import com.eber.R;
 import com.eber.base.ActivityManager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.request.RequestCall;
 
 /**
  * Created by WangLibo on 2017/4/23.
@@ -17,8 +19,11 @@ import com.eber.base.ActivityManager;
 
 public class Loading {
     private static Dialog loading;
-    private static Context mContext;
+    private static String cancelUrl;
 
+    public static void setCancelUrl(String url) {
+        cancelUrl = url;
+    }
 
     public static void show() {
         if (loading == null) {
@@ -37,7 +42,8 @@ public class Loading {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     Loading.dismiss();
-                    //                    NetUtils.cancelCurHandler();
+                    RequestCall call = OkHttpUtils.get().url(cancelUrl).build();
+                    call.cancel();
                 }
             });
         } else {
@@ -79,7 +85,6 @@ public class Loading {
         dismiss();
         if (loading != null) {
             loading = null;
-            mContext = null;
         }
 
     }
