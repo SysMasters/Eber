@@ -17,7 +17,15 @@ public class NetUtils {
 
     private OnHttpResult httpResult;
 
-    public void get(String url, boolean isShowLoading, Map paramMap, final OnHttpResult httpResult, Object... params) {
+    /**
+     * get请求
+     *
+     * @param url           接口地址
+     * @param isShowLoading 是否显示加载中对话框
+     * @param paramMap      参数map
+     * @param httpResult    回调
+     */
+    public void get(String url, boolean isShowLoading, Map paramMap, final OnHttpResult httpResult) {
         if (isShowLoading) {
             Loading.setCancelUrl(url);
             Loading.show();
