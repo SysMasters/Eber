@@ -22,11 +22,174 @@
             android:textSize="18sp" />
 
         <ImageView
+            android:id="@+id/tendency_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="23dp"
-            android:src="@mipmap/ic_index_share" />
+            android:src="@mipmap/ic_index_share"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="11dp" />
     </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/tendency_navi_root_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_tendency_navi_bg"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/tendency_navi_weight_rb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:button="@null"
+            android:text="体重"/>
+        <View
+            android:id="@+id/tendency_navi_line1"
+            android:layout_width="2dp"
+            android:layout_height="27dp"
+            android:background="#666"/>
+        <RadioButton
+            android:id="@+id/tendency_navi_fat_rb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:button="@null"
+            android:text="脂肪率"/>
+        <View
+            android:id="@+id/tendency_navi_line2"
+            android:layout_width="2dp"
+            android:layout_height="27dp"
+            android:background="#666"/>
+        <RadioButton
+            android:id="@+id/tendency_navi_muscle_rb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:button="@null"
+            android:text="肌肉量"/>
+        <View
+            android:id="@+id/tendency_navi_line3"
+            android:layout_width="2dp"
+            android:layout_height="27dp"
+            android:background="#666"/>
+        <RadioButton
+            android:id="@+id/tendency_navi_water_rb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:button="@null"
+            android:text="体水分"/>
+        <View
+            android:id="@+id/tendency_navi_line4"
+            android:layout_width="2dp"
+            android:layout_height="27dp"
+            android:background="#666"/>
+        <RadioButton
+            android:id="@+id/tendency_navi_protein_rb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:button="@null"
+            android:text="蛋白质"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/tendency_week_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_tendency_sl_date_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:text="周"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/tendency_month_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shape_tendency_sl_date_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:text="月"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/tendency_year_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shape_tendency_sl_date_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:text="年"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.eber.views.BrokenLineView
+            android:id="@+id/tendency_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tendency_bottom_text_ll" />
+
+        <LinearLayout
+            android:id="@+id/tendency_bottom_text_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="45dp"
+            android:layout_marginRight="13dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="数据来源:" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全天" />
+        </LinearLayout>
+    </RelativeLayout>
+
 </LinearLayout>

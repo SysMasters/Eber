@@ -10,6 +10,7 @@ import com.eber.base.BaseFragment;
 import com.eber.fragment.HomeFragment;
 import com.eber.ui.find.FindFragment;
 import com.eber.ui.my.MyFragment;
+import com.eber.ui.tendency.TendencyFragment;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class MainActivity extends BaseActivity {
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity {
     private BaseFragment mFragHome;
     private BaseFragment mFragFind;
     private BaseFragment mFragMy;
+    private BaseFragment mFragTendency;
 
     @ViewInject(R.id.index_radioGroup)
     private RadioGroup radioGroup;
@@ -51,6 +53,10 @@ public class MainActivity extends BaseActivity {
                     switchContent(mFragHome);
                     break;
                 case R.id.index_tendency:// 趋势
+                    if (mFragTendency == null) {
+                        mFragTendency = new TendencyFragment();
+                    }
+                    switchContent(mFragTendency);
                     break;
                 case R.id.index_discover:// 发现
                     if (mFragFind == null) {
