@@ -15,6 +15,7 @@ import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.adapters.GuidePageAdapter;
 import com.eber.ui.login.LoginActivity;
+import com.eber.utils.SPKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
         ib_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EBERApp.spUtil.putData("version_code", EBERApp.versionUtil.getVersionCode());
+                EBERApp.spUtil.putData(SPKey.VERSION_CODE, EBERApp.versionUtil.getVersionCode());
                 startActivity(new Intent(GuideActivity.this,LoginActivity.class));
                 finish();
             }
