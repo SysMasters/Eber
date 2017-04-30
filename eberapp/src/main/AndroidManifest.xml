@@ -31,6 +31,7 @@
         <activity android:name=".ui.register.FillInformationActivity">
         </activity>
         <activity android:name=".ui.home.LocalMemberActivity"></activity>
+        <activity android:name=".ui.WebActivity"></activity>
     </application>
 
 </manifest>

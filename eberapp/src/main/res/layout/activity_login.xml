@@ -39,6 +39,8 @@
             android:id="@+id/login_phone_num_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="11"
+            android:inputType="number"
             android:hint="手机号"
             android:textColor="#888"
             android:textSize="15sp"
