@@ -17,4 +17,15 @@
             <enum name="horizontal" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="BrokenLineView">
+        <attr name="startColor" format="color"/>
+        <attr name="endColor" format="color"/>
+        <attr name="brokenLineColor" format="color"/>
+        <attr name="dashLineColor" format="color"/>
+        <attr name="dashWidth" format="dimension"/>
+        <attr name="dashGap" format="dimension"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="divideHeight" format="dimension"/>
+    </declare-styleable>
 </resources>
