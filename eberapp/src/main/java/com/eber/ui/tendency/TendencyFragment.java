@@ -113,7 +113,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tendency_line:
-
+                startActivity(HistoryActivity.class);
                 break;
             case R.id.tendency_share:
 

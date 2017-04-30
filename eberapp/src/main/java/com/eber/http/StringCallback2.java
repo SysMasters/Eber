@@ -25,7 +25,6 @@ public abstract class StringCallback2 implements OnHttpResult {
             JSONObject jo = JSON.parseObject(response);
             int resultCode = jo.getInteger("retcode");
             if (resultCode == 1) {
-                String[] str = null;
                 for (int i = 0; i < params.length; i++) {
                     String param = this.params[i];
                     this.params[i] = jo.getString(param);
