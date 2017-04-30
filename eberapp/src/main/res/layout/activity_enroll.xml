@@ -34,6 +34,8 @@
             android:id="@+id/login_phone_num_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="11"
+            android:inputType="number"
             android:hint="手机号"
             android:textColor="#888"
             android:textSize="15sp"
@@ -47,6 +49,7 @@
         android:layout_marginRight="77dp"
         android:orientation="horizontal">
         <EditText
+            android:id="@+id/login_code_et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="13dp"
@@ -55,6 +58,7 @@
             android:textSize="15sp"
             android:hint="输入验证码"/>
         <Button
+            android:id="@+id/login_get_code_btn"
             android:layout_width="wrap_content"
             android:layout_height="43dp"
             android:paddingLeft="13dp"
@@ -95,13 +99,15 @@
         android:layout_marginTop="44dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
-        <TextView
+        <CheckBox
+            android:id="@+id/login_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#888"
             android:textSize="12dp"
-            android:text="点击完成表示同意"/>
+            android:text="我已阅读并同意"/>
         <TextView
+            android:id="@+id/login_agreement_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#634A2A"
@@ -109,6 +115,7 @@
             android:text="《EBER服务协议》"/>
     </LinearLayout>
     <Button
+        android:id="@+id/login_ok_btn"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginTop="20dp"
@@ -116,6 +123,5 @@
         android:textColor="@android:color/white"
         android:layout_marginLeft="57.5dp"
         android:layout_marginRight="57.5dp"
-        android:onClick="viewClick"
         android:text="完成"/>
 </LinearLayout>

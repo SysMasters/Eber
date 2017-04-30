@@ -2,13 +2,21 @@ package com.eber.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eber.R;
 import com.eber.base.BaseActivity;
-import com.lidroid.xutils.ViewUtils;
+import com.eber.http.StringCallback;
+import com.eber.ui.WebActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import java.util.HashMap;
 
 /**
  * Created by Administrator on 2017/4/19.
@@ -17,23 +25,86 @@ public class EnrollActivity extends BaseActivity {
 
     @ViewInject(R.id.title_content)
     private TextView tvTitle;
+    @ViewInject(R.id.login_phone_num_et)
+    private EditText etPhone;
+    @ViewInject(R.id.login_code_et)
+    private EditText etCode;
+    @ViewInject(R.id.login_password_et)
+    private EditText etPassword;
+    @ViewInject(R.id.login_get_code_btn)
+    private Button btnGetCode;
+    @ViewInject(R.id.login_ok_btn)
+    private Button btnOK;
+    @ViewInject(R.id.login_check_box)
+    private CheckBox cb;
+    @ViewInject(R.id.login_agreement_tv)
+    private TextView tvAgreement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enroll);
-        ViewUtils.inject(this);
+        super.onCreate(savedInstanceState);
         tvTitle.setText("用户注册");
     }
 
     @Override
     public void setListener() {
-        
+        btnGetCode.setOnClickListener(clickLis);
+        btnOK.setOnClickListener(clickLis);
+        cb.setOnClickListener(clickLis);
+        tvAgreement.setOnClickListener(clickLis);
     }
 
+    private View.OnClickListener clickLis = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.login_get_code_btn:
+                    String phone = etPhone.getText().toString();
+                    if (!phone.matches(REGEX_MOBILE)){
+                        Toast.makeText(EnrollActivity.this, "请正确输入手机号", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    param = new HashMap<>();
+                    param.put("phoneNum",phone);
+                    netUtils.get("http://112.74.62.116:8080/ieber/memberLoginAPP/getVCode.shtml",
+                            true, param, new StringCallback("") {
+                                @Override
+                                public void onSuccess(String resultJson) {
+                                    timer.start();
+                                }
+                            });
+                    break;
+                case R.id.login_ok_btn:
+                    if (!cb.isChecked()){
+                        Toast.makeText(EnrollActivity.this, "请同意《EBER服务协议》", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Intent intent = new Intent(EnrollActivity.this, FillInformationActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.login_agreement_tv:
+                    // 服务协议
+                    startWebActivity("用户协议",
+                            "http://112.74.62.116:8080/ieber/dictionaryAPP/getAgreement.shtml");
+                    break;
+            }
+        }
+    };
 
-    public void viewClick(View v){
-        Intent intent = new Intent(EnrollActivity.this, FillInformationActivity.class);
-        startActivity(intent);
-    }
+
+    private CountDownTimer timer = new CountDownTimer(60000, 1000) {
+        int i = 60;
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btnGetCode.setText(--i + "秒后重发");
+            btnGetCode.setEnabled(false);
+        }
+
+        @Override
+        public void onFinish() {
+            btnGetCode.setText("获取验证码");
+            btnGetCode.setEnabled(true);
+        }
+    };
 }
