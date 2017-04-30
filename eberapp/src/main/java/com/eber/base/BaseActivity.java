@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.eber.R;
+import com.eber.http.NetUtils;
 import com.eber.utils.StatusBarUtil;
 import com.lidroid.xutils.ViewUtils;
 
@@ -14,9 +15,11 @@ import com.lidroid.xutils.ViewUtils;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    protected NetUtils netUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        netUtils = new NetUtils();
         ActivityManager.getInstance().addActivity(this);
         setStatusBar();
         findViews();

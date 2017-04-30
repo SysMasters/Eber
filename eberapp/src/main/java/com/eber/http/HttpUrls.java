@@ -7,6 +7,10 @@ package com.eber.http;
 
 public class HttpUrls {
 
-    public static String IP = "http://112.74.62.116:8080/";
-    public static String BASEURL = IP + "ieber/";
+    public final static String IP = "http://112.74.62.116:8080/";
+    public final static String BASEURL = IP + "ieber/";
+
+
+    public final static String FINDEQUIPARRAY = BASEURL + "equipTypeAPP/findEquipArray.shtml";
+
 }

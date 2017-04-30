@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     compile 'com.zhy:okhttputils:2.6.2'
     compile project(':base-adapter-library')
+    compile 'com.alibaba:fastjson:1.1.56.android'
 }

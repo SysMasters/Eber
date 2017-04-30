@@ -1,0 +1,50 @@
+package com.eber.http;
+
+import com.eber.utils.Loading;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.Map;
+
+import okhttp3.Call;
+
+/**
+ * 网络请求工具类
+ * Created by WangLibo on 2017/4/29.
+ */
+
+public class NetUtils {
+
+    private OnHttpResult httpResult;
+
+    public void get(String url, boolean isShowLoading, Map paramMap, final OnHttpResult httpResult, Object... params) {
+        if (isShowLoading) {
+            Loading.setCancelUrl(url);
+            Loading.show();
+        }
+        this.httpResult = httpResult;
+        OkHttpUtils
+                .get()
+                .url(url)
+                .params(paramMap)
+                .build()
+                .execute(callback);
+    }
+
+
+    private StringCallback callback = new StringCallback() {
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            Loading.dismiss();
+            httpResult.onError(e);
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+            Loading.dismiss();
+            httpResult.onResponse(response);
+        }
+    };
+
+
+}
