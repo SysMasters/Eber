@@ -11,6 +11,9 @@
     <color name="trans5_white">#0dffffff</color><!--5透明白-->
     <color name="trans15_white">#26ffffff</color><!--15透明白-->
 
-    <color name="weight">#03a9f4</color>
-    <color name="fat">#fca929</color>
+    <color name="weight">#03a9f4</color><!--体重-->
+    <color name="fat">#fca929</color><!--脂肪率-->
+    <color name="wet">#1ebea3</color><!--体水分-->
+    <color name="muscle">#4054b2</color><!--肌肉量-->
+    <color name="protein">#ff7587</color><!--蛋白质-->
 </resources>
