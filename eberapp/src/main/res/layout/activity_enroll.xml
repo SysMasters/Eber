@@ -52,6 +52,8 @@
             android:id="@+id/login_code_et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="6"
             android:padding="13dp"
             android:layout_marginRight="32dp"
             android:background="@drawable/enroll_et_bg"
