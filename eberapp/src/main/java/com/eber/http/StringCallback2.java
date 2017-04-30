@@ -1,5 +1,6 @@
 package com.eber.http;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -24,6 +25,7 @@ public abstract class StringCallback2 implements OnHttpResult {
         try {
             JSONObject jo = JSON.parseObject(response);
             int resultCode = jo.getInteger("retcode");
+            Log.i("=======resultCode",": "+resultCode);
             if (resultCode == 1) {
                 String[] str = null;
                 for (int i = 0; i < params.length; i++) {

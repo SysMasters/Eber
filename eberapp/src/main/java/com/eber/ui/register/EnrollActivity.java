@@ -10,10 +10,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
+import com.eber.bean.User;
+import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback;
+import com.eber.http.StringCallback2;
 import com.eber.ui.WebActivity;
+import com.eber.utils.OtherUtils;
+import com.eber.utils.SPKey;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
@@ -67,8 +74,7 @@ public class EnrollActivity extends BaseActivity {
                     }
                     param = new HashMap<>();
                     param.put("phoneNum",phone);
-                    netUtils.get("http://112.74.62.116:8080/ieber/memberLoginAPP/getVCode.shtml",
-                            true, param, new StringCallback("") {
+                    netUtils.get(HttpUrls.GETVCODE, true, param, new StringCallback("") {
                                 @Override
                                 public void onSuccess(String resultJson) {
                                     timer.start();
@@ -80,6 +86,38 @@ public class EnrollActivity extends BaseActivity {
                         Toast.makeText(EnrollActivity.this, "请同意《EBER服务协议》", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    String phoneE = etPhone.getText().toString();
+                    String code = etCode.getText().toString();
+                    String password = etPassword.getText().toString();
+                    if (!phoneE.matches(REGEX_MOBILE)){
+                        Toast.makeText(EnrollActivity.this, "请正确输入手机号", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (code.length() < 4){
+                        Toast.makeText(EnrollActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (password.length() < 6){
+                        Toast.makeText(EnrollActivity.this, "密码长度不足6位", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    param = new HashMap<>();
+                    param.put("phoneNum",phoneE);
+                    param.put("vCode",code);
+                    param.put("password",password);
+                    param.put("rigesterIP", OtherUtils.getHostIP());
+                    param.put("deviceType","2");
+                    param.put("installationId",OtherUtils.getAndroidId(EnrollActivity.this));
+                    netUtils.get(HttpUrls.REGISTERBYCELLPHONE, true, param, new StringCallback2("member","sessionId") {
+                        @Override
+                        public void onSuccess(String... result) {
+                            User user = JSON.parseObject(result[0],User.class);
+                            user.sessionId = result[1];
+                            EBERApp.spUtil.putData(SPKey.USER, JSON.toJSONString(user));
+                        }
+                    });
+
                     Intent intent = new Intent(EnrollActivity.this, FillInformationActivity.class);
                     startActivity(intent);
                     break;
