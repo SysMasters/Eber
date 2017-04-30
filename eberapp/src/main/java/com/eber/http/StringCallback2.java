@@ -13,12 +13,10 @@ import com.eber.EBERApp;
 
 public abstract class StringCallback2 implements OnHttpResult {
 
-    private String param1;
-    private String param2;
+    private String[] params;
 
-    public StringCallback2(String param1, String param2) {
-        this.param1 = param1;
-        this.param2 = param2;
+    public StringCallback2(String... params) {
+        this.params = params;
     }
 
     @Override
@@ -27,7 +25,12 @@ public abstract class StringCallback2 implements OnHttpResult {
             JSONObject jo = JSON.parseObject(response);
             int resultCode = jo.getInteger("retcode");
             if (resultCode == 1) {
-                onSuccess(jo.getString(param1), jo.getString(param2));
+                String[] str = null;
+                for (int i = 0; i < params.length; i++) {
+                    String param = this.params[i];
+                    this.params[i] = jo.getString(param);
+                }
+                onSuccess(params);
             } else {
                 String msg = jo.getString("msg");
                 Toast.makeText(EBERApp.sContext, msg, Toast.LENGTH_SHORT).show();
@@ -43,7 +46,7 @@ public abstract class StringCallback2 implements OnHttpResult {
         onFaile(e);
     }
 
-    public abstract void onSuccess(String result1, String result2);
+    public abstract void onSuccess(String... result);
 
 
     public void onFaile(Exception e) {
