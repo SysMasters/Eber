@@ -88,7 +88,6 @@ public class LoginActivity extends BaseActivity {
                         User user = JSON.parseObject(result[0], User.class);
                         user.sessionId = result[1];
                         EBERApp.spUtil.putData(SPKey.USER, JSON.toJSONString(user));
-
                         // 登录操作
                         EBERApp.spUtil.putData(SPKey.USER_NAME, etPhone.getText().toString());
                         EBERApp.spUtil.putData(SPKey.PASS_WORD, etPassword.getText().toString());
