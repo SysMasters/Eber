@@ -28,7 +28,6 @@ import com.eber.bean.BodyIndex;
 import com.eber.bean.Member;
 import com.eber.bean.MemberRecord;
 import com.eber.bean.User;
-import com.eber.ui.MainActivity;
 import com.eber.ui.home.LocalMemberActivity;
 import com.eber.utils.DisplayUtil;
 import com.eber.utils.TextViewUtil;
@@ -36,7 +35,6 @@ import com.eber.views.decoration.DividerGridItemDecoration;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +72,6 @@ public class HomeFragment extends BaseFragment {
     private PopupWindow mPopupWindow;
     @ViewInject(R.id.index_root)
     private RelativeLayout rlRoot;
-    @ViewInject(R.id.home_open_slide_ll)
-    private LinearLayout llOpenSlide;
 
     @ViewInject(R.id.index_gridView)
     private RecyclerView mGridView;
@@ -96,7 +92,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onBusiness() {
         memberRecord = JSON.parseObject(getActivity().getIntent().getStringExtra("memberRecord"), MemberRecord.class);
-        users = JSON.parseArray(getActivity().getIntent().getStringExtra("memberArray"),User.class);
+        users = JSON.parseArray(getActivity().getIntent().getStringExtra("memberArray"), User.class);
         setViewValues(memberRecord);
         ivHead.setOnClickListener(clickLis);
         setData();
@@ -141,24 +137,25 @@ public class HomeFragment extends BaseFragment {
         String weightChangeStr = jo.getString("weightChangeStr");
         jo = JSON.parseObject(m.BMIChange);
         double BMIChange = jo.getDouble("weightChange");
-        String BMIChangeStr = jo.getString("BMIChangeStr");;
+        String BMIChangeStr = jo.getString("BMIChangeStr");
+        ;
         tvTitleLabel.setText(m.updateTime);
-        tvScore.setText(m.score+"");
-        tvWeight.setText(m.weight+"");
-        tvAge.setText(m.bodyAge+"");
-        tvBMIChange.setText(BMIChange+"%");
-        if (BMIChange >= 0){
+        tvScore.setText(m.score + "");
+        tvWeight.setText(m.weight + "");
+        tvAge.setText(m.bodyAge + "");
+        tvBMIChange.setText(BMIChange + "%");
+        if (BMIChange >= 0) {
             imgBMIChange.setImageResource(R.mipmap.ic_index_up);
         } else {
             imgBMIChange.setImageResource(R.mipmap.ic_index_down);
         }
-        tvweightChange.setText(weightChange+"kg");
-        if (weightChange >= 0){
+        tvweightChange.setText(weightChange + "kg");
+        if (weightChange >= 0) {
             imgweightChange.setImageResource(R.mipmap.ic_index_up);
         } else {
             imgweightChange.setImageResource(R.mipmap.ic_index_down);
         }
-        tvChange.setText(weightChangeStr+""+BMIChangeStr);
+        tvChange.setText(weightChangeStr + "" + BMIChangeStr);
 
         jo = JSON.parseObject(m.indicateType);
         List<BodyIndex> bodyIndices = new ArrayList<>();
