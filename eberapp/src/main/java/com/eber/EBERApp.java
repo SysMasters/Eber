@@ -3,6 +3,7 @@ package com.eber;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.eber.bean.User;
 import com.eber.utils.SPUtil;
 import com.eber.utils.VersionUtil;
 
@@ -14,6 +15,7 @@ public class EBERApp extends MultiDexApplication {
     public static Context sContext;
     public static SPUtil spUtil;
     public static VersionUtil versionUtil;
+    public static User user;
 
     @Override
     public void onCreate() {

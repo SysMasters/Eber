@@ -1,16 +1,26 @@
 package com.eber.ui.register;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback;
 import com.eber.listener.OnValueChangeListener;
 import com.eber.ui.binddevice.BindDeviceActivity1;
+import com.eber.utils.SPKey;
 import com.eber.views.RulerView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import java.util.HashMap;
 
 /**
  * Created by Administrator on 2017/4/21.
@@ -19,6 +29,11 @@ public class FillInformationActivity extends BaseActivity {
 
     @ViewInject(R.id.title_content)
     private TextView tvTitle;
+
+    @ViewInject(R.id.fill_info_sex_rg)
+    private RadioGroup sexRg;
+    @ViewInject(R.id.fill_info_username)
+    private EditText etUserName;
 
     @ViewInject(R.id.fill_info_ruler_height)
     private RulerView rvHeight;
@@ -37,6 +52,8 @@ public class FillInformationActivity extends BaseActivity {
     @ViewInject(R.id.fill_info_success)
     private TextView btnSuccess;
 
+    private int sex = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_fill_information);
@@ -46,16 +63,31 @@ public class FillInformationActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-        ViewUtils.inject(this);
+
     }
 
     @Override
     public void setListener() {
+        sexRg.setOnCheckedChangeListener(checkLis);
         rvHeight.setOnValueChangeListener(heightValueLis);
         rvYear.setOnValueChangeListener(yearValueLis);
         rvMonth.setOnValueChangeListener(monthValueLis);
         btnSuccess.setOnClickListener(clickLis);
     }
+
+    private RadioGroup.OnCheckedChangeListener checkLis = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+            switch (checkedId){
+                case R.id.fill_info_male:
+                    sex = 1;
+                    break;
+                case R.id.fill_info_woman:
+                    sex = 2;
+                    break;
+            }
+        }
+    };
 
     public void titleBackClick(View v) {
         finish();
@@ -84,7 +116,24 @@ public class FillInformationActivity extends BaseActivity {
     private View.OnClickListener clickLis = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(BindDeviceActivity1.class);
+            param = new HashMap<>();
+            param.put("memberId", EBERApp.user.id+"");
+            param.put("userName", etUserName.getText().toString().trim());
+            param.put("birthday", tvYearText.getText()+"-"+tvMonthText.getText());
+            param.put("sex", sex+"");
+            param.put("height", tvHeightText.getText()+"");
+            netUtils.get(HttpUrls.MODIFYMEMBERINFO, true, param, new StringCallback("member") {
+                @Override
+                public void onSuccess(String resultJson) {
+                    EBERApp.user.userName = etUserName.getText().toString().trim();
+                    EBERApp.user.birthday = tvYearText.getText()+"-"+tvMonthText.getText();
+                    EBERApp.user.sex = sex;
+                    EBERApp.user.height = Integer.parseInt(tvHeightText.getText()+"");
+                    String userJson = JSON.toJSONString(EBERApp.user);
+                    EBERApp.spUtil.putData(SPKey.USER, userJson);
+                    startActivity(BindDeviceActivity1.class);
+                }
+            });
         }
     };
 }

@@ -16,5 +16,10 @@ public class User implements Serializable {
     public String sessionId;
     public String birthday;
     public int sex;
+    public String userName;
+    public int height;
+    public int waistline;
+    public int hipline;
+    public int pregnate;
 
 }

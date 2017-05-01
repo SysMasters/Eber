@@ -114,12 +114,13 @@ public class EnrollActivity extends BaseActivity {
                         public void onSuccess(String... result) {
                             User user = JSON.parseObject(result[0],User.class);
                             user.sessionId = result[1];
-                            EBERApp.spUtil.putData(SPKey.USER, JSON.toJSONString(user));
+                            EBERApp.user = user;
+                            String userJson = JSON.toJSONString(user);
+                            EBERApp.spUtil.putData(SPKey.USER, userJson);
+                            Intent intent = new Intent(EnrollActivity.this, FillInformationActivity.class);
+                            startActivity(intent);
                         }
                     });
-
-                    Intent intent = new Intent(EnrollActivity.this, FillInformationActivity.class);
-                    startActivity(intent);
                     break;
                 case R.id.login_agreement_tv:
                     // 服务协议

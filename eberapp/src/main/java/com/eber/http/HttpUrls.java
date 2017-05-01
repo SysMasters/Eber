@@ -16,5 +16,6 @@ public class HttpUrls {
     public final static String REGISTERBYCELLPHONE = BASEURL + "memberLoginAPP/registerByCellphone.shtml";
     public final static String LOGIN = BASEURL + "memberLoginAPP/login.shtml";
     public final static String CHECKSESSIONID = BASEURL + "memberLoginAPP/checkSessionId.shtml";
+    public final static String MODIFYMEMBERINFO = BASEURL + "memberAPP/modifyMemberInfo.shtml";
 
 }
