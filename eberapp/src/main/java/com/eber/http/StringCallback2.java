@@ -27,7 +27,6 @@ public abstract class StringCallback2 implements OnHttpResult {
             int resultCode = jo.getInteger("retcode");
             Log.i("=======resultCode",": "+resultCode);
             if (resultCode == 1) {
-                String[] str = null;
                 for (int i = 0; i < params.length; i++) {
                     String param = this.params[i];
                     this.params[i] = jo.getString(param);

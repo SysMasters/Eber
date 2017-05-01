@@ -1,5 +1,6 @@
 package com.eber.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,6 @@ import android.view.View;
 import com.eber.R;
 import com.eber.http.NetUtils;
 import com.eber.ui.WebActivity;
-import com.eber.ui.register.EnrollActivity;
 import com.eber.utils.StatusBarUtil;
 import com.lidroid.xutils.ViewUtils;
 
@@ -21,14 +21,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected NetUtils netUtils;
     protected Map<String, String> param;
+    protected Context mContext;
 
     /**
      * 正则表达式：验证手机号
      */
     public static final String REGEX_MOBILE = "^((17[0-9])(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         netUtils = new NetUtils();
         ActivityManager.getInstance().addActivity(this);
         setStatusBar();

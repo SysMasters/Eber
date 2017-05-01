@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eber.R;
 import com.eber.base.BaseActivity;
@@ -60,7 +61,7 @@ public class LocalMemberActivity extends BaseActivity {
                 ImageView ivDel = holder.getView(R.id.local_member_del);
                 ImageView ivSelected = holder.getView(R.id.local_member_selected);
                 boolean flag = (boolean) tvRight.getTag();
-                if (position < 2) {
+                if (position < 2 || position == members.size() - 1) {
                     ivDel.setVisibility(View.GONE);
                 } else {
                     ivDel.setVisibility(flag ? View.VISIBLE : View.INVISIBLE);
@@ -77,8 +78,12 @@ public class LocalMemberActivity extends BaseActivity {
                 });
                 if (TextUtils.equals("1", member.sex)) {// 1:男
                     headImage.setImageResource(R.mipmap.ic_local_member_man);
-                } else {
+                } else if (TextUtils.equals("2", member.sex)) {
                     headImage.setImageResource(R.mipmap.ic_local_member_woman);
+                } else {
+                    headImage.setImageResource(R.mipmap.ic_local_member_add);
+                    headImage.setTag("add");
+                    headImage.setOnClickListener(clickListener);
                 }
                 tvName.setText(member.userName);
             }
@@ -88,12 +93,13 @@ public class LocalMemberActivity extends BaseActivity {
     private void initData() {
         members = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Member member = new Member("" + i, "" + i, "男", "成员" + (i + 1));
+            Member member = new Member("" + i, "" + i, "1", "成员" + (i + 1));
             if (i == 2 || i == 4 || i == 7) {
-                member.sex = "女";
+                member.sex = "2";
             }
             members.add(member);
         }
+        members.add(new Member("", "", "-1", "添加成员"));
     }
 
     @Override
@@ -123,6 +129,11 @@ public class LocalMemberActivity extends BaseActivity {
                     members.remove(position);
                     mAdapter.notifyItemRemoved(position);
                     mAdapter.notifyItemRangeRemoved(position, members.size() - position);
+                    break;
+                case R.id.local_member_head:// 添加成员
+                    if (TextUtils.equals("add", v.getTag() + "")) {
+                        Toast.makeText(LocalMemberActivity.this, "添加成员", Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
