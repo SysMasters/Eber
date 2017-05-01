@@ -149,11 +149,13 @@
                         android:textSize="16sp"/>
 
                     <ImageView
+                        android:id="@+id/index_bmi_change_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/ic_index_down"/>
 
                     <TextView
+                        android:id="@+id/index_bmi_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
@@ -178,11 +180,13 @@
                         android:textSize="16sp"/>
 
                     <ImageView
+                        android:id="@+id/index_weightChange_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/ic_index_down"/>
 
                     <TextView
+                        android:id="@+id/index_weightChange"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
@@ -207,6 +211,7 @@
                         android:textSize="16sp"/>
 
                     <TextView
+                        android:id="@+id/index_bodyage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
@@ -218,6 +223,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/index_change_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00A7F7"
@@ -249,6 +255,7 @@
                     android:textSize="16sp"/>
 
                 <LinearLayout
+                    android:id="@+id/home_open_slide_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="2dp"
@@ -275,10 +282,11 @@
                                 android:src="@mipmap/ic_index_axunge_percentage"/>
 
                             <TextView
+                                android:id="@+id/"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="9dp"
-                                android:text="脂肪率(14.0%)"
+                                android:text="脂肪率(0.0%)"
                                 android:textColor="#000000"
                                 android:textSize="14sp"/>
 

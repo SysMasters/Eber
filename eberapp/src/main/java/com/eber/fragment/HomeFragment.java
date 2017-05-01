@@ -16,15 +16,22 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.eber.R;
 import com.eber.base.BaseFragment;
+import com.eber.bean.BodyIndex;
 import com.eber.bean.Member;
+import com.eber.bean.MemberRecord;
+import com.eber.bean.User;
+import com.eber.ui.MainActivity;
 import com.eber.ui.home.LocalMemberActivity;
 import com.eber.utils.DisplayUtil;
 import com.eber.utils.TextViewUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +50,32 @@ public class HomeFragment extends BaseFragment {
     private TextView tvWeight;// 体重
     @ViewInject(R.id.index_bmi)
     private TextView tvBMI;// BMI
+    @ViewInject(R.id.index_score)
+    private TextView tvScore;   // 得分
+    @ViewInject(R.id.index_bodyage)
+    private TextView tvAge;   // 年龄
+    @ViewInject(R.id.index_bmi_change)
+    private TextView tvBMIChange;   // 脂肪变化
+    @ViewInject(R.id.index_bmi_change_img)
+    private ImageView imgBMIChange;   // 脂肪变化箭头图
+    @ViewInject(R.id.index_weightChange)
+    private TextView tvweightChange;   // 体重变化
+    @ViewInject(R.id.index_weightChange_img)
+    private ImageView imgweightChange;   // 体重变化箭头图
+    @ViewInject(R.id.index_change_text)
+    private TextView tvChange;   // 体重、脂肪变化概述
+
 
     private PopupWindow mPopupWindow;
     @ViewInject(R.id.index_root)
     private RelativeLayout rlRoot;
+    @ViewInject(R.id.home_open_slide_ll)
+    private LinearLayout llOpenSlide;
 
     private CommonAdapter<Member> mMembersAdapter;
     private List<Member> members;// 成员列表
+    private MemberRecord memberRecord;      // 称重记录
+    private List<User> users;      // 用户与子用户集合
 
     @Override
     public int bindLayout() {
@@ -58,8 +84,63 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onBusiness() {
+        memberRecord = JSON.parseObject(getActivity().getIntent().getStringExtra("memberRecord"), MemberRecord.class);
+        users = JSON.parseArray(getActivity().getIntent().getStringExtra("memberArray"),User.class);
+        setViewValues(memberRecord);
         ivHead.setOnClickListener(clickLis);
         setData();
+    }
+
+    private void setViewValues(MemberRecord m) {
+        JSONObject jo = JSON.parseObject(m.weightChange);
+        double weightChange = jo.getDouble("weightChange");
+        String weightChangeStr = jo.getString("weightChangeStr");
+        jo = JSON.parseObject(m.BMIChange);
+        double BMIChange = jo.getDouble("weightChange");
+        String BMIChangeStr = jo.getString("BMIChangeStr");;
+        tvTitleLabel.setText(m.updateTime);
+        tvScore.setText(m.score+"");
+        tvWeight.setText(m.weight+"");
+        tvAge.setText(m.bodyAge+"");
+        tvBMIChange.setText(BMIChange+"%");
+        if (BMIChange >= 0){
+            imgBMIChange.setImageResource(R.mipmap.ic_index_up);
+        } else {
+            imgBMIChange.setImageResource(R.mipmap.ic_index_down);
+        }
+        tvweightChange.setText(weightChange+"kg");
+        if (weightChange >= 0){
+            imgweightChange.setImageResource(R.mipmap.ic_index_up);
+        } else {
+            imgweightChange.setImageResource(R.mipmap.ic_index_down);
+        }
+        tvChange.setText(weightChangeStr+""+BMIChangeStr);
+
+        jo = JSON.parseObject(m.indicateType);
+        List<BodyIndex> bodyIndices = new ArrayList<>();
+        BodyIndex bi = new BodyIndex();
+        bi = JSON.parseObject(jo.getString("fatRate"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("bodywater"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("subcutaneousfat"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("protein"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("muscle"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("bone"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("organfat"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("basicmetabolism"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("bonerisk"), BodyIndex.class);
+        bodyIndices.add(bi);
+        bi = JSON.parseObject(jo.getString("BMI"), BodyIndex.class);
+        tvBMI.setText(bi.value);
+
+        // 创建adapter 传入集合bodyIndices
     }
 
     @Override
