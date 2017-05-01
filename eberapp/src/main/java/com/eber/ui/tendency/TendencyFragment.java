@@ -2,7 +2,6 @@ package com.eber.ui.tendency;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.eber.R;
 import com.eber.base.BaseFragment;
@@ -113,7 +112,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tendency_line:
-                startActivity(HistoryActivity.class);
+                startActivity(HistoryRecordActivity.class);
                 break;
             case R.id.tendency_share:
 

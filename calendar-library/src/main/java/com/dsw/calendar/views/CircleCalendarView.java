@@ -51,12 +51,32 @@ public class CircleCalendarView extends LinearLayout implements View.OnClickList
 
     public void setDate() {
         int year = circleMonthView.getSelYear();
-        int month = circleMonthView.getSelMonth()+1;
+        int month = circleMonthView.getSelMonth() + 1;
         int date = circleMonthView.getSelDay();
         String monthStr = month < 10 ? "0" + month : month + "";
         String dateStr = date < 10 ? "0" + date : date + "";
         textViewYear.setText(year + "." + monthStr + "." + dateStr);
     }
+
+    public String getMonthStr() {
+        int month = circleMonthView.getSelMonth() + 1;
+        return month < 10 ? "0" + month : month + "";
+    }
+
+    public String getDayStr() {
+        int date = circleMonthView.getSelDay();
+        return date < 10 ? "0" + date : date + "";
+    }
+
+    public String getDateStr() {
+        int year = circleMonthView.getSelYear();
+        int month = circleMonthView.getSelMonth() + 1;
+        int date = circleMonthView.getSelDay();
+        String monthStr = month < 10 ? "0" + month : month + "";
+        String dateStr = date < 10 ? "0" + date : date + "";
+        return year + "." + monthStr + "." + dateStr;
+    }
+
 
     /**
      * 设置日历点击事件

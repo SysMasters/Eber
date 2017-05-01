@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/history_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:20"
+            android:textColor="#888888"/>
+
+        <View
+            android:id="@+id/history_item_bule"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/history_item_time"
+            android:background="@drawable/sp_blue_circle"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/history_item_line_parent"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/linearlayout"
+        android:gravity="center">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="#7ED3FB"/>
+    </RelativeLayout>
+
+</RelativeLayout>
