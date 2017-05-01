@@ -15,7 +15,7 @@ import com.dsw.calendar.views.CircleCalendarView;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.BodyInfo;
-import com.eber.views.RecycleViewDivider;
+import com.eber.views.decoration.RecycleViewDivider;
 import com.eber.views.swipe.SwipeMenuLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;

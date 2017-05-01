@@ -27,7 +27,7 @@ import com.eber.bean.Member;
 import com.eber.ui.home.LocalMemberActivity;
 import com.eber.utils.DisplayUtil;
 import com.eber.utils.TextViewUtil;
-import com.eber.views.RecycleViewDivider;
+import com.eber.views.decoration.DividerGridItemDecoration;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -75,8 +75,7 @@ public class HomeFragment extends BaseFragment {
         initBodyInfoData();
 
         mGridView.setLayoutManager(new GridLayoutManager(mActivity, 3));
-        mGridView.addItemDecoration(new RecycleViewDivider(mActivity, LinearLayoutManager.VERTICAL, 2, Color.parseColor("#bfbfbf")));
-        mGridView.addItemDecoration(new RecycleViewDivider(mActivity, LinearLayoutManager.HORIZONTAL, 2, Color.parseColor("#bfbfbf")));
+        mGridView.addItemDecoration(new DividerGridItemDecoration(mActivity));
         mAdapter = new CommonAdapter<BodyIndex>(mActivity, R.layout.view_index_item, bodyIndices) {
             @Override
             protected void convert(ViewHolder holder, BodyIndex item, final int position) {
@@ -102,7 +101,7 @@ public class HomeFragment extends BaseFragment {
 
     private void initBodyInfoData() {
         bodyIndices = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 10; i++) {
             BodyIndex b = new BodyIndex();
             bodyIndices.add(b);
         }

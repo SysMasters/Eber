@@ -94,7 +94,7 @@ public class HistoryDataActivity extends BaseActivity {
                     vCircle.setLayoutParams(layoutParams);
                 }
                 if (position == bodyInfos.size() - 1) {
-                    rlLineParent.setVisibility(View.GONE);
+                    rlLineParent.setVisibility(View.INVISIBLE);
                 } else {
                     rlLineParent.setVisibility(View.VISIBLE);
                 }
