@@ -74,8 +74,6 @@ public class HomeFragment extends BaseFragment {
     private PopupWindow mPopupWindow;
     @ViewInject(R.id.index_root)
     private RelativeLayout rlRoot;
-    @ViewInject(R.id.home_open_slide_ll)
-    private LinearLayout llOpenSlide;
 
     @ViewInject(R.id.index_gridView)
     private RecyclerView mGridView;
@@ -162,7 +160,7 @@ public class HomeFragment extends BaseFragment {
         tvChange.setText(weightChangeStr+""+BMIChangeStr);
 
         jo = JSON.parseObject(m.indicateType);
-        List<BodyIndex> bodyIndices = new ArrayList<>();
+        bodyIndices = new ArrayList<>();
         BodyIndex bi = new BodyIndex();
         bi = JSON.parseObject(jo.getString("fatRate"), BodyIndex.class);
         bodyIndices.add(bi);
