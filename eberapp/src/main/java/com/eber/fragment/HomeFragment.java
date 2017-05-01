@@ -1,9 +1,12 @@
 package com.eber.fragment;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -15,13 +18,16 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eber.R;
 import com.eber.base.BaseFragment;
+import com.eber.bean.BodyIndex;
 import com.eber.bean.Member;
 import com.eber.ui.home.LocalMemberActivity;
 import com.eber.utils.DisplayUtil;
 import com.eber.utils.TextViewUtil;
+import com.eber.views.RecycleViewDivider;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -48,8 +54,14 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.index_root)
     private RelativeLayout rlRoot;
 
+    @ViewInject(R.id.index_gridView)
+    private RecyclerView mGridView;
+
     private CommonAdapter<Member> mMembersAdapter;
     private List<Member> members;// 成员列表
+
+    private CommonAdapter<BodyIndex> mAdapter;
+    private List<BodyIndex> bodyIndices;
 
     @Override
     public int bindLayout() {
@@ -60,11 +72,46 @@ public class HomeFragment extends BaseFragment {
     public void onBusiness() {
         ivHead.setOnClickListener(clickLis);
         setData();
+        initBodyInfoData();
+
+        mGridView.setLayoutManager(new GridLayoutManager(mActivity, 3));
+        mGridView.addItemDecoration(new RecycleViewDivider(mActivity, LinearLayoutManager.VERTICAL, 2, Color.parseColor("#bfbfbf")));
+        mGridView.addItemDecoration(new RecycleViewDivider(mActivity, LinearLayoutManager.HORIZONTAL, 2, Color.parseColor("#bfbfbf")));
+        mAdapter = new CommonAdapter<BodyIndex>(mActivity, R.layout.view_index_item, bodyIndices) {
+            @Override
+            protected void convert(ViewHolder holder, BodyIndex item, final int position) {
+                ImageView ivImage = holder.getView(R.id.index_item_image);
+                TextView tvDesc = holder.getView(R.id.index_item_desc);// 脂肪率(14%)
+                tvDesc.setText("脂肪率" + "(14%)");
+                TextView tvBody = holder.getView(R.id.index_item_body);//胖瘦
+
+                GradientDrawable gd = (GradientDrawable) tvBody.getBackground();
+                gd.setColor(Color.parseColor("#00fff0"));// 设置颜色
+                holder.setOnClickListener(R.id.index_item_root, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        };
+        mGridView.setAdapter(mAdapter);
+
+    }
+
+    private void initBodyInfoData() {
+        bodyIndices = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            BodyIndex b = new BodyIndex();
+            bodyIndices.add(b);
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
 

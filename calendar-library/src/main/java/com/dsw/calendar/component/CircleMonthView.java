@@ -44,7 +44,7 @@ public class CircleMonthView extends MonthView {
             float endRecY = startRecY + rowSize - 2 * 1;
             float cx = (startRecX + endRecX) / 2;
             float cy = (startRecY + endRecY) / 2;
-            float radius = columnSize < rowSize ? columnSize / 2.5f : rowSize / 2.5f;
+            float radius = columnSize < rowSize ? columnSize / 2.8f : rowSize / 2.8f;
             paint.setColor(theme.colorSelectBG());
             paint.setStyle(Paint.Style.FILL);
             canvas.drawCircle(cx,cy,radius,paint);
@@ -58,7 +58,7 @@ public class CircleMonthView extends MonthView {
             paint.setColor(theme.colorDecor());
             paint.setStyle(Paint.Style.FILL);
             float circleX = (float) (columnSize * column +	columnSize*0.5);
-            float circleY = (float) (rowSize * row + rowSize*1);
+            float circleY = (float) (rowSize * row + rowSize*0.9);
             canvas.drawCircle(circleX, circleY, theme.sizeDecor(), paint);
         }
     }

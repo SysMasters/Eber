@@ -29,7 +29,8 @@
         <activity android:name=".ui.register.EnrollActivity"></activity>
         <activity android:name=".ui.binddevice.BindDeviceActivity1"></activity>
         <activity android:name=".ui.binddevice.BindDeviceActivity2"></activity>
-        <activity android:name=".ui.tendency.HistoryActivity"></activity>
+        <activity android:name=".ui.tendency.HistoryRecordActivity"></activity>
+        <activity android:name=".ui.tendency.HistoryDataActivity"></activity>
         <activity android:name=".ui.register.FillInformationActivity">
         </activity>
         <activity android:name=".ui.home.LocalMemberActivity"></activity>

@@ -34,7 +34,7 @@ public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T> {
         });
     }
 
-    protected abstract void convert(ViewHolder viewHolder, T item, int position);
+    protected abstract void convert(ViewHolder holder, T item, int position);
 
     public void refresh(List<T> datas) {
         this.mDatas.addAll(datas);
