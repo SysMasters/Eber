@@ -158,7 +158,7 @@ public class HomeFragment extends BaseFragment {
         tvChange.setText(weightChangeStr + "" + BMIChangeStr);
 
         jo = JSON.parseObject(m.indicateType);
-        List<BodyIndex> bodyIndices = new ArrayList<>();
+        bodyIndices = new ArrayList<>();
         BodyIndex bi = new BodyIndex();
         bi = JSON.parseObject(jo.getString("fatRate"), BodyIndex.class);
         bodyIndices.add(bi);
