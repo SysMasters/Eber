@@ -1,4 +1,4 @@
-package com.eber.views;
+package com.eber.views.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -28,15 +28,13 @@ import com.eber.bean.BodyIndex;
 import com.eber.bean.Member;
 import com.eber.bean.MemberRecord;
 import com.eber.bean.User;
-import com.eber.ui.MainActivity;
 import com.eber.ui.home.LocalMemberActivity;
 import com.eber.utils.DisplayUtil;
 import com.eber.utils.TextViewUtil;
-import com.eber.views.RecycleViewDivider;
+import com.eber.views.decoration.DividerGridItemDecoration;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,15 +92,14 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onBusiness() {
         memberRecord = JSON.parseObject(getActivity().getIntent().getStringExtra("memberRecord"), MemberRecord.class);
-        users = JSON.parseArray(getActivity().getIntent().getStringExtra("memberArray"),User.class);
+        users = JSON.parseArray(getActivity().getIntent().getStringExtra("memberArray"), User.class);
         setViewValues(memberRecord);
         ivHead.setOnClickListener(clickLis);
         setData();
         initBodyInfoData();
 
         mGridView.setLayoutManager(new GridLayoutManager(mActivity, 3));
-        mGridView.addItemDecoration(new RecycleViewDivider(mActivity, LinearLayoutManager.VERTICAL, 2, Color.parseColor("#bfbfbf")));
-        mGridView.addItemDecoration(new RecycleViewDivider(mActivity, LinearLayoutManager.HORIZONTAL, 2, Color.parseColor("#bfbfbf")));
+        mGridView.addItemDecoration(new DividerGridItemDecoration(mActivity));
         mAdapter = new CommonAdapter<BodyIndex>(mActivity, R.layout.view_index_item, bodyIndices) {
             @Override
             protected void convert(ViewHolder holder, BodyIndex item, final int position) {
@@ -128,7 +125,7 @@ public class HomeFragment extends BaseFragment {
 
     private void initBodyInfoData() {
         bodyIndices = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 10; i++) {
             BodyIndex b = new BodyIndex();
             bodyIndices.add(b);
         }
@@ -140,24 +137,25 @@ public class HomeFragment extends BaseFragment {
         String weightChangeStr = jo.getString("weightChangeStr");
         jo = JSON.parseObject(m.BMIChange);
         double BMIChange = jo.getDouble("weightChange");
-        String BMIChangeStr = jo.getString("BMIChangeStr");;
+        String BMIChangeStr = jo.getString("BMIChangeStr");
+        ;
         tvTitleLabel.setText(m.updateTime);
-        tvScore.setText(m.score+"");
-        tvWeight.setText(m.weight+"");
-        tvAge.setText(m.bodyAge+"");
-        tvBMIChange.setText(BMIChange+"%");
-        if (BMIChange >= 0){
+        tvScore.setText(m.score + "");
+        tvWeight.setText(m.weight + "");
+        tvAge.setText(m.bodyAge + "");
+        tvBMIChange.setText(BMIChange + "%");
+        if (BMIChange >= 0) {
             imgBMIChange.setImageResource(R.mipmap.ic_index_up);
         } else {
             imgBMIChange.setImageResource(R.mipmap.ic_index_down);
         }
-        tvweightChange.setText(weightChange+"kg");
-        if (weightChange >= 0){
+        tvweightChange.setText(weightChange + "kg");
+        if (weightChange >= 0) {
             imgweightChange.setImageResource(R.mipmap.ic_index_up);
         } else {
             imgweightChange.setImageResource(R.mipmap.ic_index_down);
         }
-        tvChange.setText(weightChangeStr+""+BMIChangeStr);
+        tvChange.setText(weightChangeStr + "" + BMIChangeStr);
 
         jo = JSON.parseObject(m.indicateType);
         bodyIndices = new ArrayList<>();
