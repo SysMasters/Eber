@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 /**
  * Created by Administrator on 2017/4/18.
  */
-public class SPUtil {
+public class SPUtil<T> {
 
     public SPUtil(Context context){
         editor = context.getSharedPreferences("eber", Context.MODE_PRIVATE).edit();

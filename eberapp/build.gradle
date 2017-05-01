@@ -33,4 +33,9 @@ dependencies {
     compile project(':base-adapter-library')
     compile 'com.alibaba:fastjson:1.1.56.android'
     compile project(':calendar-library')
+    compile files('libs/umeng_shareboard_widget.jar')
+    compile files('libs/umeng_social_api.jar')
+    compile files('libs/umeng_social_net.jar')
+    compile files('libs/umeng_social_shareboard.jar')
+    compile files('libs/umeng_social_tool.jar')
 }
