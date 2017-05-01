@@ -12,5 +12,9 @@ public class HttpUrls {
 
 
     public final static String FINDEQUIPARRAY = BASEURL + "equipTypeAPP/findEquipArray.shtml";
+    public final static String GETVCODE = BASEURL + "memberLoginAPP/getVCode.shtml";
+    public final static String REGISTERBYCELLPHONE = BASEURL + "memberLoginAPP/registerByCellphone.shtml";
+    public final static String LOGIN = BASEURL + "memberLoginAPP/login.shtml";
+    public final static String CHECKSESSIONID = BASEURL + "memberLoginAPP/checkSessionId.shtml";
 
 }

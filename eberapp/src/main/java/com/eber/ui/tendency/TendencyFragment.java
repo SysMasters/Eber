@@ -70,42 +70,42 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
     private BMIBtnGroup.OnCheckedChangeListener bmiBtnGroupLis = new BMIBtnGroup.OnCheckedChangeListener() {
         @Override
         public void onWeight(int color) {
-            Toast.makeText(mActivity, "体重", Toast.LENGTH_SHORT).show();
+            // 体重
         }
 
         @Override
         public void onFat(int color) {
-            Toast.makeText(mActivity, "脂肪", Toast.LENGTH_SHORT).show();
+            // 脂肪
         }
 
         @Override
         public void onMuscle(int color) {
-            Toast.makeText(mActivity, "肌肉", Toast.LENGTH_SHORT).show();
+            // 肌肉
         }
 
         @Override
         public void onWater(int color) {
-            Toast.makeText(mActivity, "体水分", Toast.LENGTH_SHORT).show();
+            // 体水分
         }
 
         @Override
         public void onProtein(int color) {
-            Toast.makeText(mActivity, "蛋白质", Toast.LENGTH_SHORT).show();
+            // 蛋白质
         }
 
         @Override
         public void onWeek() {
-            Toast.makeText(mActivity, "周", Toast.LENGTH_SHORT).show();
+            // 周
         }
 
         @Override
         public void onMonth() {
-            Toast.makeText(mActivity, "月", Toast.LENGTH_SHORT).show();
+            // 月
         }
 
         @Override
         public void onYear() {
-            Toast.makeText(mActivity, "年", Toast.LENGTH_SHORT).show();
+            // 年
         }
     };
 
