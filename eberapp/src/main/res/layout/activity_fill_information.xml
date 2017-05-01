@@ -15,6 +15,7 @@
         <include layout="@layout/title_view"/>
 
         <RadioGroup
+            android:id="@+id/fill_info_sex_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -54,6 +55,7 @@
                 android:textSize="16sp"/>
 
             <EditText
+                android:id="@+id/fill_info_username"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginLeft="18dp"
@@ -187,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     app:currentValue="1990"
-                    app:fromValue="1970"
+                    app:fromValue="1930"
                     app:interval="10dp"
                     app:intervalsBetweenValues="5"
                     app:linesColor="#33000000"

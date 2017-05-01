@@ -28,6 +28,9 @@ public class MainActivity extends BaseActivity {
     private BaseFragment mFragMy;
     private BaseFragment mFragTendency;
 
+    private String memberRecordJSON;        // 最近一次称重信息
+    private String memberArrayJSON;         // 子用户信息
+
     @ViewInject(R.id.index_radioGroup)
     private RadioGroup radioGroup;
 
@@ -35,6 +38,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
+        memberRecordJSON = getIntent().getStringExtra("memberRecord");
+        memberArrayJSON = getIntent().getStringExtra("memberArray");
         init();
     }
 
