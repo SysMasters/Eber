@@ -5,22 +5,62 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "com.eber"
-        minSdkVersion 19
+        applicationId "com.eber.xianfeng"
+        minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        debug {
+            storeFile file("./jks/eber.jks")
+            storePassword "123456"
+            keyAlias "eber"
+            keyPassword "123456"
+        }
+        relealse {
+            storeFile file("./jks/eber.jks")
+            storePassword "123456"
+            keyAlias "eber"
+            keyPassword "123456"
         }
     }
-    
-}
+    buildTypes {
+        debug {
+            versionNameSuffix "-debug"
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+            ndk {
+                abiFilters "armeabi", "armeabi-v7a", "x86"
+            }
+        }
 
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.relealse
+            ndk {
+                abiFilters "armeabi", "armeabi-v7a", "x86"
+            }
+        }
+
+
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -33,4 +73,5 @@ dependencies {
     compile project(':base-adapter-library')
     compile 'com.alibaba:fastjson:1.1.56.android'
     compile project(':calendar-library')
+    compile project(':umeng')
 }

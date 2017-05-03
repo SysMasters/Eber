@@ -60,10 +60,15 @@ public class Loading {
      */
 
     public static void dismiss() {
-        if (loading != null && loading.isShowing()) {
-            loading.dismiss();
-            loading = null;
+        try {
+            if (loading != null && loading.isShowing()) {
+                loading.dismiss();
+                loading = null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        
     }
 
     /**

@@ -5,9 +5,9 @@ package com.eber.bean;
  */
 
 public class MemberRecord {
-    public int id;
-    public int weight;
-    public int bodyAge;
+    public String id;
+    public String weight;
+    public String bodyAge;
     public String updateTime;
     public String weightChange;
 //    {
@@ -20,7 +20,7 @@ public class MemberRecord {
 //        "BMIChangeStr": "您的BMI值有明显下降。"
 //        },
     public String indicateType;
-    public int score;
-    public int memberId;
+    public String score;
+    public String memberId;
     public String MAC;
 }

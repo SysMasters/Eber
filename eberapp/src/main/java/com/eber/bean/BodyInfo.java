@@ -10,13 +10,15 @@ public class BodyInfo {
     /**
      * subcutaneousfat : 29
      * weight : 65
-     * updateTime : 08:31
+     * updateTime : 09:14
      * organfat : 6
      * score : 80
      * muscle : 39
      * bodywater : 50
-     * id : 10
+     * id : 22
+     * bodyAge : 18
      * bonerisk : 2
+     * bodyShape : 1
      * protein : 16
      * bone : 2
      * fatRate : 25
@@ -32,7 +34,9 @@ public class BodyInfo {
     public String muscle;
     public String bodywater;
     public String id;
+    public String bodyAge;
     public String bonerisk;
+    public String bodyShape;
     public String protein;
     public String bone;
     public String fatRate;

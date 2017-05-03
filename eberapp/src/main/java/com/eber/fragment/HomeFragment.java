@@ -93,7 +93,7 @@ public class HomeFragment extends BaseFragment {
     public void onBusiness() {
         memberRecord = JSON.parseObject(getActivity().getIntent().getStringExtra("memberRecord"), MemberRecord.class);
         users = JSON.parseArray(getActivity().getIntent().getStringExtra("memberArray"), User.class);
-        setViewValues(memberRecord);
+//        setViewValues(memberRecord);
         ivHead.setOnClickListener(clickLis);
         setData();
         initBodyInfoData();
@@ -133,27 +133,35 @@ public class HomeFragment extends BaseFragment {
 
     private void setViewValues(MemberRecord m) {
         JSONObject jo = JSON.parseObject(m.weightChange);
-        double weightChange = jo.getDouble("weightChange");
+        String weightChange = jo.getString("weightChange");
         String weightChangeStr = jo.getString("weightChangeStr");
         jo = JSON.parseObject(m.BMIChange);
-        double BMIChange = jo.getDouble("weightChange");
+        String BMIChange = jo.getString("weightChange");
         String BMIChangeStr = jo.getString("BMIChangeStr");
         ;
         tvTitleLabel.setText(m.updateTime);
+        
+        
         tvScore.setText(m.score + "");
         tvWeight.setText(m.weight + "");
         tvAge.setText(m.bodyAge + "");
         tvBMIChange.setText(BMIChange + "%");
-        if (BMIChange >= 0) {
-            imgBMIChange.setImageResource(R.mipmap.ic_index_up);
-        } else {
-            imgBMIChange.setImageResource(R.mipmap.ic_index_down);
+        if (!TextUtils.isEmpty(BMIChange)) {
+            double change = Double.valueOf(BMIChange);
+            if (change >= 0) {
+                imgBMIChange.setImageResource(R.mipmap.ic_index_up);
+            } else {
+                imgBMIChange.setImageResource(R.mipmap.ic_index_down);
+            }
         }
         tvweightChange.setText(weightChange + "kg");
-        if (weightChange >= 0) {
-            imgweightChange.setImageResource(R.mipmap.ic_index_up);
-        } else {
-            imgweightChange.setImageResource(R.mipmap.ic_index_down);
+        if (!TextUtils.isEmpty(BMIChange)) {
+            double change = Double.valueOf(weightChange);
+            if (change >= 0) {
+                imgweightChange.setImageResource(R.mipmap.ic_index_up);
+            } else {
+                imgweightChange.setImageResource(R.mipmap.ic_index_down);
+            }
         }
         tvChange.setText(weightChangeStr + "" + BMIChangeStr);
 
