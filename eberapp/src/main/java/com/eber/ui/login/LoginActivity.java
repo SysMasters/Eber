@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity {
                 param.put("loginIP", OtherUtils.getHostIP());
                 param.put("deviceType", "2");
                 param.put("installationId", OtherUtils.getAndroidId(LoginActivity.this));
-                netUtils.get(HttpUrls.LOGIN, true, param, new StringCallback2("member", "sessionId", "memberRecord", "memberArray") {
+                netUtils.get(HttpUrls.LOGIN, true, param, new StringCallback2("member", "sessionId", "memberRecord", "memberArray", "memberEquipArray") {
                     @Override
                     public void onSuccess(String... result) {
                         User user = JSON.parseObject(result[0], User.class);
@@ -94,6 +94,7 @@ public class LoginActivity extends BaseActivity {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.putExtra("memberRecord", result[2]);
                         intent.putExtra("memberArray", result[3]);
+                        intent.putExtra("memberEquipArray", result[4]);
                         startActivity(intent);
                         finish();
                     }

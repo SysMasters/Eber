@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity {
 
     private String memberRecordJSON;        // 最近一次称重信息
     private String memberArrayJSON;         // 子用户信息
+    private String memberEquipArrayJSON;         // 用户设备信息
 
     @ViewInject(R.id.index_radioGroup)
     private RadioGroup radioGroup;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         memberRecordJSON = getIntent().getStringExtra("memberRecord");
         memberArrayJSON = getIntent().getStringExtra("memberArray");
+        memberEquipArrayJSON = getIntent().getStringExtra("memberEquipArray");
         init();
     }
 
