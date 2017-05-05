@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
-import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,12 +40,11 @@ public class ShareUtil {
      * 分享图片
      */
     public void shareImg() {
-        String path = GetandSaveCurrentImage();
-        if (TextUtils.isEmpty(path)) {
+        if (getScreenImage() == null) {
             Toast.makeText(mContext, "分享失败", Toast.LENGTH_SHORT).show();
             return;
         }
-        File file = new File(path);
+        File file = getScreenImage();
         if (file.exists()) {
             Uri uri = Uri.fromFile(file);
             Intent it = new Intent(Intent.ACTION_SEND);
@@ -117,7 +115,7 @@ public class ShareUtil {
     /**
      * 获取和保存当前屏幕的截图
      */
-    private String GetandSaveCurrentImage() {
+    public File getScreenImage() {
         //1.构建Bitmap    
         WindowManager windowManager = mContext.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
@@ -135,11 +133,12 @@ public class ShareUtil {
 
         //3.保存Bitmap     
         String filepath = "";
+        File file = null;
         try {
             File path = new File(SavePath);
             //文件    
             filepath = SavePath + File.separator + System.currentTimeMillis() + ".png";
-            File file = new File(filepath);
+            file = new File(filepath);
             if (!path.exists()) {
                 path.mkdirs();
             }
@@ -157,9 +156,8 @@ public class ShareUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
         }
-        return filepath;
+        return file;
     }
 
     /**

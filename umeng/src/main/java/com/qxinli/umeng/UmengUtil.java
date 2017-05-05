@@ -156,9 +156,8 @@ public class UmengUtil {
                 .open();
     }
 
-    public static void shareImage(Activity activity) {
-        File file = getScreenImage(activity);
-        shareImage(activity, file, new ShareCallback() {
+    public static void shareImage(Activity activity, File imageFile) {
+        shareImage(activity, imageFile, new ShareCallback() {
             @Override
             public void onResult(SHARE_MEDIA var1) {
 
@@ -174,6 +173,30 @@ public class UmengUtil {
 
             }
         });
+    }
+
+    public static void shareImage(Activity activity) {
+        try {
+            File file = getScreenImage(activity);
+            shareImage(activity, file, new ShareCallback() {
+                @Override
+                public void onResult(SHARE_MEDIA var1) {
+
+                }
+
+                @Override
+                public void onError(SHARE_MEDIA var1, Throwable var2) {
+
+                }
+
+                @Override
+                public void onCancel(SHARE_MEDIA var1) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
