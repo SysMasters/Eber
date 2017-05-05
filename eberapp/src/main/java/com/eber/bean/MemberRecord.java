@@ -7,10 +7,13 @@ package com.eber.bean;
 public class MemberRecord {
     public String fatRateChange;
     public String bodyshape;
-    public String bodyAge;
+    public String id;
     public String weight;
+    public String bodyAge;
     public String updateTime;
     public String weightChange;
     public String indicateType;
     public String score;
+    public String memberId;
+    public String MAC;
 }

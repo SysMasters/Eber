@@ -26,6 +26,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
+            android:listSelector="@color/transparent"
             android:background="@color/transparent"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"

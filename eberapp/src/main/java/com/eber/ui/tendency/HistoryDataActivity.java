@@ -2,9 +2,11 @@ package com.eber.ui.tendency;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.BodyInfo;
 import com.eber.utils.DisplayUtil;
+import com.eber.utils.ShareUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
@@ -26,8 +29,15 @@ import java.util.List;
 
 public class HistoryDataActivity extends BaseActivity {
 
+    
+    private ShareUtil shareUtil;
     @ViewInject(R.id.history_data_listview)
     private ListView mListView;
+
+    @ViewInject(R.id.title_content)
+    private TextView tvContent;
+    @ViewInject(R.id.title_right)
+    private ImageView tvRight;
 
     @ViewInject(R.id.history_data_weight)
     private TextView tvWeight;// 体重
@@ -66,12 +76,16 @@ public class HistoryDataActivity extends BaseActivity {
     }
 
     private void init() {
+        shareUtil = new ShareUtil(this);
+        tvContent.setText("历史记录");
+        tvRight.setImageResource(R.mipmap.ic_index_share);
         initData();
         mAdapter = new CommonAdapter<BodyInfo>(mContext, R.layout.view_history_data_item, bodyInfos) {
             @Override
             protected void convert(ViewHolder holder, BodyInfo item, final int position) {
                 final RelativeLayout rlLineParent = holder.getView(R.id.history_item_line_parent);
                 TextView tvTime = holder.getView(R.id.history_item_time);
+                tvTime.setText(item.updateTime);
                 final View vCircle = holder.getView(R.id.history_item_bule);
                 final int dp20 = DisplayUtil.dp2px(mContext, 20);
                 final int dp10 = DisplayUtil.dp2px(mContext, 10);
@@ -162,11 +176,15 @@ public class HistoryDataActivity extends BaseActivity {
                 "]";
 
         bodyInfos = JSON.parseArray(json, BodyInfo.class);
+        if (bodyInfos != null && bodyInfos.size() > 0) {
+            setBodyData(bodyInfos.get(0));
+        }
     }
 
     @Override
     public void setListener() {
         mListView.setOnItemClickListener(itemClickLis);
+        tvRight.setOnClickListener(clickLis);
     }
 
     private AdapterView.OnItemClickListener itemClickLis = new AdapterView.OnItemClickListener() {
@@ -174,6 +192,39 @@ public class HistoryDataActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mAdapter.setSelectedPosition(position);
             mAdapter.notifyDataSetChanged();
+            BodyInfo bodyInfo = bodyInfos.get(position);
+            setBodyData(bodyInfo);
         }
     };
+
+    private View.OnClickListener clickLis = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.title_right:// 分享
+                    shareUtil.shareImg();
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 设置身体数据
+     *
+     * @param bodyInfo
+     */
+    private void setBodyData(BodyInfo bodyInfo) {
+        tvWeight.setText(bodyInfo.weight + "kg");
+        tvBMI.setText(bodyInfo.BMI);
+        tvBodayAge.setText((!TextUtils.isEmpty(bodyInfo.bodyAge) ? bodyInfo.bodyAge : "-") + "岁");
+        tvFat.setText(bodyInfo.fatRate + "%");
+        tvWater.setText(bodyInfo.bodywater + "%");
+        tvFatDown.setText(bodyInfo.subcutaneousfat + "%");
+        tvProtein.setText(bodyInfo.protein + "%");
+        tvMuscle.setText(bodyInfo.muscle + "%");
+        tvBone.setText(bodyInfo.bone + "%");
+        tvBoneBad.setText(bodyInfo.bonerisk);
+        tvNeizang.setText(bodyInfo.organfat + "级");
+        tvBasis.setText(bodyInfo.basicmetabolism + "cal");
+    }
 }
