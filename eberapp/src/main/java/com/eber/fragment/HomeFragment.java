@@ -32,6 +32,7 @@ import com.eber.ui.slideinfo.SlideInfoActivity;
 import com.eber.utils.DisplayUtil;
 import com.eber.views.decoration.DividerGridItemDecoration;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -46,6 +47,8 @@ public class HomeFragment extends BaseFragment {
 
     @ViewInject(R.id.index_title_head)
     private ImageView ivHead;
+    @ViewInject(R.id.index_title_share)
+    private ImageView ivShare;
     @ViewInject(R.id.index_title_label)
     private TextView tvTitleLabel;
     @ViewInject(R.id.index_weight)
@@ -91,7 +94,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onBusiness() {
         String memberRecordStr = getActivity().getIntent().getStringExtra("memberRecord");
-        if (null != memberRecordStr && !memberRecordStr.equals("")){
+        if (null != memberRecordStr && !memberRecordStr.equals("")) {
             memberRecord = JSON.parseObject(memberRecordStr, MemberRecord.class);
             setViewValues(memberRecord);
             mGridView.setLayoutManager(new GridLayoutManager(mActivity, 3));
@@ -103,60 +106,60 @@ public class HomeFragment extends BaseFragment {
                     TextView tvDesc = holder.getView(R.id.index_item_desc);// 脂肪率(14%)
                     TextView tvBody = holder.getView(R.id.index_item_body);//胖瘦
                     GradientDrawable gd = (GradientDrawable) tvBody.getBackground();
-                    switch (item.indicateName){
+                    switch (item.indicateName) {
                         case "体水分":
                             ivImage.setImageResource(R.mipmap.ic_index_wet);
-                            tvDesc.setText(item.indicateName + "("+ item.value +"%)");
-                            if (item.name.equals("不足")){
+                            tvDesc.setText(item.indicateName + "(" + item.value + "%)");
+                            if (item.name.equals("不足")) {
                                 gd.setColor(Color.parseColor("#2ce3d7"));// 设置颜色
-                            }else if (item.name.equals("标准")){
+                            } else if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("优秀")){
+                            } else if (item.name.equals("优秀")) {
                                 gd.setColor(Color.parseColor("#2aac18"));// 设置颜色
                             }
                             break;
                         case "皮下脂肪":
                             ivImage.setImageResource(R.mipmap.ic_index_axunge);
-                            tvDesc.setText(item.indicateName + "("+ item.value +"%)");
-                            if (item.name.equals("偏低")){
+                            tvDesc.setText(item.indicateName + "(" + item.value + "%)");
+                            if (item.name.equals("偏低")) {
                                 gd.setColor(Color.parseColor("#2ce3d7"));// 设置颜色
-                            }else if (item.name.equals("标准")){
+                            } else if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("偏高")){
+                            } else if (item.name.equals("偏高")) {
                                 gd.setColor(Color.parseColor("#ff7485"));// 设置颜色
                             }
                             break;
                         case "骨质疏松风险":
                             ivImage.setImageResource(R.mipmap.ic_index_rarefaction);
                             tvDesc.setEms(6);
-                            tvDesc.setText(item.indicateName + item.value +"");
-                            if (item.name.equals("低风险")){
+                            tvDesc.setText(item.indicateName + item.value + "");
+                            if (item.name.equals("低风险")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("中风险")){
+                            } else if (item.name.equals("中风险")) {
                                 gd.setColor(Color.parseColor("#ff7485"));// 设置颜色
-                            }else if (item.name.equals("高风险")){
+                            } else if (item.name.equals("高风险")) {
                                 gd.setColor(Color.parseColor("#f5495d"));// 设置颜色
                             }
                             break;
                         case "蛋白质":
                             ivImage.setImageResource(R.mipmap.ic_index_protein);
-                            tvDesc.setText(item.indicateName + "("+ item.value +"%)");
-                            if (item.name.equals("不足")){
+                            tvDesc.setText(item.indicateName + "(" + item.value + "%)");
+                            if (item.name.equals("不足")) {
                                 gd.setColor(Color.parseColor("#2ce3d7"));// 设置颜色
-                            }else if (item.name.equals("标准")){
+                            } else if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("优秀")){
+                            } else if (item.name.equals("优秀")) {
                                 gd.setColor(Color.parseColor("#2aac18"));// 设置颜色
                             }
                             break;
                         case "骨量":
                             ivImage.setImageResource(R.mipmap.ic_index_bone);
-                            tvDesc.setText(item.indicateName + item.value +"kg");
-                            if (item.name.equals("不足")){
+                            tvDesc.setText(item.indicateName + item.value + "kg");
+                            if (item.name.equals("不足")) {
                                 gd.setColor(Color.parseColor("#2ce3d7"));// 设置颜色
-                            }else if (item.name.equals("标准")){
+                            } else if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("优秀")){
+                            } else if (item.name.equals("优秀")) {
                                 gd.setColor(Color.parseColor("#2aac18"));// 设置颜色
                             }
                             break;
@@ -164,45 +167,45 @@ public class HomeFragment extends BaseFragment {
                             ivImage.setImageResource(R.mipmap.ic_index_viscera);
                             tvDesc.setEms(6);
                             tvDesc.setText(item.indicateName + item.value + "级");
-                            if (item.name.equals("标准")){
+                            if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("偏高")){
+                            } else if (item.name.equals("偏高")) {
                                 gd.setColor(Color.parseColor("#ff7485"));// 设置颜色
-                            }else if (item.name.equals("危险")){
+                            } else if (item.name.equals("危险")) {
                                 gd.setColor(Color.parseColor("#f5495d"));// 设置颜色
                             }
                             break;
                         case "肌肉量":
                             ivImage.setImageResource(R.mipmap.ic_index_muscle);
-                            tvDesc.setText(item.indicateName + "("+ item.value +"%)");
-                            if (item.name.equals("不足")){
+                            tvDesc.setText(item.indicateName + "(" + item.value + "%)");
+                            if (item.name.equals("不足")) {
                                 gd.setColor(Color.parseColor("#2ce3d7"));// 设置颜色
-                            }else if (item.name.equals("标准")){
+                            } else if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("优秀")){
+                            } else if (item.name.equals("优秀")) {
                                 gd.setColor(Color.parseColor("#2aac18"));// 设置颜色
                             }
                             break;
                         case "脂肪率":
                             ivImage.setImageResource(R.mipmap.ic_index_axunge_percentage);
-                            tvDesc.setText(item.indicateName + "("+ item.value +"%)");
-                            if (item.name.equals("偏瘦")){
+                            tvDesc.setText(item.indicateName + "(" + item.value + "%)");
+                            if (item.name.equals("偏瘦")) {
                                 gd.setColor(Color.parseColor("#2ce3d7"));// 设置颜色
-                            }else if (item.name.equals("标准")){
+                            } else if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
-                            }else if (item.name.equals("微胖")){
+                            } else if (item.name.equals("微胖")) {
                                 gd.setColor(Color.parseColor("#ff7485"));// 设置颜色
-                            }else if (item.name.equals("肥胖")){
+                            } else if (item.name.equals("肥胖")) {
                                 gd.setColor(Color.parseColor("#2aac18"));// 设置颜色
                             }
                             break;
                         case "基础代谢":
                             ivImage.setImageResource(R.mipmap.ic_index_metabolism);
                             tvDesc.setText(item.indicateName + "\n" + item.value + "卡路里");
-//                        2ce3d7 不达标     69d55f 标准    ff7485 偏高    f5495d 严重   2aac18 优
-                            if (item.name.equals("偏低")){
+                            //                        2ce3d7 不达标     69d55f 标准    ff7485 偏高    f5495d 严重   2aac18 优
+                            if (item.name.equals("偏低")) {
                                 gd.setColor(Color.parseColor("#2ce3d7"));// 设置颜色
-                            }else if (item.name.equals("优秀")){
+                            } else if (item.name.equals("优秀")) {
                                 gd.setColor(Color.parseColor("#2aac18"));// 设置颜色
                             }
                             break;
@@ -226,6 +229,7 @@ public class HomeFragment extends BaseFragment {
             users = JSON.parseArray(usersStr, User.class);
         }
         ivHead.setOnClickListener(clickLis);
+        ivShare.setOnClickListener(clickLis);
         setData();
         initBodyInfoData();
     }
@@ -265,13 +269,13 @@ public class HomeFragment extends BaseFragment {
         tvChange.setText(weightChangeStr + "" + BMIChangeStr);
         indicates = JSON.parseArray(m.indicateType, Indicate.class);
         Indicate indicate = null;
-        for (int i = 0; i <indicates.size(); i++){
-            if (indicates.get(i).indicateName.equals("BMI")){
+        for (int i = 0; i < indicates.size(); i++) {
+            if (indicates.get(i).indicateName.equals("BMI")) {
                 indicate = indicates.get(i);
                 indicates.remove(i);
             }
         }
-        if (null != indicate){
+        if (null != indicate) {
             tvBMI.setText(indicate.value);
         }
     }
@@ -284,12 +288,12 @@ public class HomeFragment extends BaseFragment {
 
 
     private void setData() {
-//        String weight = "48.1";
-//        String bmi = "25.6";
-//        SpannableString weightSpannableString = TextViewUtil.getSizeSpanSpToPx(mActivity, weight, weight.length() - 1, weight.length(), 35);
-//        tvWeight.setText(weightSpannableString);
-//        SpannableString bmiSpannableString = TextViewUtil.getSizeSpanSpToPx(mActivity, weight, bmi.length() - 1, bmi.length(), 18);
-//        tvBMI.setText(bmiSpannableString);
+        //        String weight = "48.1";
+        //        String bmi = "25.6";
+        //        SpannableString weightSpannableString = TextViewUtil.getSizeSpanSpToPx(mActivity, weight, weight.length() - 1, weight.length(), 35);
+        //        tvWeight.setText(weightSpannableString);
+        //        SpannableString bmiSpannableString = TextViewUtil.getSizeSpanSpToPx(mActivity, weight, bmi.length() - 1, bmi.length(), 18);
+        //        tvBMI.setText(bmiSpannableString);
 
         loadMemberData();// 成员列表
     }
@@ -350,6 +354,9 @@ public class HomeFragment extends BaseFragment {
                     startActivity(LocalMemberActivity.class);
                     mPopupWindow.dismiss();
                     break;
+                case R.id.index_title_share:// 分享
+                    UmengUtil.shareImage(mActivity);
+                    break;
             }
         }
     };
@@ -367,4 +374,9 @@ public class HomeFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UmengUtil.onActivityResult(mActivity, requestCode, resultCode, data);
+    }
 }
