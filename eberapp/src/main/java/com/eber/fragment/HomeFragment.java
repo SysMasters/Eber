@@ -225,9 +225,6 @@ public class HomeFragment extends BaseFragment {
         if (usersStr != null && !usersStr.equals("")) {
             users = JSON.parseArray(usersStr, User.class);
         }
-        memberRecord = JSON.parseObject(getActivity().getIntent().getStringExtra("memberRecord"), MemberRecord.class);
-        users = JSON.parseArray(getActivity().getIntent().getStringExtra("memberArray"), User.class);
-//        setViewValues(memberRecord);
         ivHead.setOnClickListener(clickLis);
         setData();
         initBodyInfoData();
@@ -243,11 +240,13 @@ public class HomeFragment extends BaseFragment {
 
     private void setViewValues(MemberRecord m) {
         JSONObject jo = JSON.parseObject(m.weightChange);
-        String weightChange = jo.getString("weightChange");
+        double weightChange = jo.getDouble("weightChange");
         String weightChangeStr = jo.getString("weightChangeStr");
+        jo = JSON.parseObject(m.fatRateChange);
+        double fatRateChange = jo.getDouble("fatRateChange");
+        String BMIChangeStr = jo.getString("fatRateChangeStr");
+        ;
         tvTitleLabel.setText(m.updateTime);
-        
-        
         tvScore.setText(m.score + "");
         tvWeight.setText(m.weight + "");
         tvAge.setText(m.bodyAge + "");
@@ -256,23 +255,12 @@ public class HomeFragment extends BaseFragment {
             imgBMIChange.setImageResource(R.mipmap.ic_index_up);
         } else {
             imgBMIChange.setImageResource(R.mipmap.ic_index_down);
-        tvBMIChange.setText(BMIChange + "%");
-        if (!TextUtils.isEmpty(BMIChange)) {
-            double change = Double.valueOf(BMIChange);
-            if (change >= 0) {
-                imgBMIChange.setImageResource(R.mipmap.ic_index_up);
-            } else {
-                imgBMIChange.setImageResource(R.mipmap.ic_index_down);
-            }
         }
         tvweightChange.setText(weightChange + "kg");
-        if (!TextUtils.isEmpty(BMIChange)) {
-            double change = Double.valueOf(weightChange);
-            if (change >= 0) {
-                imgweightChange.setImageResource(R.mipmap.ic_index_up);
-            } else {
-                imgweightChange.setImageResource(R.mipmap.ic_index_down);
-            }
+        if (weightChange >= 0) {
+            imgweightChange.setImageResource(R.mipmap.ic_index_up);
+        } else {
+            imgweightChange.setImageResource(R.mipmap.ic_index_down);
         }
         tvChange.setText(weightChangeStr + "" + BMIChangeStr);
         indicates = JSON.parseArray(m.indicateType, Indicate.class);

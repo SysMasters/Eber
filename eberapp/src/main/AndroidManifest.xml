@@ -27,7 +27,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.launcher.WelcomeActivity">
-           
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity"></activity>
         <activity android:name=".ui.launcher.GuideActivity"></activity>
@@ -43,15 +46,8 @@
         <activity android:name=".ui.WebActivity"></activity>
         <activity android:name=".ui.slideinfo.SlideInfoActivity"></activity>
         <activity android:name=".ui.tendency.HistoryDataActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
-        <activity android:name=".ui.register.FillInformationActivity">
-        </activity>
-        <activity android:name=".ui.home.LocalMemberActivity"></activity>
-        <activity android:name=".ui.WebActivity"></activity>
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5909ea80677baa78a200163b" />
