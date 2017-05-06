@@ -17,5 +17,11 @@ public class HttpUrls {
     public final static String LOGIN = BASEURL + "memberLoginAPP/login.shtml";
     public final static String CHECKSESSIONID = BASEURL + "memberLoginAPP/checkSessionId.shtml";
     public final static String MODIFYMEMBERINFO = BASEURL + "memberAPP/modifyMemberInfo.shtml";
+    /**
+     * 三方注册
+     */
+    public final static String REGISTERTHIRDMEMBER = BASEURL + "memberLoginAPP/registerThirdMember.shtml";
+    /**三方登录**/
+    public final static String MEMBERLOGINAPP = BASEURL + "memberLoginAPP/login.shtml";
 
 }

@@ -58,7 +58,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent1104927660" />
+                <data android:scheme="tencent1106039737" />
             </intent-filter>
         </activity>
         <activity
@@ -73,7 +73,7 @@
             android:excludeFromRecents="true"
         />
         <activity
-            android:name="xianfeng.wxapi.WXEntryActivity"
+            android:name=".bfs.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

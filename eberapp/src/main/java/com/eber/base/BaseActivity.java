@@ -12,6 +12,7 @@ import com.eber.ui.WebActivity;
 import com.eber.utils.StatusBarUtil;
 import com.lidroid.xutils.ViewUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Map;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected NetUtils netUtils;
-    protected Map<String, String> param;
+    protected Map<String, String> param = new HashMap<>();
     protected Context mContext;
 
     /**

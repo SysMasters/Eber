@@ -12,7 +12,7 @@ import com.eber.EBERApp;
  * Created by WangLibo on 2017/4/29.
  */
 
-public abstract class StringCallback2 implements OnHttpResult {
+public abstract class StringCallback2 extends BaseCallback {
 
     private String[] params;
 
@@ -25,7 +25,7 @@ public abstract class StringCallback2 implements OnHttpResult {
         try {
             JSONObject jo = JSON.parseObject(response);
             int resultCode = jo.getInteger("retcode");
-            Log.i("=======resultCode",": "+resultCode);
+            Log.i("=======resultCode", ": " + resultCode);
             if (resultCode == 1) {
                 for (int i = 0; i < params.length; i++) {
                     String param = this.params[i];
