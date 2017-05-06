@@ -18,6 +18,7 @@ import com.eber.bean.BodyInfo;
 import com.eber.utils.DisplayUtil;
 import com.eber.utils.ShareUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class HistoryDataActivity extends BaseActivity {
 
-    
+
     private ShareUtil shareUtil;
     @ViewInject(R.id.history_data_listview)
     private ListView mListView;
@@ -66,6 +67,7 @@ public class HistoryDataActivity extends BaseActivity {
 
     private CommonAdapter<BodyInfo> mAdapter;
     private List<BodyInfo> bodyInfos;
+    
 
 
     @Override
@@ -74,6 +76,7 @@ public class HistoryDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         init();
     }
+
 
     private void init() {
         shareUtil = new ShareUtil(this);
@@ -202,7 +205,7 @@ public class HistoryDataActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.title_right:// 分享
-                    shareUtil.shareImg();
+                    UmengUtil.shareImage(HistoryDataActivity.this);
                     break;
             }
         }
