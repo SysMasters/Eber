@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#f3f3f3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/title_view" />
+     <LinearLayout
+         android:orientation="vertical"
+         android:gravity="center"
+         android:layout_marginTop="81dp"
+         android:layout_marginBottom="81dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+      <ImageView
+          android:src="@mipmap/icon_logo"
+          android:layout_gravity="center_horizontal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+     <TextView
+         android:text="V 1.2.2"
+         android:textSize="15sp"
+         android:layout_marginTop="18dp"
+         android:gravity="center_horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:background="#ffffff"
+        android:id="@+id/lly_haoping"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_hp"
+            android:layout_marginLeft="23dp"
+            />
+        <TextView android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="给个好评"
+            android:layout_weight="4"
+            android:textSize="15sp"
+            android:layout_marginLeft="22dp"
+            />
+
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_arrows"
+            android:layout_marginRight="26dp"
+            />
+    </LinearLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bebebe"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:background="#ffffff"
+        android:id="@+id/lly_kefu"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_lxkf"
+            android:layout_marginLeft="23dp"
+            />
+        <TextView android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="联系客服"
+            android:layout_weight="4"
+            android:textSize="15sp"
+            android:layout_marginLeft="22dp"
+            />
+        <TextView android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:text="400 - 098 - 4006"
+            android:layout_marginRight="15dp"
+            android:gravity="right"
+            android:textSize="15sp"
+            android:textColor="#4d4a4a"
+            />
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_arrows"
+            android:layout_marginRight="26dp"
+            />
+    </LinearLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bebebe"/>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:background="#ffffff"
+        android:id="@+id/lly_weixin"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/weibo"
+            android:layout_marginLeft="23dp"
+            />
+        <TextView android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="微信公众号"
+            android:textSize="15sp"
+            android:layout_weight="4"
+            android:layout_marginLeft="22dp"
+            />
+        <TextView android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:text="EBEF智能生活"
+            android:layout_marginRight="15dp"
+            android:gravity="right"
+            android:textSize="15sp"
+            android:textColor="#4d4a4a"
+            />
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_arrows"
+            android:layout_marginRight="26dp"
+            />
+    </LinearLayout>
+</LinearLayout>

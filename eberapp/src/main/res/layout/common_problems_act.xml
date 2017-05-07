@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_1"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="#03a9f4"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/title_1_left"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/refund" />
+
+        <TextView
+            android:id="@+id/title_1_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:text="常见问题"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/title_1_right"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:textSize="20sp"
+            android:textColor="#03a9f4"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="常见方式" />
+
+        <TextView
+            android:layout_marginTop="25dp"
+            android:id="@+id/details_text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:inputType="textMultiLine"
+            android:text="对于老百姓可以收藏的文物，《文物保护法》也做了规定，“属于集体所有和私人所有的纪念建筑物、古建筑和祖传文物以及依法取得的其他文物，
+        其所有权受法律保护。文物的所有者必须遵守国家有关文物保护的法律、法规的规定”
+        。在《文物保护法》中有规定：“中华人民共和国境内地下、内水和领海中遗存的一切文物，属于国家所有。"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

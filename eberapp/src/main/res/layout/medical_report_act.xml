@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#f3f3f3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+     <LinearLayout
+         android:orientation="horizontal"
+         android:gravity="center"
+         android:background="#ffffff"
+         android:layout_width="match_parent"
+         android:layout_height="45dp">
+<RelativeLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="体检报告"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:id="@+id/tijian_text"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_below="@+id/tijian_text"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/xiajiantou"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+
+         <TextView
+             android:text="BMI"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:gravity="center"
+             android:textSize="20sp"
+             android:layout_height="wrap_content" />
+         <TextView
+             android:text="脂肪率"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:gravity="center"
+             android:textSize="20sp"
+             android:layout_height="wrap_content" />
+         <TextView
+             android:text="体水分"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:gravity="center"
+             android:textSize="20sp"
+             android:layout_height="wrap_content" />
+     </LinearLayout>
+</LinearLayout>

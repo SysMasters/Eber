@@ -17,6 +17,7 @@ public class HttpUrls {
     public final static String LOGIN = BASEURL + "memberLoginAPP/login.shtml";
     public final static String CHECKSESSIONID = BASEURL + "memberLoginAPP/checkSessionId.shtml";
     public final static String MODIFYMEMBERINFO = BASEURL + "memberAPP/modifyMemberInfo.shtml";
+    public final static String FINDLASTRECORDDETAIL = BASEURL + "memberRecordAPP/findLastRecordDetail.shtml";
     /**
      * 三方注册
      */

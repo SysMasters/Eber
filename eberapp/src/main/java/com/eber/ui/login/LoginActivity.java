@@ -113,6 +113,7 @@ public class LoginActivity extends BaseActivity {
     private void toHomePage(String... result) {
         User user = JSON.parseObject(result[0], User.class);
         user.sessionId = result[1];
+        EBERApp.user = user;
         EBERApp.spUtil.putData(SPKey.USER, JSON.toJSONString(user));
         // 登录操作
         EBERApp.spUtil.putData(SPKey.USER_NAME, etPhone.getText().toString());
