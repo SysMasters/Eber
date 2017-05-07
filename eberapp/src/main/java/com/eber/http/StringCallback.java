@@ -11,7 +11,7 @@ import com.eber.EBERApp;
  * Created by WangLibo on 2017/4/29.
  */
 
-public abstract class StringCallback implements OnHttpResult {
+public abstract class StringCallback extends BaseCallback {
 
     private String paramArray;
 

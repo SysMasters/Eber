@@ -5,6 +5,8 @@ package com.qxinli.umeng.login;
  */
 
 public class BaseInfo {
+    
+    public String account;
     public String uid;
     public String accessToken;
     public String refreshtoken;
@@ -18,8 +20,9 @@ public class BaseInfo {
     @Override
     public String toString() {
         return "BaseInfo{" +
-                "accessToken='" + accessToken + '\'' +
+                "account='" + account + '\'' +
                 ", uid='" + uid + '\'' +
+                ", accessToken='" + accessToken + '\'' +
                 ", refreshtoken='" + refreshtoken + '\'' +
                 ", expiration='" + expiration + '\'' +
                 ", gender='" + gender + '\'' +

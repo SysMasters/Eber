@@ -7,58 +7,39 @@
     android:background="#f3f3f3"
     >
 
-    <RelativeLayout
-        android:id="@+id/title_view"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#00A7F7">
-
-        <ImageView
-            android:id="@+id/index_title_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@mipmap/ic_index_head_male"/>
-
-        <TextView
-            android:id="@+id/index_title_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="7天前"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/ic_index_share"/>
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentBottom="true">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:background="#00A7F7">
+                android:layout_height="180dp"
+                android:background="#00A7F7"
+                >
+
+                <TextView
+                    android:id="@+id/index_title_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:text="7天前"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="80dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -82,7 +63,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
+                    android:layout_marginTop="80dp"
+                    android:layout_centerHorizontal="true">
 
                     <TextView
                         android:id="@+id/index_weight"
@@ -95,7 +77,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp"
                         android:text="kg"
                         android:textColor="#ccffffff"
                         android:textSize="16sp"/>
@@ -106,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="80dp"
                     android:layout_marginRight="43dp"
                     android:orientation="vertical">
 
@@ -266,5 +248,22 @@
 
     </ScrollView>
 
+    <ImageView
+        android:id="@+id/index_title_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:src="@mipmap/ic_index_head_male"/>
+
+
+    <ImageView
+        android:id="@+id/index_title_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/ic_index_share"/>
 
 </RelativeLayout>

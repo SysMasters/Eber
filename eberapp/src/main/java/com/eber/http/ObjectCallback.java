@@ -14,7 +14,7 @@ import java.util.List;
  * Created by WangLibo on 2017/4/29.
  */
 
-public abstract class ObjectCallback<E> implements OnHttpResult {
+public abstract class ObjectCallback<E> extends BaseCallback {
 
     private String paramArray;
 
