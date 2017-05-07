@@ -10,8 +10,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
+import com.eber.bean.SlideInfo;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback;
 import com.eber.ui.slideinfo.adapter.PageFragmentAdapter;
 import com.eber.ui.slideinfo.db.ChannelDb;
 import com.eber.ui.slideinfo.entity.Channel;
@@ -19,6 +25,7 @@ import com.eber.ui.slideinfo.fragment.NewsFragment;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,6 +41,7 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private HorizontalScrollView hvChannel;
     private PageFragmentAdapter adapter=null;
     private List<Fragment> fragmentList=new ArrayList<Fragment>();
+    private List<SlideInfo> slideInfos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_slide_info);
@@ -43,7 +51,16 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
 
     @Override
     public void setListener() {
-
+        param = new HashMap<>();
+        param.put("memberId", "163"/*String.valueOf(EBERApp.user.id)*/);
+        netUtils.get(HttpUrls.FINDLASTRECORDDETAIL, true, param, new StringCallback("memberRecord") {
+            @Override
+            public void onSuccess(String resultJson) {
+                JSONObject jo = JSON.parseObject(resultJson);
+                slideInfos = JSON.parseArray(jo.getString("indicateType"), SlideInfo.class);
+                initViewPager(slideInfos);
+            }
+        });
     }
 
     private void initView(){
@@ -62,9 +79,7 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
 
         viewPager.setOnPageChangeListener(this);
         initTab();
-        initViewPager();
         rgChannel.check(0);
-
     }
     private void initTab(){
         List<Channel> channelList= ChannelDb.getSelectedChannel();
@@ -76,18 +91,17 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
             RadioGroup.LayoutParams params=new
                     RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,
                     RadioGroup.LayoutParams.WRAP_CONTENT);
-
             rgChannel.addView(rb,params);
         }
 
     }
-    private void initViewPager(){
+    private void initViewPager(List<SlideInfo> slideInfos){
         List<Channel> channelList=ChannelDb.getSelectedChannel();
-        for(int i=0;i<channelList.size();i++){
+        for(int i=0;i<slideInfos.size();i++){
             NewsFragment frag=new NewsFragment();
             Bundle bundle=new Bundle();
-            bundle.putString("weburl", channelList.get(i).getWeburl());
             bundle.putString("name", channelList.get(i).getName());
+            bundle.putSerializable("slide_info", slideInfos.get(i));
             frag.setArguments(bundle);
             fragmentList.add(frag);
         }
@@ -114,22 +128,16 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
     }
     @Override
     public void onPageScrollStateChanged(int arg0) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onPageSelected(int position) {
-        // TODO Auto-generated method stub
         setTab(position);
     }
-
-
-
 }

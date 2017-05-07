@@ -39,14 +39,20 @@
         <activity android:name=".ui.binddevice.BindDeviceActivity1">
 
         </activity>
-        <activity android:name=".ui.binddevice.BindDeviceActivity2"></activity>
         <activity android:name=".ui.tendency.HistoryRecordActivity"></activity>
         <activity android:name=".ui.register.FillInformationActivity"></activity>
         <activity android:name=".ui.home.LocalMemberActivity"></activity>
         <activity android:name=".ui.WebActivity"></activity>
         <activity android:name=".ui.slideinfo.SlideInfoActivity"></activity>
         <activity android:name=".ui.tendency.HistoryDataActivity">
+
         </activity>
+        <activity android:name=".ui.my.AboutUsAct" />
+        <activity android:name=".ui.my.EquipmentInfoAct" />
+        <activity android:name=".ui.my.EquipmentManagementAct" />
+        <activity android:name=".ui.my.ModifyDataAct" />
+        <activity android:name=".ui.my.MyGoalAct" />
+        <activity android:name=".ui.my.MyRemindAct" />
 
         <activity
             android:name="com.umeng.qq.tencent.AuthActivity"

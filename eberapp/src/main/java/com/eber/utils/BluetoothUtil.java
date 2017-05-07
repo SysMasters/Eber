@@ -21,6 +21,7 @@ import com.eber.ui.binddevice.BindDeviceActivity2;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
 /**
@@ -29,7 +30,8 @@ import java.util.UUID;
 public class BluetoothUtil {
     private InputStream is;    //输入流，用来接收蓝牙数据
 //    private final static String MY_UUID = "00001101-0000-1000-8000-00805F9B34FB";   //SPP服务UUID号
-    private final static String MY_UUID = "00060000-F8CE-11E4-ABF4-0002A5D5C51B";   //SPP服务UUID号
+//    private final static String MY_UUID = "00060000-F8CE-11E4-ABF4-0002A5D5C51B";   //SPP服务UUID号
+    private UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     BluetoothDevice _device = null;     //蓝牙设备
     BluetoothSocket _socket = null;      //蓝牙通信socket
     boolean bRun = true;
@@ -73,13 +75,22 @@ public class BluetoothUtil {
             @Override
             public void run() {
                 // 得到蓝牙设备句柄
-                _device = device1; //_bluetooth.getRemoteDevice(address);
+                _device = device1; //_bluetooth.getRemoteDevice(device1.getAddress());
                 // 用服务号得到socket
-                try{
-                    _socket = _device.createRfcommSocketToServiceRecord(UUID.fromString(MY_UUID));
-                }catch(IOException e){
-                    handler.sendMessage(handler.obtainMessage(BLUETOOTH_CONN, "连接失败！"));
-                }
+//                try{
+//                    _socket = _device.createRfcommSocketToServiceRecord(uuid);
+                    try {
+                        _socket =(BluetoothSocket) _device.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(_device,1);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+//                }catch(IOException e){
+//                    handler.sendMessage(handler.obtainMessage(BLUETOOTH_CONN, "连接失败！"));
+//                }
                 //连接socket
                 try{
                     _socket.connect();
