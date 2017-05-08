@@ -16,8 +16,7 @@ import com.eber.http.StringCallback;
 import com.eber.listener.OnValueChangeListener;
 import com.eber.ui.binddevice.BindDeviceActivity1;
 import com.eber.utils.SPKey;
-import com.eber.views.RulerView;
-import com.lidroid.xutils.ViewUtils;
+import com.eber.views.ruler.RulerView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;

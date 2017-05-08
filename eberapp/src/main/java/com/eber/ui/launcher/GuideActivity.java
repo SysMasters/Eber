@@ -3,7 +3,6 @@ package com.eber.ui.launcher;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,7 +13,9 @@ import android.widget.LinearLayout;
 import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.adapters.GuidePageAdapter;
+import com.eber.base.BaseActivity;
 import com.eber.ui.login.LoginActivity;
+import com.eber.utils.ImageLoader;
 import com.eber.utils.SPKey;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * 首次启动 滑屏页面
  */
-public class GuideActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class GuideActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     private ViewPager vp;
     private int []imageIdArray;//图片资源的数组
     private List<View> viewList;//图片资源的集合
@@ -51,6 +52,11 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
         initViewPager();
     }
 
+    @Override
+    public void setListener() {
+        
+    }
+
     /**
      * 加载图片ViewPager
      */
@@ -69,7 +75,8 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
             //new ImageView并设置全屏和图片资源
             ImageView imageView = new ImageView(this);
             imageView.setLayoutParams(params);
-            imageView.setBackgroundResource(imageIdArray[i]);
+            ImageLoader.displayImage(mContext,imageIdArray[i],imageView);
+//            imageView.setImageResource(imageIdArray[i]);
 
             //将ImageView加入到集合中
             viewList.add(imageView);
