@@ -83,6 +83,11 @@ public class RulerView extends View {
         //当前所指的刻度位置，即中间红色指针指向的值
         currentPosition = currentValue / valuesInterval * intervalsBetweenValues;
     }
+    
+    public void setCurrentValue(int value){
+        this.currentValue = value;
+    }
+    
 
     public RulerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);

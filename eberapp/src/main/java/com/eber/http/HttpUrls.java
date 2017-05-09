@@ -42,5 +42,11 @@ public class HttpUrls {
     public final static String GETPUBLICMUMBER = BASEURL + "dictionaryAPP/getPublicMumber.shtml";
     /**提交称重记录**/
     public final static String ADDRECORD = BASEURL + "memberRecordAPP/addRecord.shtml";
+    /**用户绑定设备**/
+    public final static String ADDMEMBEREQUIP = BASEURL + "memberEquipAPP/addMemberEquip.shtml";
+    /**解绑设备**/
+    public final static String DELMEMBEREQUIP = BASEURL + "memberEquipAPP/delMemberEquip.shtml";
+    /**根据memberId取得用户所有绑定设备**/
+    public final static String FINDEQUIPLIST = BASEURL + "memberEquipAPP/findEquipList.shtml?memberId=%s";
 
 }

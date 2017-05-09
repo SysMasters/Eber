@@ -75,6 +75,7 @@ public class WelcomeActivity extends Activity {
             if (versionCode < EBERApp.versionUtil.getVersionCode())       // 当前版本第一次启动，跳转滑屏页
                 intent = new Intent(WelcomeActivity.this, GuideActivity.class);
             else{
+                isLogin = false;
                 if (isLogin){
                     intent = new Intent(WelcomeActivity.this, MainActivity.class);
                     intent.putExtra("memberRecord", memberRecord);

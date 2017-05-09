@@ -1,22 +1,31 @@
 package com.eber.ui.binddevice;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
-import com.eber.bean.BodyInfo;
 import com.eber.bluetooth.BluetoothUtil;
 import com.eber.bluetooth.ClientManager;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback2;
+import com.eber.interfaces.BluetoothMeasure;
 import com.eber.utils.StatusBarUtil;
 import com.inuker.bluetooth.library.BluetoothClient;
-import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.connect.listener.BluetoothStateListener;
-import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
-import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 
-import java.util.UUID;
+import static com.eber.R.id.binding_again_btn;
 
 /**
  * Created by wxd on 2017/4/23.
@@ -24,10 +33,17 @@ import java.util.UUID;
 public class BindDeviceActivity2 extends BaseActivity implements View.OnClickListener {
 
 
+    public static final int TYPE_MEASURE = 1;
     private View vBack;
 
     private BluetoothUtil bluetoothUtil;
     private BluetoothClient mClient;
+    private LinearLayout bindAgainLayout;
+    private Button btnAgain;
+    private RelativeLayout discernLayout;
+    private TextView tvCenter;
+
+    boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +55,16 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
 
     private void init() {
         vBack = findView(R.id.title_back);
+        bindAgainLayout = findView(R.id.binding_again);
+        btnAgain = findView(binding_again_btn);
+        discernLayout = findView(R.id.binding_device);
+        tvCenter = findView(R.id.title_content);
+        tvCenter.setText("识别设备");
 
         vBack.setOnClickListener(this);
-
+        btnAgain.setOnClickListener(this);
+        discernLayout.setVisibility(View.VISIBLE);
+        bindAgainLayout.setVisibility(View.GONE);
 
         bluetoothUtil = new BluetoothUtil(this);
         mClient = ClientManager.getClient();
@@ -67,23 +90,31 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
 
     };
 
-    private BluetoothUtil.OnBluetoothMeasureListener onBluetoothMeasureListener = new BluetoothUtil.OnBluetoothMeasureListener() {
+    private BluetoothUtil.OnBluetoothMeasureListener onBluetoothMeasureListener = new BluetoothMeasure() {
         @Override
-        public void onWeigh() {
-        }
-
-        @Override
-        public void onMeasureData(BodyInfo data) {// 返回测量数据
-        }
-
-        @Override
-        public void onDisconnected() {// 连接断开
-            Log.e("", "------onDisconnected---连接已断开");
+        public void onDisconnected() {
+            super.onDisconnected();
+            bindAgainLayout.setVisibility(View.VISIBLE);
+            discernLayout.setVisibility(View.GONE);
         }
 
         @Override
         public void onConnectSuccess() {
-            readScaleInfo();
+            super.onConnectSuccess();
+
+            bluetoothUtil.readScaleInfo();
+
+        }
+
+        @Override
+        public void onVersion(String deviceVersion, String bluetoothVersion) {
+            super.onVersion(deviceVersion, bluetoothVersion);
+            if (flag) {
+                return;
+            }
+            if (!TextUtils.isEmpty(deviceVersion) && !TextUtils.isEmpty(bluetoothVersion)) {
+                readScaleInfo(deviceVersion, bluetoothVersion);
+            }
         }
     };
 
@@ -91,38 +122,38 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
     /**
      * 读取秤体信息
      */
-    private void readScaleInfo() {
+    private void readScaleInfo(String deviceVersion, String bluetoothVersion) {
+        flag = true;
+        param.clear();
+        param.put("memberId", EBERApp.nowUser.id + "");
+        param.put("mac", bluetoothUtil.getMAC());
+        param.put("type", deviceVersion);
+        param.put("softVersion", bluetoothVersion);
+        netUtils.get(HttpUrls.ADDMEMBEREQUIP, false, param, new StringCallback2("memberEquipArray") {
+            @Override
+            public void onSuccess(String... result) {
+                String deviceName = "";
+                String equipId = "";
+                JSONObject jo = null;
+                if (result[0].contains("[{")) {
+                    JSONArray ja = JSON.parseArray(result[0]);
+                    jo = ja.getJSONObject(0);
+                } else {
+                    jo = JSON.parseObject(result[0]);
+                }
+                deviceName = jo.getString("typename");
+                equipId = jo.getString("equipId");
+                Log.e("", "===========" + result);
+                Intent intent = new Intent(mContext, BindDeviceActivity3.class);
+                intent.putExtra("deviceName", deviceName);
+                intent.putExtra("equipId", equipId);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
-
-    private final BleWriteResponse mWriteRsp = new BleWriteResponse() {
-        @Override
-        public void onResponse(int code) {
-            if (code == Constants.REQUEST_SUCCESS) {
-                Log.i("", "mWriteRsp   success");
-            } else {
-                Log.e("", "mWriteRsp   failed");
-            }
-        }
-    };
-
-    private final BleNotifyResponse mNotifyRsp = new BleNotifyResponse() {
-
-        @Override
-        public void onResponse(int code) {
-            if (code == Constants.REQUEST_SUCCESS) {
-                Log.i("", "mNotifyRsp   success");
-            } else {
-                Log.i("", "mNotifyRsp   failed");
-            }
-        }
-
-        @Override
-        public void onNotify(UUID service, UUID character, byte[] value) {
-
-        }
-    };
 
     @Override
     protected void setStatusBar() {
@@ -141,6 +172,18 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
             case R.id.title_back:
                 finish();
                 break;
+            case R.id.binding_again_btn:
+                discernLayout.setVisibility(View.VISIBLE);
+                bindAgainLayout.setVisibility(View.GONE);
+
+                if (mClient.isBluetoothOpened()) {
+                    connect();
+                } else {
+                    mClient.registerBluetoothStateListener(mBluetoothStateListener);
+                    mClient.openBluetooth();
+                    connect();
+                }
+                break;
         }
 
     }
@@ -157,7 +200,6 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
     protected void onPause() {
         super.onPause();
         bluetoothUtil.onPause();
-        mClient.unregisterBluetoothStateListener(mBluetoothStateListener);
     }
 
     @Override
@@ -165,4 +207,5 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
         super.onResume();
         bluetoothUtil.onResume();
     }
+
 }
