@@ -42,11 +42,12 @@ public class ImageLoader {
 
     private static DrawableRequestBuilder<String> loadImage(DrawableTypeRequest<String> typeRequest) {
         return typeRequest
-//                .placeholder(R.mipmap.icon)// 占位图
-//                .error(R.mipmap.icon)
+                //                .placeholder(R.mipmap.icon)// 占位图
+                //                .error(R.mipmap.icon)
                 .dontAnimate();
     }
-    private static DrawableRequestBuilder<String> loadImage(DrawableTypeRequest<String> typeRequest,int defaultResId) {
+
+    private static DrawableRequestBuilder<String> loadImage(DrawableTypeRequest<String> typeRequest, int defaultResId) {
         return typeRequest
                 .placeholder(defaultResId)// 占位图
                 .error(defaultResId)
@@ -58,6 +59,9 @@ public class ImageLoader {
         loadImage(Glide.with(context).load(uri)).into(imageView);
     }
 
+    public static void displayImage(Context context, int resId, ImageView imageView) {
+        Glide.with(context).load(resId).dontAnimate().into(imageView);
+    }
 
 
     public static void displayImage(Context context, String uri, final OnLoadBitmapListener listener) {
