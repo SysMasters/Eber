@@ -22,6 +22,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+
+import com.eber.bean.FindImg;
+import com.eber.ui.WebActivity;
 import com.eber.utils.ImageLoader;
 
 import com.eber.R;
@@ -44,7 +47,7 @@ public class SlideShowView extends FrameLayout {
     private final static boolean isAutoPlay = true; 
     
     //自定义轮播图的资源
-    private String[] imageUrls;
+    private List<FindImg> mFindImages;
     //放轮播图片的ImageView 的list
     private List<ImageView> imageViewsList;
     //放圆点的View的list
@@ -81,12 +84,10 @@ public class SlideShowView extends FrameLayout {
     public SlideShowView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = context;
-        initData();
-        if(isAutoPlay){
-            startPlay();
-        }
         
     }
+
+
     /**
      * 开始轮播图切换
      */
@@ -100,33 +101,38 @@ public class SlideShowView extends FrameLayout {
     private void stopPlay(){
         scheduledExecutorService.shutdown();
     }
-    /**
-     * 初始化相关Data
-     */
-    private void initData(){
-        imageViewsList = new ArrayList<ImageView>();
-        dotViewsList = new ArrayList<View>();
 
-        // 一步任务获取图片
-        new GetListTask().execute("");
+
+    public void startPlay(List<FindImg> imgs){
+        mFindImages = imgs;
+        initUI(context);
+        startPlay();
     }
     /**
      * 初始化Views等UI
      */
     private void initUI(Context context){
-    	if(imageUrls == null || imageUrls.length == 0)
+    	if(mFindImages == null || mFindImages.size() == 0)
     		return;
-    	
+        imageViewsList = new ArrayList<>();
+        dotViewsList = new ArrayList<>();
         LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
         
         LinearLayout dotLayout = (LinearLayout)findViewById(R.id.dotLayout);
         dotLayout.removeAllViews();
         
         // 热点个数与图片特殊相等
-        for (int i = 0; i < imageUrls.length; i++) {
+        for (int i = 0; i < mFindImages.size(); i++) {
         	ImageView view =  new ImageView(context);
-        	view.setTag(R.id.ids1, imageUrls[i]);
+        	view.setTag(R.id.ids1, mFindImages.get(i).url);
         	view.setScaleType(ScaleType.FIT_XY);
+            final int finalI = i;
+            view.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(SlideShowView.this.context,mFindImages.get(finalI).content,mFindImages.get(finalI).description);
+                }
+            });
         	imageViewsList.add(view);
         	
         	ImageView dotView =  new ImageView(context);
@@ -288,35 +294,4 @@ public class SlideShowView extends FrameLayout {
             }
         }
     }
- 
-
-	/**
-	 * 异步任务,获取数据
-	 * 
-	 */
-	class GetListTask extends AsyncTask<String, Integer, Boolean> {
-
-		@Override
-		protected Boolean doInBackground(String... params) {
-			try {
-				// 这里一般调用服务端接口获取一组轮播图片
-				imageUrls = new String[]{"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
-                        "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
-                        "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
-                        "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg"};
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			super.onPostExecute(result);
-			if (result) {
-		        initUI(context);
-			}
-		}
-	}
 }

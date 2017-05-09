@@ -17,4 +17,8 @@
     <color name="wet">#1ebea3</color><!--体水分-->
     <color name="muscle">#4054b2</color><!--肌肉量-->
     <color name="protein">#ff7587</color><!--蛋白质-->
+
+    <color name="slide_first_color_blue">#03a9f4</color>
+    <color name="slide_first_color_red">#ef4d63</color>
+    <color name="slide_first_color_yello">#fdcb7d</color>
 </resources>

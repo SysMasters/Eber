@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eber.http.NetUtils;
 import com.eber.listener.IBaseFragment;
 import com.lidroid.xutils.ViewUtils;
+
+import java.util.Map;
 
 /**
  * Created by WangLibo on 2017/4/23.
@@ -20,6 +23,8 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
 
     private View view;
     protected BaseActivity mActivity;
+    protected NetUtils netUtils;
+    protected Map<String, String> param;
 
     @Nullable
     @Override
@@ -42,6 +47,7 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (BaseActivity) context;
+        netUtils = new NetUtils();
     }
 
     protected void startActivity(Class<? extends BaseActivity> cls) {

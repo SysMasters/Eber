@@ -29,6 +29,7 @@ import com.eber.bean.MemberRecord;
 import com.eber.bean.User;
 import com.eber.ui.home.LocalMemberActivity;
 import com.eber.ui.slideinfo.SlideInfoActivity;
+import com.eber.utils.DateUtil;
 import com.eber.utils.DisplayUtil;
 import com.eber.views.decoration.DividerGridItemDecoration;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -36,6 +37,8 @@ import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -250,7 +253,12 @@ public class HomeFragment extends BaseFragment {
         double fatRateChange = jo.getDouble("fatRateChange");
         String BMIChangeStr = jo.getString("fatRateChangeStr");
         ;
-        tvTitleLabel.setText(m.updateTime);
+        try {
+            String format = "yyyy-MM-dd HH:mm:ss";
+            tvTitleLabel.setText(DateUtil.showTime(new SimpleDateFormat(format).parse(m.updateTime),format));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         tvScore.setText(m.score + "");
         tvWeight.setText(m.weight + "");
         tvAge.setText(m.bodyAge + "");

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -54,7 +55,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="60dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/year_text_layout"
+        android:background="@drawable/enroll_et_bg"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp">
+
+        <com.eber.views.RulerView
+            android:id="@+id/goal_ruler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:currentValue="1990"
+            app:fromValue="1930"
+            app:interval="10dp"
+            app:intervalsBetweenValues="5"
+            app:linesColor="#33000000"
+            app:linesWidth="4px"
+            app:toValue="2017"
+            app:valuesInterval="5"
+            app:valuesTextSize="12sp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

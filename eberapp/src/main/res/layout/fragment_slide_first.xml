@@ -1,6 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="35dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/f_slide_f_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ico_biaozhun_x" />
+
+            <TextView
+                android:id="@+id/f_slide_f_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:gravity="center_horizontal"
+                android:text="标准型"
+                android:textColor="@color/theme_color"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="35dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="19dp"
+            android:layout_marginTop="35dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#888"
+                    android:text="综合得分" />
+
+                <TextView
+                    android:id="@+id/f_slide_f_score_tv"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/slide_first_text_bg"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/theme_color"
+                    android:text="99分" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#888"
+                    android:text="身体年龄" />
+
+                <TextView
+                    android:id="@+id/f_slide_f_age_tv"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/slide_first_text_bg"
+                    android:gravity="center"
+                    android:text="24岁"
+                    android:textColor="@color/theme_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#888"
+                    android:text="标准体重" />
+
+                <TextView
+                    android:id="@+id/f_slide_f_weight_tv"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/slide_first_text_bg"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/theme_color"
+                    android:text="50.3kg" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#888"
+                    android:text="测试日期" />
+
+                <TextView
+                    android:id="@+id/f_slide_f_time_tv"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/slide_first_text_bg"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/theme_color"
+                    android:text="17-3-15" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/f_slide_f_m_1"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_2"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_3"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_4"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_5"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_6"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_7"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_8"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+        <TextView
+            android:id="@+id/f_slide_f_m_9"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:background="#888"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/f_slide_f_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textColor="#888"
+        android:textSize="14sp"
+        android:text="肥胖"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:background="@drawable/lly_dashed_frame">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/f_slide_f_s_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#69d55f"
+                android:layout_marginBottom="5dp"
+                android:text="标准型"/>
+            <TextView
+                android:id="@+id/f_slide_f_s_type_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="标准型标准型标准型标准型标准型标准型标准型标准型"
+                android:textColor="#888"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/f_slide_f_s_eat_jianyi_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#69d55f"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:text="标准型"/>
+            <TextView
+                android:id="@+id/f_slide_f_s_eat_jianyi_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型"
+                android:textColor="#888"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/f_slide_f_s_exe_jianyi_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#69d55f"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:text="标准型"/>
+            <TextView
+                android:id="@+id/f_slide_f_s_exe_jianyi_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型标准型"
+                android:textColor="#888"
+                android:textSize="13sp"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

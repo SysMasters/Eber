@@ -22,6 +22,7 @@ public class EBERApp extends MultiDexApplication {
     public static SPUtil spUtil;
     public static VersionUtil versionUtil;
     public static User user;
+    public static User nowUser;
 
     @Override
     public void onCreate() {

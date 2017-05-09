@@ -1,18 +1,54 @@
 package com.eber.ui.my;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.text.format.Time;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseFragment;
+import com.eber.http.BaseCallback;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback;
+import com.eber.ui.login.LoginActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by wxd on 2017/4/29.
  */
 
 public class MyFragment extends BaseFragment {
+
+    @ViewInject(R.id.f_my_photo_img)
+    private ImageView imgPhoto;
+    @ViewInject(R.id.f_my_badge_img1)
+    private ImageView imgBadge1;
+    @ViewInject(R.id.f_my_badge_img2)
+    private ImageView imgBadge2;
+    @ViewInject(R.id.f_my_badge_img3)
+    private ImageView imgBadge3;
+    @ViewInject(R.id.f_my_user_name_tv)
+    private TextView tvName;
+    @ViewInject(R.id.f_my_user_id_tv)
+    private TextView tvID;
+    @ViewInject(R.id.f_my_user_signature_tv)
+    private TextView tvSignature;
+    @ViewInject(R.id.f_my_sign_in_tv)
+    private TextView tvSignIn;
+    @ViewInject(R.id.f_my_integral_tv)
+    private TextView tvIntegral;
+
+
 
     @ViewInject(R.id.f_my_remind)
     LinearLayout llRemind;                  // 提醒
@@ -33,6 +69,8 @@ public class MyFragment extends BaseFragment {
     @ViewInject(R.id.f_my_un_login)
     LinearLayout llUnlogin;                  // 退出登录
 
+    private static final int UPDATE_INFO = 1;
+
     @Override
     public int bindLayout() {
         return R.layout.fragment_my;
@@ -40,6 +78,8 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void onBusiness() {
+        getMyData();
+        tvSignIn.setOnClickListener(clickLis);
         llRemind.setOnClickListener(clickLis);
         llTarget.setOnClickListener(clickLis);
         llAccountManager.setOnClickListener(clickLis);
@@ -49,6 +89,37 @@ public class MyFragment extends BaseFragment {
         llFaq.setOnClickListener(clickLis);
         llAbout.setOnClickListener(clickLis);
         llUnlogin.setOnClickListener(clickLis);
+    }
+
+    private void getMyData() {
+        param = new HashMap<>();
+        param.put("memberId", String.valueOf(EBERApp.nowUser.id));
+        netUtils.get(HttpUrls.TOMYPAGE, false, param, new BaseCallback() {
+            @Override
+            public void onResponse(String response) {
+                super.onResponse(response);
+                JSONObject jo = JSON.parseObject(response);
+                if (jo.getInteger("sex") == 1){
+                    imgPhoto.setImageResource(R.mipmap.ico_man);
+                }else{
+                    imgPhoto.setImageResource(R.mipmap.ico_woman);
+                }
+                tvName.setText(jo.getString("userName"));
+                tvID.setText(jo.getString("cellphone"));
+                tvSignature.setText(jo.getString("description"));
+                tvSignIn.setText(jo.getString("signTime")+"次");
+                tvIntegral.setText(jo.getString("sumScore")+"积分");
+                if (jo.getInteger("flag") >= 1){
+                    imgBadge1.setImageResource(R.mipmap.ico_my_badge_1);
+                }
+                if (jo.getInteger("flag") >= 2){
+                    imgBadge2.setImageResource(R.mipmap.ico_my_badge_1);
+                }
+                if (jo.getInteger("flag") >= 3){
+                    imgBadge3.setImageResource(R.mipmap.ico_my_badge_1);
+                }
+            }
+        });
     }
 
     private View.OnClickListener clickLis = new View.OnClickListener() {
@@ -72,22 +143,64 @@ public class MyFragment extends BaseFragment {
                     break;
                 case R.id.f_my_update_info:// 修改资料
                     Intent in7 = new Intent(mActivity, ModifyDataAct.class);
-                    startActivity(in7);
+                    in7.putExtra("description", tvSignature.getText().toString());
+                    startActivityForResult(in7, UPDATE_INFO);
                     break;
                 case R.id.f_my_clear_cache:// 清理缓存
 
                     break;
                 case R.id.f_my_faq: // 常见问题
-
+                    Intent in4 = new Intent(mActivity, QATActivity.class);
+                    startActivity(in4);
                     break;
                 case R.id.f_my_about: // 关于我们
                     Intent in5 = new Intent(mActivity, AboutUsAct.class);
                     startActivity(in5);
                     break;
                 case R.id.f_my_un_login: // 退出登录
-
+                    unLogin();
+                    break;
+                case R.id.f_my_sign_in_tv:      // 签到
+                    signIn();
                     break;
             }
         }
     };
+
+    private void unLogin() {
+        param = new HashMap<>();
+        param.put("memberId", String.valueOf(EBERApp.nowUser.id));
+        netUtils.get(HttpUrls.LOGOUT, true, param, new BaseCallback() {
+            @Override
+            public void onResponse(String response) {
+                super.onResponse(response);
+                JSONObject jo = JSON.parseObject(response);
+                Toast.makeText(mActivity, jo.getString("msg"), Toast.LENGTH_SHORT).show();
+                if (jo.getInteger("retcode") == 1){
+                    // 跳转登录
+                    startActivity(new Intent(mActivity, LoginActivity.class));
+                    // 关闭
+                    mActivity.exitAllBarringStackTop();
+                }
+            }
+        });
+    }
+
+    private void signIn() {
+        param = new HashMap<>();
+        param.put("memberId", String.valueOf(EBERApp.nowUser.id));
+        param.put("scoreType", "2");
+        netUtils.get(HttpUrls.ADDSCORE, true, param, new BaseCallback() {
+            @Override
+            public void onResponse(String response) {
+                super.onResponse(response);
+                JSONObject jo = JSON.parseObject(response);
+                Toast.makeText(mActivity, jo.getString("msg"), Toast.LENGTH_SHORT).show();
+                if (jo.getInteger("retcode") == 1){
+                    tvSignIn.setText(jo.getString("signTime")+"次");
+                    tvIntegral.setText(jo.getString("sumScore")+"积分");
+                };
+            }
+        });
+    }
 }

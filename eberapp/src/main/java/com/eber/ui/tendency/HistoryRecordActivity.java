@@ -1,5 +1,6 @@
 package com.eber.ui.tendency;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.eber.bean.BodyInfo;
 import com.eber.views.decoration.RecycleViewDivider;
 import com.eber.views.swipe.SwipeMenuLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 
 import java.util.ArrayList;
@@ -132,7 +134,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.title_right:// 分享
-                Toast.makeText(mContext, "分享", Toast.LENGTH_SHORT).show();
+                UmengUtil.shareImage(this);
                 break;
         }
     }
@@ -145,4 +147,10 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
             }
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UmengUtil.onActivityResult(this,requestCode,resultCode,data);
+    }
 }

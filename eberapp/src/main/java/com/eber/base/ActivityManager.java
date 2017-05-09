@@ -60,6 +60,17 @@ public class ActivityManager {
         return stack.lastElement();
     }
 
+    public void exitAllBarringStackTop(){
+        if(stack != null){
+            for(Activity activity : stack){
+                if (activity != getTopActivity()) {
+                    stack.remove(activity);
+                    activity.finish();
+                }
+            }
+        }
+    }
+
     /**
      * 退出所有栈中的activity
      */
