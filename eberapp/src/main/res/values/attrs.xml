@@ -28,4 +28,8 @@
         <attr name="textSize" format="dimension"/>
         <attr name="divideHeight" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="LoadMoreListView">
+        <attr name="sampleSize" format="integer"/>
+    </declare-styleable>
 </resources>

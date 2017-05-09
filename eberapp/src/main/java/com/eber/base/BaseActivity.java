@@ -77,4 +77,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityManager.getInstance().removeActivity(this);
     }
+
+    public void exitAllBarringStackTop(){
+        ActivityManager.getInstance().exitAllBarringStackTop();
+    }
 }

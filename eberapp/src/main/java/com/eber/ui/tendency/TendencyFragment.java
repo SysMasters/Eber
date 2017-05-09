@@ -1,5 +1,6 @@
 package com.eber.ui.tendency;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,6 +9,7 @@ import com.eber.base.BaseFragment;
 import com.eber.views.BMIBtnGroup;
 import com.eber.views.BrokenLineView;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.qxinli.umeng.UmengUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +117,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
                 startActivity(HistoryRecordActivity.class);
                 break;
             case R.id.tendency_share:
-
+                UmengUtil.shareImage(mActivity);
                 break;
             case R.id.tendency_navi_muscle_rb:
 
@@ -136,5 +138,11 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
 
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UmengUtil.onActivityResult(mActivity,requestCode,resultCode,data);
     }
 }

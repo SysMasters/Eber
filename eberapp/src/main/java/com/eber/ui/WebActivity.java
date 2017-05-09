@@ -1,5 +1,7 @@
 package com.eber.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -28,6 +30,13 @@ public class WebActivity extends BaseActivity {
         tvTitle.setText(getIntent().getStringExtra("title"));
         url = getIntent().getStringExtra("url");
         wv.loadUrl(url);
+    }
+
+    public static void startActivity(Context context,String url,String title){
+        Intent intent = new Intent(context,WebActivity.class);
+        intent.putExtra("title",title);
+        intent.putExtra("url",url);
+        context.startActivity(intent);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private RadioGroup rgChannel=null;
     private HorizontalScrollView hvChannel;
     private PageFragmentAdapter adapter=null;
-    private List<Fragment> fragmentList=new ArrayList<Fragment>();
+    private List<Fragment> fragmentList=new ArrayList<>();
     private List<SlideInfo> slideInfos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
     @Override
     public void setListener() {
         param = new HashMap<>();
-        param.put("memberId", "163"/*String.valueOf(EBERApp.user.id)*/);
+        param.put("memberId", String.valueOf(EBERApp.user.id));
         netUtils.get(HttpUrls.FINDLASTRECORDDETAIL, true, param, new StringCallback("memberRecord") {
             @Override
             public void onSuccess(String resultJson) {

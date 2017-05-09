@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
@@ -17,23 +17,29 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="#888"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/find_item_time"
             android:text="生活实验室"/>
         <TextView
-            android:id="@+id/find_item_time"
-            android:layout_width="match_parent"
+            android:id="@id/find_item_time"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="15sp"
             android:textColor="#888"
             android:text="12月29日"/>
-    </LinearLayout>
+    </RelativeLayout>
     <ImageView
         android:id="@+id/find_item_img"
         android:layout_width="match_parent"
         android:layout_height="140dp"
+        android:scaleType="centerCrop"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
     <TextView
+        android:id="@+id/find_type_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
@@ -43,10 +49,13 @@
         android:textColor="#888"
         android:text="全家人的健康小管家"/>
     <TextView
+        android:id="@+id/find_subTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
+        android:lines="3"
         android:layout_marginRight="12dp"
+        android:paddingBottom="10dp"
         android:textSize="12sp"
         android:textColor="#888"
         android:text="一部手机可以管理全家人的健康，智能体脂称能给你的不仅仅"/>
