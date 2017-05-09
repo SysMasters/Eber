@@ -61,6 +61,14 @@
         <activity android:name=".ui.tendency.HistoryDataActivity">
 
         </activity>
+        <activity android:name=".ui.my.AboutUsAct" />
+        <activity android:name=".ui.my.EquipmentInfoAct" />
+        <activity android:name=".ui.my.EquipmentManagementAct" />
+        <activity android:name=".ui.my.ModifyDataAct" />
+        <activity android:name=".ui.my.MyGoalAct" />
+        <activity android:name=".ui.my.QATActivity" />
+        <activity android:name=".ui.my.MyRemindAct" />
+        <activity android:name=".ui.check.MeasureActivity" />
         <activity android:name=".ui.my.AboutUsAct"/>
         <activity android:name=".ui.my.EquipmentInfoAct"/>
         <activity android:name=".ui.my.EquipmentManagementAct"/>

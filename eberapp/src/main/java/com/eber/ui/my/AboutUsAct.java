@@ -1,6 +1,10 @@
 package com.eber.ui.my;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +23,7 @@ import com.eber.http.HttpUrls;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by 烛九阴 on 2017/5/6.
@@ -71,10 +76,6 @@ public class AboutUsAct extends BaseActivity {
                         }else{
                             Toast.makeText(AboutUsAct.this, jo.getString("msg"), Toast.LENGTH_SHORT).show();
                         }
-//                        jo.getString("sourceID"): "h_ff4434815bbd",
-//                        jo.getString("content"): "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzIxMTI2MzM0NA==#wechat_redirect",
-//                        jo.getInteger("retcode"): 1,
-//                        jo.getString("msg"): "取得公众号成功"
                     }
                 });
             }
@@ -82,17 +83,30 @@ public class AboutUsAct extends BaseActivity {
     }
 
     private void startWicat(String sourceID) {
-//        String appId = "你的ID";//开发者平台ID
-//        IWXAPI api = WXAPIFactory.createWXAPI(getActivity(), appId, false);
-//
-//        if (api.isWXAppInstalled()) {
-//            JumpToBizProfile.Req req = new JumpToBizProfile.Req();
-//            req.toUserName = sourceID; // 公众号原始ID
-//            req.extMsg = "";
-//            req.profileType = JumpToBizProfile.JUMP_TO_NORMAL_BIZ_PROFILE; // 普通公众号
-//            api.sendReq(req);
-//        }else{
-//            Toast.makeText(AboutUsAct.this, "微信未安装", Toast.LENGTH_SHORT).show();
-//        }
+        if (isWeixinAvilible(this)){
+            Intent intent = new Intent();
+            ComponentName cmp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+            intent.setAction(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setComponent(cmp);
+            startActivity(intent);
+        }else{
+            Toast.makeText(AboutUsAct.this, "微信未安装", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static boolean isWeixinAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

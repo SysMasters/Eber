@@ -1,1 +1,1 @@
-include ':eberapp', ':base-adapter-library', ':calendar-library', ':umeng'
+include ':eberapp', ':base-adapter-library', ':calendar-library', ':umeng', ':FastBleLib'

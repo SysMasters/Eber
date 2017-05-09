@@ -48,5 +48,13 @@ public class HttpUrls {
     public final static String DELMEMBEREQUIP = BASEURL + "memberEquipAPP/delMemberEquip.shtml";
     /**根据memberId取得用户所有绑定设备**/
     public final static String FINDEQUIPLIST = BASEURL + "memberEquipAPP/findEquipList.shtml?memberId=%s";
+    // 趋势
+    public final static String RECORDTREND = BASEURL + "memberRecordAPP/recordTrend.shtml";
+
+    public final static String FINDRECORDDATE = BASEURL + "memberRecordAPP/findRecordDate.shtm";
+    // 进入我的目标
+    public final static String FINDMEMBERAIM = BASEURL + "memberAimAPP/findMemberAim.shtml";
+    // 确定目标
+    public final static String ADDORUPDATEAIM = BASEURL + "memberAimAPP/addOrUpdateAim.shtml";
 
 }

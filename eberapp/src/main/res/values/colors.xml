@@ -21,4 +21,20 @@
     <color name="slide_first_color_blue">#03a9f4</color>
     <color name="slide_first_color_red">#ef4d63</color>
     <color name="slide_first_color_yello">#fdcb7d</color>
+
+    <color name="start_color_1">#58c7fa</color>
+    <color name="end_color_1">#eef9fe</color>
+    <color name="line_color_1">#00a7f7</color>
+    <color name="start_color_2">#fec86d</color>
+    <color name="end_color_2">#fff9f0</color>
+    <color name="line_color_2">#feaa00</color>
+    <color name="start_color_3">#8390cf</color>
+    <color name="end_color_3">#f2fcfa</color>
+    <color name="line_color_3">#3f51b5</color>
+    <color name="start_color_4">#68d6c3</color>
+    <color name="end_color_4">#fefaf9</color>
+    <color name="line_color_4">#00bfa3</color>
+    <color name="start_color_5">#ffa3ae</color>
+    <color name="end_color_5">#fff5f7</color>
+    <color name="line_color_5">#ff7485</color>
 </resources>

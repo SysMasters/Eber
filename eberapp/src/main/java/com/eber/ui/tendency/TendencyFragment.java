@@ -4,14 +4,20 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseFragment;
+import com.eber.bean.Trend;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback2;
 import com.eber.views.BMIBtnGroup;
 import com.eber.views.BrokenLineView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.qxinli.umeng.UmengUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -42,11 +48,11 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
         setListener();
 
         List<Float> nums = new ArrayList<>();
-        nums.add(14f);
-        nums.add(20f);
-        nums.add(12.5f);
-        nums.add(15.5f);
-        nums.add(17.2f);
+        nums.add(0f);
+        nums.add(0f);
+        nums.add(0f);
+        nums.add(0f);
+        nums.add(0f);
         List<String> texts = new ArrayList<>();
         texts.add("12-21");
         texts.add("12-22");
@@ -61,6 +67,83 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
 
     }
 
+    private List<Trend> weekTrendArray = new ArrayList<>();
+    private List<Trend> monthTrendArray = new ArrayList<>();
+    private List<Trend> yearTrendArray = new ArrayList<>();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        param = new HashMap<>();
+        param.put("memberId", String.valueOf(EBERApp.nowUser.id));
+        netUtils.get(HttpUrls.RECORDTREND, true, param, new StringCallback2("weekTrendArray",
+                "monthTrendArray", "yearTrendArray") {
+            @Override
+            public void onSuccess(String... result) {
+                weekTrendArray = JSONArray.parseArray(result[0], Trend.class);
+                monthTrendArray = JSONArray.parseArray(result[1], Trend.class);
+                yearTrendArray = JSONArray.parseArray(result[2], Trend.class);
+                setValue();
+            }
+        });
+    }
+
+    private void setViewVaule(int property, List<Trend> trends) {
+        int[] colors = new int[3];
+        List<Float> nums = new ArrayList<>();
+        if (property == 1){
+            colors = new int[]{
+                    R.color.start_color_1, R.color.end_color_1, R.color.line_color_1
+            };
+            for (Trend t : trends){
+                nums.add(t.weightAverage);
+            }
+        }else if (property == 2){
+            colors = new int[]{
+                    R.color.start_color_2, R.color.end_color_2, R.color.line_color_2
+            };
+            for (Trend t : trends){
+                nums.add(t.fatRateAverage);
+            }
+        }else if (property == 3){
+            colors = new int[]{
+                    R.color.start_color_3, R.color.end_color_3, R.color.line_color_3
+            };
+            for (Trend t : trends){
+                nums.add(t.muscleAverage);
+            }
+        }else if (property == 4){
+            colors = new int[]{
+                    R.color.start_color_4, R.color.end_color_4, R.color.line_color_4
+            };
+            for (Trend t : trends){
+                nums.add(t.bodywaterAverage);
+            }
+        }else if (property == 5){
+            colors = new int[]{
+                    R.color.start_color_5, R.color.end_color_5, R.color.line_color_5
+            };
+            for (Trend t : trends){
+                nums.add(t.proteinAverage);
+            }
+        }
+        List<String> texts = new ArrayList<>();
+        for (Trend t : trends){
+            if (t.updateTime.length() >= 10){
+                texts.add(t.updateTime.substring(5));
+            }else {
+                texts.add(t.updateTime);
+            }
+        }
+        line.setNums(nums)      // 数据集
+                .setTexts(texts)    // 坐标文字集合
+                .setTextSize(16)
+                .setDivideHeight(5)     // 文字图标间距
+                .setStartColor(mActivity.getResources().getColor(colors[0]))
+                .setEndColor(mActivity.getResources().getColor(colors[1]))
+                .setBrokenLineColor(mActivity.getResources().getColor(colors[2]))
+                .draw();
+    }
 
     private void setListener() {
         line.setOnClickListener(this);
@@ -68,47 +151,76 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
         mBmiBtnGroup.setOnCheckedChangeListener(bmiBtnGroupLis);
     }
 
+    int property = 1;
+    int timeT = 1;
+
     private BMIBtnGroup.OnCheckedChangeListener bmiBtnGroupLis = new BMIBtnGroup.OnCheckedChangeListener() {
         @Override
         public void onWeight(int color) {
             // 体重
+            property = 1;
+            setValue();
         }
 
         @Override
         public void onFat(int color) {
             // 脂肪
+            property = 2;
+            setValue();
         }
 
         @Override
         public void onMuscle(int color) {
             // 肌肉
+            property = 3;
+            setValue();
         }
 
         @Override
         public void onWater(int color) {
             // 体水分
+            property = 4;
+            setValue();
         }
 
         @Override
         public void onProtein(int color) {
             // 蛋白质
+            property = 5;
+            setValue();
         }
 
         @Override
         public void onWeek() {
             // 周
+            timeT = 1;
+            setValue();
         }
 
         @Override
         public void onMonth() {
             // 月
+            timeT = 2;
+            setValue();
         }
 
         @Override
         public void onYear() {
             // 年
+            timeT = 1;
+            setValue();
         }
     };
+
+    private void setValue() {
+        if (timeT == 1) {
+            setViewVaule(property, weekTrendArray);
+        }else if (timeT == 2){
+            setViewVaule(property, monthTrendArray);
+        }else{
+            setViewVaule(property, yearTrendArray);
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -118,24 +230,6 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.tendency_share:
                 UmengUtil.shareImage(mActivity);
-                break;
-            case R.id.tendency_navi_muscle_rb:
-
-                break;
-            case R.id.tendency_navi_water_rb:
-
-                break;
-            case R.id.tendency_navi_protein_rb:
-
-                break;
-            case R.id.tendency_week_rb:
-
-                break;
-            case R.id.tendency_month_rb:
-
-                break;
-            case R.id.tendency_year_rb:
-
                 break;
         }
     }
