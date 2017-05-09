@@ -147,7 +147,8 @@ public class MyFragment extends BaseFragment {
                     startActivityForResult(in7, UPDATE_INFO);
                     break;
                 case R.id.f_my_clear_cache:// 清理缓存
-
+                    Toast.makeText(mActivity, "正在清理", 4000).show();
+                    Toast.makeText(mActivity, "清理完成", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.f_my_faq: // 常见问题
                     Intent in4 = new Intent(mActivity, QATActivity.class);

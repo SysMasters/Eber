@@ -103,6 +103,7 @@ public class BrokenLineView extends View {
 
     public BrokenLineView setTexts(List<String> texts) {
         if (texts != null && !texts.isEmpty()) {
+            this.texts.clear();
             this.texts.addAll(texts);
         } else {
             this.texts.clear();
@@ -222,6 +223,8 @@ public class BrokenLineView extends View {
         paint.setStrokeWidth(2);
         dashPath.reset();
         brokenPath.reset();
+        circelPath.reset();
+        gradientPath.reset();
         for (int i = 0; i < numRatios.size(); i++) {
             float x = startX + space * i;
             float y = startY + (1 - numRatios.get(i)) * drawableHeight;
@@ -273,7 +276,6 @@ public class BrokenLineView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(brokenLineColor);
         canvas.drawPath(circelPath, paint);
-
 
         canvas.drawLine(getPaddingLeft(), endY, getWidth() - getPaddingRight(), endY, paint);
         //绘制文字

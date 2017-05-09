@@ -10,12 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.dsw.calendar.component.MonthView;
 import com.dsw.calendar.entity.CalendarInfo;
 import com.dsw.calendar.views.CircleCalendarView;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.BodyInfo;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback2;
 import com.eber.views.decoration.RecycleViewDivider;
 import com.eber.views.swipe.SwipeMenuLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -24,6 +29,7 @@ import com.zhy.adapter.recyclerview.CommonAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -54,6 +60,14 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_history);
         super.onCreate(savedInstanceState);
         init();
+    }
+
+    private List<String> date = new ArrayList<>();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void init() {
@@ -94,12 +108,26 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
 
     private void initData() {
         bodyInfos = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            BodyInfo b = new BodyInfo();
-            b.weight = "72";
-            b.fatRate = "43.5";
-            bodyInfos.add(b);
-        }
+        param = new HashMap<>();
+        param.put("memberId",/*String.valueOf(EBERApp.nowUser.id)*/"163");
+        netUtils.get(HttpUrls.FINDRECORDDATE, true, param, new StringCallback2("memberRecordArray", "dateArray") {
+            @Override
+            public void onSuccess(String... result) {
+                List<BodyInfo> datas = JSONArray.parseArray(result[0], BodyInfo.class);
+                bodyInfos.addAll(datas);
+                JSONArray ja = JSON.parseArray(result[1]);
+                for (int i = 0; i < ja.size(); i++){
+                    date.add(ja.getString(i));
+                }
+                List<CalendarInfo> list = new ArrayList<>();
+                for (int i = 0; i < date.size(); i++){
+                    list.add(new CalendarInfo(Integer.parseInt(date.get(i).substring(0, 4)),
+                            Integer.parseInt(date.get(i).substring(5, 7)),
+                            Integer.parseInt(date.get(i).substring(9, 11)), ""));
+                }
+                circleCalendarView.setCalendarInfos(list);
+            }
+        });
     }
 
     @Override
@@ -107,16 +135,16 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         circleCalendarView.setDateClick(dateClickLis);
         ivRight.setOnClickListener(this);
 
-        Calendar calendar = Calendar.getInstance();
-        int currYear = calendar.get(Calendar.YEAR);
-        int currMonth = calendar.get(Calendar.MONTH) + 1;
-        List<CalendarInfo> list = new ArrayList<CalendarInfo>();
-        list.add(new CalendarInfo(currYear, currMonth, 4, ""));
-        list.add(new CalendarInfo(currYear, currMonth, 6, ""));
-        list.add(new CalendarInfo(currYear, currMonth, 12, ""));
-        list.add(new CalendarInfo(currYear, currMonth, 16, ""));
-        list.add(new CalendarInfo(currYear, currMonth, 28, ""));
-        circleCalendarView.setCalendarInfos(list);
+//        Calendar calendar = Calendar.getInstance();
+//        int currYear = calendar.get(Calendar.YEAR);
+//        int currMonth = calendar.get(Calendar.MONTH) + 1;
+//        List<CalendarInfo> list = new ArrayList<CalendarInfo>();
+//        list.add(new CalendarInfo(currYear, currMonth, 4, ""));
+//        list.add(new CalendarInfo(currYear, currMonth, 6, ""));
+//        list.add(new CalendarInfo(currYear, currMonth, 12, ""));
+//        list.add(new CalendarInfo(currYear, currMonth, 16, ""));
+//        list.add(new CalendarInfo(currYear, currMonth, 28, ""));
+//        circleCalendarView.setCalendarInfos(list);
 
     }
 
@@ -127,6 +155,10 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
             circleCalendarView.setDate();
             tvDate.setText(circleCalendarView.getDateStr());
             tvMonth.setText(circleCalendarView.getMonthStr() + "月");
+//            param = new HashMap<>();
+//            param.put("memberId","163");
+//            param.put("month","163");
+//            netUtils.get(HttpUrls.LOGIN, true, param, new );
         }
     };
 
