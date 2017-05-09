@@ -8,6 +8,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:text="常见问题"/>
 </LinearLayout>

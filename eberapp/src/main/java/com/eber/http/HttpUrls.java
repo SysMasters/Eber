@@ -42,5 +42,13 @@ public class HttpUrls {
     public final static String GETPUBLICMUMBER = BASEURL + "dictionaryAPP/getPublicMumber.shtml";
     /**提交称重记录**/
     public final static String ADDRECORD = BASEURL + "memberRecordAPP/addRecord.shtml";
+    // 趋势
+    public final static String RECORDTREND = BASEURL + "memberRecordAPP/recordTrend.shtml";
+
+    public final static String FINDRECORDDATE = BASEURL + "memberRecordAPP/findRecordDate.shtm";
+    // 进入我的目标
+    public final static String FINDMEMBERAIM = BASEURL + "memberAimAPP/findMemberAim.shtml";
+    // 确定目标
+    public final static String ADDORUPDATEAIM = BASEURL + "memberAimAPP/addOrUpdateAim.shtml";
 
 }

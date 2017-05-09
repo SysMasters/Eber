@@ -71,7 +71,8 @@ public class QATActivity extends BaseActivity {
     private AdapterView.OnItemClickListener itemClickLis = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            qatList.get(position);
+            startWebActivity(qatList.get(position).title, String.format("http://112.74.62.116:8080/ieber/QAAPP/findQAById.shtml?QAId=%s", qatList.get(position).id));
         }
     };
 }

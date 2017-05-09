@@ -20,6 +20,7 @@ import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback2;
 import com.eber.ui.MainActivity;
 import com.eber.ui.register.EnrollActivity;
+import com.eber.ui.register.FillInformationActivity;
 import com.eber.utils.OtherUtils;
 import com.eber.utils.SPKey;
 import com.eber.utils.StatusBarUtil;
@@ -113,6 +114,11 @@ public class LoginActivity extends BaseActivity {
     private void toHomePage(String... result) {
         User user = JSON.parseObject(result[0], User.class);
         user.sessionId = result[1];
+        if (user.birthday == null || user.birthday.equals("")){
+            Intent intent = new Intent(LoginActivity.this, FillInformationActivity.class);
+            startActivity(intent);
+            return;
+        }
         EBERApp.user = user;
         EBERApp.nowUser = user;
         EBERApp.spUtil.putData(SPKey.USER, JSON.toJSONString(user));
