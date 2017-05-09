@@ -1,49 +1,126 @@
 package com.eber.ui.binddevice;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.widget.Toast;
+import android.util.Log;
+import android.view.View;
+
 import com.eber.R;
 import com.eber.base.BaseActivity;
-import com.eber.interfaces.BluetoothListener;
-import com.eber.utils.BluetoothUtil;
+import com.eber.bean.BodyInfo;
+import com.eber.bluetooth.BluetoothUtil;
+import com.eber.bluetooth.ClientManager;
 import com.eber.utils.StatusBarUtil;
+import com.inuker.bluetooth.library.BluetoothClient;
+import com.inuker.bluetooth.library.Constants;
+import com.inuker.bluetooth.library.connect.listener.BluetoothStateListener;
+import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
+import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
+
+import java.util.UUID;
 
 /**
  * Created by wxd on 2017/4/23.
  */
-public class BindDeviceActivity2 extends BaseActivity {
+public class BindDeviceActivity2 extends BaseActivity implements View.OnClickListener {
 
-    private static final int BLUETOOTHSTATE = 1;
+
+    private View vBack;
+
+    private BluetoothUtil bluetoothUtil;
+    private BluetoothClient mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_bind_device_2);
         super.onCreate(savedInstanceState);
-        BluetoothUtil.getIntence().setOnBluetoothListener(bluetoothListener);
+        setContentView(R.layout.activity_bind_device_2);
+
+        init();
     }
 
-    private BluetoothListener bluetoothListener = new BluetoothListener() {
+    private void init() {
+        vBack = findView(R.id.title_back);
+
+        vBack.setOnClickListener(this);
+
+
+        bluetoothUtil = new BluetoothUtil(this);
+        mClient = ClientManager.getClient();
+        if (mClient.isBluetoothOpened()) {
+            connect();
+        } else {
+            mClient.registerBluetoothStateListener(mBluetoothStateListener);
+            mClient.openBluetooth();
+        }
+    }
+
+    private void connect() {
+        bluetoothUtil.startConnect();
+        bluetoothUtil.setOnBluetoothMeasureListener(onBluetoothMeasureListener);
+    }
+
+
+    private final BluetoothStateListener mBluetoothStateListener = new BluetoothStateListener() {
         @Override
-        public void bluetoothState(boolean bluetoothState) {
-            handler.sendMessage(handler.obtainMessage(BLUETOOTHSTATE, bluetoothState));
+        public void onBluetoothStateChanged(boolean openOrClosed) {
+            connect();
+        }
+
+    };
+
+    private BluetoothUtil.OnBluetoothMeasureListener onBluetoothMeasureListener = new BluetoothUtil.OnBluetoothMeasureListener() {
+        @Override
+        public void onWeigh() {
+        }
+
+        @Override
+        public void onMeasureData(BodyInfo data) {// 返回测量数据
+        }
+
+        @Override
+        public void onDisconnected() {// 连接断开
+            Log.e("", "------onDisconnected---连接已断开");
+        }
+
+        @Override
+        public void onConnectSuccess() {
+            readScaleInfo();
         }
     };
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        BluetoothUtil.getIntence().onConnectButtonClicked(BindDeviceActivity2.this);
+
+    /**
+     * 读取秤体信息
+     */
+    private void readScaleInfo() {
+
     }
 
-    private Handler handler = new Handler(){
+
+    private final BleWriteResponse mWriteRsp = new BleWriteResponse() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == BLUETOOTHSTATE){
-                Toast.makeText(BindDeviceActivity2.this, "蓝牙链接状态"+msg.obj, Toast.LENGTH_SHORT).show();
+        public void onResponse(int code) {
+            if (code == Constants.REQUEST_SUCCESS) {
+                Log.i("", "mWriteRsp   success");
+            } else {
+                Log.e("", "mWriteRsp   failed");
             }
+        }
+    };
+
+    private final BleNotifyResponse mNotifyRsp = new BleNotifyResponse() {
+
+        @Override
+        public void onResponse(int code) {
+            if (code == Constants.REQUEST_SUCCESS) {
+                Log.i("", "mNotifyRsp   success");
+            } else {
+                Log.i("", "mNotifyRsp   failed");
+            }
+        }
+
+        @Override
+        public void onNotify(UUID service, UUID character, byte[] value) {
+
         }
     };
 
@@ -57,10 +134,35 @@ public class BindDeviceActivity2 extends BaseActivity {
 
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.title_back:
+                finish();
+                break;
+        }
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        BluetoothUtil.getIntence().removeOnBluetoothListener();
-        BluetoothUtil.getIntence().bluetoothDestroy(BindDeviceActivity2.this);
+        mClient.unregisterBluetoothStateListener(mBluetoothStateListener);
+        bluetoothUtil.onDestroy();
+        bluetoothUtil = null;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bluetoothUtil.onPause();
+        mClient.unregisterBluetoothStateListener(mBluetoothStateListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bluetoothUtil.onResume();
     }
 }

@@ -17,6 +17,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    // 0000ffe0-0000-1000-8000-00805f9b34fb
+    // 0000ffe1-0000-1000-8000-00805f9b34fb
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <application
         android:name=".EBERApp"
@@ -39,6 +44,9 @@
         <activity android:name=".ui.binddevice.BindDeviceActivity1">
 
         </activity>
+        <activity android:name=".ui.binddevice.BindDeviceActivity2">
+
+        </activity>
         <activity android:name=".ui.tendency.HistoryRecordActivity"></activity>
         <activity android:name=".ui.register.FillInformationActivity"></activity>
         <activity android:name=".ui.home.LocalMemberActivity"></activity>
@@ -53,6 +61,7 @@
         <activity android:name=".ui.my.ModifyDataAct" />
         <activity android:name=".ui.my.MyGoalAct" />
         <activity android:name=".ui.my.MyRemindAct" />
+        <activity android:name=".ui.check.MeasureActivity" />
 
         <activity
             android:name="com.umeng.qq.tencent.AuthActivity"

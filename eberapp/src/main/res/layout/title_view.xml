@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:background="#03a9f4"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#03a9f4">
+
     <ImageView
         android:id="@+id/title_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/title_content"
         android:layout_alignBottom="@+id/title_content"
-        android:onClick="titleBackClick"
+        android:layout_alignTop="@+id/title_content"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
+        android:onClick="titleBackClick"
         android:src="@mipmap/ico_back"/>
+
     <TextView
         android:id="@+id/title_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_toRightOf="@id/title_back"
+        android:layout_centerInParent="true"
         android:layout_marginBottom="14dp"
-        android:singleLine="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="25dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"
+        android:layout_marginTop="14dp"
+        android:singleLine="true"
+        android:text="this is title"
         android:textColor="@android:color/white"
-        android:text="this is title"/>
+        android:textSize="18sp"/>
 </RelativeLayout>

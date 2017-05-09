@@ -42,4 +42,26 @@ public class BodyInfo {
     public String fatRate;
     public String BMI;
     public String basicmetabolism;
+
+    @Override
+    public String toString() {
+        return "BodyInfo{" +
+                "subcutaneousfat='" + subcutaneousfat + '\'' +
+                ", weight='" + weight + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", organfat='" + organfat + '\'' +
+                ", score='" + score + '\'' +
+                ", muscle='" + muscle + '\'' +
+                ", bodywater='" + bodywater + '\'' +
+                ", id='" + id + '\'' +
+                ", bodyAge='" + bodyAge + '\'' +
+                ", bonerisk='" + bonerisk + '\'' +
+                ", bodyShape='" + bodyShape + '\'' +
+                ", protein='" + protein + '\'' +
+                ", bone='" + bone + '\'' +
+                ", fatRate='" + fatRate + '\'' +
+                ", BMI='" + BMI + '\'' +
+                ", basicmetabolism='" + basicmetabolism + '\'' +
+                '}';
+    }
 }

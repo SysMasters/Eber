@@ -1,13 +1,8 @@
 package com.eber.ui.find;
 
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.eber.R;
@@ -18,16 +13,9 @@ import com.eber.bean.FindImg;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback2;
 import com.eber.ui.WebActivity;
-import com.eber.utils.DisplayUtil;
 import com.eber.views.LoadMoreListView;
 import com.eber.views.SlideShowView;
-import com.eber.views.decoration.DividerGridItemDecoration;
-import com.github.nukc.LoadMoreWrapper.LoadMoreAdapter;
-import com.github.nukc.LoadMoreWrapper.LoadMoreWrapper;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
-import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
