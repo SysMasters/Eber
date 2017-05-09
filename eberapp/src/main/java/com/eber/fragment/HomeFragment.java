@@ -97,6 +97,18 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onBusiness() {
         String memberRecordStr = getActivity().getIntent().getStringExtra("memberRecord");
+        setRecordValue(memberRecordStr);
+        String usersStr = getActivity().getIntent().getStringExtra("memberArray");
+        if (usersStr != null && !usersStr.equals("")) {
+            users = JSON.parseArray(usersStr, User.class);
+        }
+        ivHead.setOnClickListener(clickLis);
+        ivShare.setOnClickListener(clickLis);
+        setData();
+        initBodyInfoData();
+    }
+    
+    public void setRecordValue(String memberRecordStr){
         if (null != memberRecordStr && !memberRecordStr.equals("")) {
             memberRecord = JSON.parseObject(memberRecordStr, MemberRecord.class);
             setViewValues(memberRecord);
@@ -227,15 +239,9 @@ public class HomeFragment extends BaseFragment {
             };
             mGridView.setAdapter(mAdapter);
         }
-        String usersStr = getActivity().getIntent().getStringExtra("memberArray");
-        if (usersStr != null && !usersStr.equals("")) {
-            users = JSON.parseArray(usersStr, User.class);
-        }
-        ivHead.setOnClickListener(clickLis);
-        ivShare.setOnClickListener(clickLis);
-        setData();
-        initBodyInfoData();
     }
+    
+    
 
     private void initBodyInfoData() {
         indicates = new ArrayList<>();

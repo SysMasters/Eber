@@ -8,20 +8,20 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <!--在sdcard中创建/删除文件的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     // 0000ffe0-0000-1000-8000-00805f9b34fb
     // 0000ffe1-0000-1000-8000-00805f9b34fb
     <uses-feature
         android:name="android.hardware.bluetooth_le"
-        android:required="true" />
+        android:required="true"/>
 
     <application
         android:name=".EBERApp"
@@ -46,9 +46,15 @@
         </activity>
         <activity android:name=".ui.binddevice.BindDeviceActivity2">
 
+
         </activity>
+        <activity
+            android:name=".ui.binddevice.BindDeviceActivity3"
+            android:launchMode="singleTop"></activity>
         <activity android:name=".ui.tendency.HistoryRecordActivity"></activity>
-        <activity android:name=".ui.register.FillInformationActivity"></activity>
+        <activity
+            android:name=".ui.register.FillInformationActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".ui.home.LocalMemberActivity"></activity>
         <activity android:name=".ui.WebActivity"></activity>
         <activity android:name=".ui.slideinfo.SlideInfoActivity"></activity>
@@ -58,45 +64,48 @@
         <activity android:name=".ui.my.AboutUsAct" />
         <activity android:name=".ui.my.EquipmentInfoAct" />
         <activity android:name=".ui.my.EquipmentManagementAct" />
-        <activity android:name=".ui.my.ModifyDataAct" />
         <activity android:name=".ui.my.MyGoalAct" />
         <activity android:name=".ui.my.QATActivity" />
         <activity android:name=".ui.my.MyRemindAct" />
         <activity android:name=".ui.check.MeasureActivity" />
+        <activity
+            android:name=".ui.my.ModifyDataAct"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name="com.umeng.qq.tencent.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="tencent1106039737" />
+                <data android:scheme="tencent1106039737"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.umeng.qq.tencent.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
-            android:theme="@style/Theme.UMDefault"
             android:excludeFromRecents="true"
-        />
+            android:theme="@style/Theme.UMDefault"
+            />
         <activity
             android:name=".bfs.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5909ea80677baa78a200163b" />
+            android:value="5909ea80677baa78a200163b"/>
     </application>
 
 </manifest>

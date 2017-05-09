@@ -9,14 +9,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.adapters.EquipmentManagementAdapter;
 import com.eber.base.BaseActivity;
 import com.eber.bean.Equipment;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback2;
 import com.eber.ui.binddevice.BindDeviceActivity1;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,13 +59,7 @@ public class EquipmentManagementAct extends BaseActivity implements View.OnClick
      * ListView初始化方法
      */
     private void initListView() {
-        alls = new ArrayList<Equipment>();
-        for (int i = 0; i < 9; i++) {
-            Equipment message = new Equipment();
-            message.name = "" + i + "号秤";
-            message.xinghao = "" + i + "mini";
-            alls.add(message);
-        }
+        loadData();
         equipmentAdapter = new EquipmentManagementAdapter(this, alls);
         list.setAdapter(equipmentAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,9 +67,21 @@ public class EquipmentManagementAct extends BaseActivity implements View.OnClick
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Intent in = new Intent(EquipmentManagementAct.this, EquipmentInfoAct.class);
-                String name = alls.get(position).name;
+                String name = equipmentAdapter.getData().get(position).typename;
                 in.putExtra("name", name);
                 startActivity(in);
+            }
+        });
+    }
+
+    private void loadData() {
+        netUtils.get(String.format(HttpUrls.FINDEQUIPLIST, EBERApp.nowUser.id + ""), true, null, new StringCallback2("memberEquipArray") {
+            @Override
+            public void onSuccess(String... result) {
+                JSONArray ja = JSON.parseArray(result[0]);
+                List<Equipment> list = JSON.parseArray(result[0], Equipment.class);
+                equipmentAdapter.getData().addAll(list);
+                equipmentAdapter.notifyDataSetChanged();
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.eber.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 public class MainActivity extends BaseActivity {
 
     private BaseFragment mContent;
-    private BaseFragment mFragHome;
+    private HomeFragment mFragHome;
     private BaseFragment mFragFind;
     private BaseFragment mFragMy;
     private BaseFragment mFragTendency;
@@ -54,7 +55,8 @@ public class MainActivity extends BaseActivity {
         tvMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(MeasureActivity.class);
+                Intent intent = new Intent(mContext, MeasureActivity.class);
+                startActivityForResult(intent, 0);
             }
         });
     }
@@ -124,4 +126,12 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 11) {
+            String recoid = data.getStringExtra("memberRecord");
+            mFragHome.setRecordValue(recoid);
+        }
+    }
 }

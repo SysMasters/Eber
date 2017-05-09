@@ -1,7 +1,10 @@
 package com.eber.ui.register;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -17,14 +20,20 @@ import com.eber.listener.OnValueChangeListener;
 import com.eber.ui.binddevice.BindDeviceActivity1;
 import com.eber.utils.SPKey;
 import com.eber.views.ruler.RulerView;
+import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
  * Created by Administrator on 2017/4/21.
  */
 public class FillInformationActivity extends BaseActivity {
+
+    public final static int REQUEST_CODE = 100;
 
     @ViewInject(R.id.title_content)
     private TextView tvTitle;
@@ -53,11 +62,58 @@ public class FillInformationActivity extends BaseActivity {
 
     private int sex = 1;
 
+    private boolean isEdit = false;
+    private Calendar mCalendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_fill_information);
         super.onCreate(savedInstanceState);
+        ViewUtils.inject(this);
+
+
         tvTitle.setText("填写信息");
+
+        sexRg.setOnCheckedChangeListener(checkLis);
+        rvHeight.setOnValueChangeListener(heightValueLis);
+        rvYear.setOnValueChangeListener(yearValueLis);
+        rvMonth.setOnValueChangeListener(monthValueLis);
+        btnSuccess.setOnClickListener(clickLis);
+
+        isEdit = getIntent().getBooleanExtra("isEdit", false);
+        String sex = getIntent().getStringExtra("sex");
+        String height = getIntent().getStringExtra("height");
+        String birthday = getIntent().getStringExtra("birthday");
+        String name = getIntent().getStringExtra("name");
+
+        if (isEdit) {
+            if (!TextUtils.equals(height, "- cm")) {
+                tvHeightText.setText(height);
+                rvHeight.setValue(Integer.parseInt(height));
+            }
+            if (TextUtils.equals("男", sex) || TextUtils.isEmpty(sex)) {
+                sexRg.check(R.id.fill_info_male);
+            } else {
+                sexRg.check(R.id.fill_info_woman);
+            }
+            if (!TextUtils.isEmpty(birthday)) {
+                mCalendar = Calendar.getInstance();
+                try {
+                    mCalendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
+                    tvYearText.setText(mCalendar.get(Calendar.YEAR));
+                    tvMonthText.setText((mCalendar.get(Calendar.MONTH) + 1));
+                    rvMonth.setValue((mCalendar.get(Calendar.MONTH) + 1));
+                    rvYear.setValue(mCalendar.get(Calendar.YEAR));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if (!TextUtils.isEmpty(name)) {
+                etUserName.setText(name);
+            }
+
+        }
     }
 
     @Override
@@ -67,17 +123,13 @@ public class FillInformationActivity extends BaseActivity {
 
     @Override
     public void setListener() {
-        sexRg.setOnCheckedChangeListener(checkLis);
-        rvHeight.setOnValueChangeListener(heightValueLis);
-        rvYear.setOnValueChangeListener(yearValueLis);
-        rvMonth.setOnValueChangeListener(monthValueLis);
-        btnSuccess.setOnClickListener(clickLis);
+
     }
 
     private RadioGroup.OnCheckedChangeListener checkLis = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-            switch (checkedId){
+            switch (checkedId) {
                 case R.id.fill_info_male:
                     sex = 1;
                     break;
@@ -115,24 +167,47 @@ public class FillInformationActivity extends BaseActivity {
     private View.OnClickListener clickLis = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            param = new HashMap<>();
-            param.put("memberId", EBERApp.user.id+"");
-            param.put("userName", etUserName.getText().toString().trim());
-            param.put("birthday", tvYearText.getText()+"-"+tvMonthText.getText());
-            param.put("sex", sex+"");
-            param.put("height", tvHeightText.getText()+"");
-            netUtils.get(HttpUrls.MODIFYMEMBERINFO, true, param, new StringCallback("member") {
-                @Override
-                public void onSuccess(String resultJson) {
-                    EBERApp.user.userName = etUserName.getText().toString().trim();
-                    EBERApp.user.birthday = tvYearText.getText()+"-"+tvMonthText.getText();
-                    EBERApp.user.sex = sex;
-                    EBERApp.user.height = Integer.parseInt(tvHeightText.getText()+"");
-                    String userJson = JSON.toJSONString(EBERApp.user);
-                    EBERApp.spUtil.putData(SPKey.USER, userJson);
-                    startActivity(BindDeviceActivity1.class);
+            if (!isEdit) {
+                param = new HashMap<>();
+                param.put("memberId", EBERApp.nowUser.id + "");
+                param.put("userName", etUserName.getText().toString().trim());
+                param.put("birthday", tvYearText.getText() + "-" + tvMonthText.getText());
+                param.put("sex", sex + "");
+                param.put("height", tvHeightText.getText() + "");
+                netUtils.get(HttpUrls.MODIFYMEMBERINFO, true, param, new StringCallback("member") {
+                    @Override
+                    public void onSuccess(String resultJson) {
+                        EBERApp.user.userName = etUserName.getText().toString().trim();
+                        EBERApp.user.birthday = tvYearText.getText() + "-" + tvMonthText.getText();
+                        EBERApp.user.sex = sex;
+                        EBERApp.user.height = Integer.parseInt(tvHeightText.getText() + "");
+                        String userJson = JSON.toJSONString(EBERApp.user);
+                        EBERApp.spUtil.putData(SPKey.USER, userJson);
+                        startActivity(BindDeviceActivity1.class);
+                    }
+                });
+            } else {
+                Intent intent = new Intent();
+                intent.putExtra("name", etUserName.getText().toString());
+                intent.putExtra("sex", sex == 1 ? "男" : "女");
+                String month = tvMonthText.getText().toString();
+                if (month.length() != 2) {
+                    month = "0" + month;
                 }
-            });
+                String dateStr = "";
+                if (mCalendar != null) {
+                    int date = mCalendar.get(Calendar.DATE);
+                    if (date < 10) {
+                        dateStr = "-0" + date;
+                    } else {
+                        dateStr = "-" + date;
+                    }
+                }
+                intent.putExtra("birthday", tvYearText.getText() + "-" + month + dateStr);
+                intent.putExtra("height", tvHeightText.getText().toString());
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
         }
     };
 }

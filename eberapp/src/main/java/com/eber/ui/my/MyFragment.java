@@ -1,8 +1,6 @@
 package com.eber.ui.my;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.text.format.Time;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,11 +14,9 @@ import com.eber.R;
 import com.eber.base.BaseFragment;
 import com.eber.http.BaseCallback;
 import com.eber.http.HttpUrls;
-import com.eber.http.StringCallback;
 import com.eber.ui.login.LoginActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -92,6 +88,9 @@ public class MyFragment extends BaseFragment {
     }
 
     private void getMyData() {
+        if (param ==null){
+            return;
+        }
         param = new HashMap<>();
         param.put("memberId", String.valueOf(EBERApp.nowUser.id));
         netUtils.get(HttpUrls.TOMYPAGE, false, param, new BaseCallback() {

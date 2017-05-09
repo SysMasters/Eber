@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.eber.bean.BodyInfo;
+import com.eber.ui.binddevice.BindDeviceActivity2;
+import com.eber.ui.check.MeasureActivity;
 import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.beacon.Beacon;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
@@ -36,6 +38,8 @@ import static java.lang.Integer.parseInt;
  */
 
 public class BluetoothUtil {
+
+    public int connectType = -1;// 判断类型是绑定设备还是测量
 
     public final static String UUIDStr = "0000ffe1-0000-1000-8000-00805f9b34fb";
     private final static String TAG = "bluetooth";
@@ -111,6 +115,12 @@ public class BluetoothUtil {
         @Override
         public void onSearchStopped() {
             Log.i(TAG, "扫描已停止");
+            if (TextUtils.isEmpty(mMac)) {
+                if (onBluetoothMeasureListener != null) {
+                    onBluetoothMeasureListener.onDisconnected();
+                }
+            }
+
         }
 
         @Override
@@ -149,7 +159,7 @@ public class BluetoothUtil {
                                 DetailItem item = new DetailItem(DetailItem.TYPE_CHARACTER, character.getUuid(), service.getUUID());
                                 mCharacter = item.uuid;
                                 mService = item.service;
-                                if (onBluetoothMeasureListener != null){
+                                if (onBluetoothMeasureListener != null) {
                                     onBluetoothMeasureListener.onConnectSuccess();
                                 }
                                 flag = false;
@@ -199,6 +209,7 @@ public class BluetoothUtil {
      * 开始测量
      */
     public void startMeasure() {
+        connectType = MeasureActivity.TYPE_MEASURE;
         if (mService == null && mCharacter == null) {
             return;
         }
@@ -215,6 +226,24 @@ public class BluetoothUtil {
         ClientManager.getClient().write(mMac, mService, mCharacter, sendByte, mWriteRsp);
     }
 
+    /**
+     * 读取秤体信息
+     */
+    public void readScaleInfo() {
+        connectType = BindDeviceActivity2.TYPE_MEASURE;
+        if (mService == null && mCharacter == null) {
+            return;
+        }
+        // 打开通知
+        ClientManager.getClient().notify(mMac, mService, mCharacter, mNotifyRsp);
+        mac = hexStringToByte(mMac.replace(":", ""));
+
+        byte[] deviceVersion = new byte[]{0x09, 0x04, 0x04, (byte) 0xAE};
+        byte[] bluetoothVersion = new byte[]{0x07, 0x04, 0x04, (byte) 0xA0};
+        ClientManager.getClient().write(mMac, mService, mCharacter, deviceVersion, mWriteRsp);
+        ClientManager.getClient().write(mMac, mService, mCharacter, bluetoothVersion, mWriteRsp);
+    }
+
 
     private final BleWriteResponse mWriteRsp = new BleWriteResponse() {
         @Override
@@ -227,11 +256,28 @@ public class BluetoothUtil {
         }
     };
 
+    private String deviceVersion;// 秤体软件版本
+    private String bluetoothVersion;// 蓝牙版本
+
     private final BleNotifyResponse mNotifyRsp = new BleNotifyResponse() {
         @Override
         public void onNotify(UUID service, UUID character, byte[] value) {
             if (service.equals(mService) && character.equals(mCharacter)) {
                 String data = ByteUtils.byteToString(value);
+                if (data.matches("^080504AE.*")) {
+                    deviceVersion = Integer.parseInt(data.substring(8, 10), 16) + "";
+                    if (onBluetoothMeasureListener != null) {
+                        onBluetoothMeasureListener.onVersion(deviceVersion, bluetoothVersion);
+                    }
+                }
+                if (data.matches("^060504A0.*")) {
+                    bluetoothVersion = Integer.parseInt(data.substring(8, 10), 16) + "";
+                    if (onBluetoothMeasureListener != null) {
+                        onBluetoothMeasureListener.onVersion(deviceVersion, bluetoothVersion);
+                    }
+                }
+
+
                 if (data.matches("^080504A1.*")) {
                     Log.i("msg=======", "删除成功");
                     mac = hexStringToByte(mMac.replace(":", ""));
@@ -285,6 +331,12 @@ public class BluetoothUtil {
                     }
                 }
                 if (data.matches("^080704B001.*")) {
+//                    if (connectType == MeasureActivity.TYPE_MEASURE){// 测量
+//                        startMeasure();
+//                    }else 
+                     if(connectType == BindDeviceActivity2.TYPE_MEASURE){// 绑定设备
+                        readScaleInfo();
+                    }
                     // 上秤
                     if (null != onBluetoothMeasureListener) {
                         onBluetoothMeasureListener.onWeigh();
@@ -337,13 +389,13 @@ public class BluetoothUtil {
     private void analysisData(String data1, String data2) {
         String data = data1.substring(14) + data2.substring(14);
         //        00003635 38 E0 00 D2 02 60 02 1A 1E 05 AC 00 C7 06 17
-        int weight = Integer.parseInt(data.substring(8, 12), 16)/200;
-        int bf = Integer.parseInt(data.substring(12, 16), 16)/10/10;
-        int watrer = Integer.parseInt(data.substring(16, 20), 16)/10;
-        int Muscle = Integer.parseInt(data.substring(20, 24), 16)/10;
-        int bone = Integer.parseInt(data.substring(24, 26), 16)/10;
+        int weight = Integer.parseInt(data.substring(8, 12), 16) / 200;
+        int bf = Integer.parseInt(data.substring(12, 16), 16) / 10 / 10;
+        int watrer = Integer.parseInt(data.substring(16, 20), 16) / 10;
+        int Muscle = Integer.parseInt(data.substring(20, 24), 16) / 10;
+        int bone = Integer.parseInt(data.substring(24, 26), 16) / 10;
         int BMR = Integer.parseInt(data.substring(26, 30), 16);
-        int SFat = Integer.parseInt(data.substring(30, 34), 16)/10;
+        int SFat = Integer.parseInt(data.substring(30, 34), 16) / 10;
         int fat = Integer.parseInt(data.substring(34, 36), 16);
         int age = Integer.parseInt(data.substring(36, 38), 16);
 
@@ -356,7 +408,7 @@ public class BluetoothUtil {
         info.bodywater = watrer + "";
         info.fatRate = bf + "";
         info.weight = weight + "";
-        info.bone = bone+"";
+        info.bone = bone + "";
 
         if (onBluetoothMeasureListener != null) {
             onBluetoothMeasureListener.onMeasureData(info);
@@ -365,7 +417,7 @@ public class BluetoothUtil {
         // 数据事例
         //                        ONE: 081104B10201-头 09-用户编号 00003635-时间 38 E0 00 D2 02 60
         //WeightH	WeighthL	BFH	BFL	WatrerH	WatrerL	蛋白质
-       // WeightH	WeighthL	BFH	BFL	WatrerH	WatrerL	蛋白质
+        // WeightH	WeighthL	BFH	BFL	WatrerH	WatrerL	蛋白质
 
         //                        TWO: 081004B10202-头 09-用户编号 02 1A 1E 05 AC 00 C7 06 17
         //MuscleH	MuscleL	Bone	BMRH	BMRL	SFatH	SFatL	InFat	BodyAge	体型
@@ -451,10 +503,15 @@ public class BluetoothUtil {
 
         // 连接断开
         void onDisconnected();
-        
+
         // 连接成功
         void onConnectSuccess();
+
+        // 获得蓝牙版本与秤体软件版本
+        void onVersion(String deviceVersion, String bluetoothVersion);
+
     }
+
 
     public void setOnBluetoothMeasureListener(OnBluetoothMeasureListener listener) {
         this.onBluetoothMeasureListener = listener;

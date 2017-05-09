@@ -4,14 +4,86 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <pl.droidsonroids.gif.GifImageView
+    <RelativeLayout
+        android:id="@+id/binding_device"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/test_gif"/>
+        android:visibility="visible">
 
-    <View
-        android:id="@+id/title_back"
-        android:layout_width="100dp"
-        android:layout_height="56dp"/>
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/test_gif"/>
+
+        <View
+            android:id="@+id/title_back"
+            android:layout_width="100dp"
+            android:layout_height="56dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/binding_again"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <include layout="@layout/title_view"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
+            android:src="@mipmap/ic_bind_device"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="附近没有设备或无法连接设备"
+            android:textColor="#3b3b3b"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● 您可以尝试重新安装电池后再次识别"
+                android:textColor="#3b3b3b"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="● 您可以重启蓝牙、手机，尝试再次识别"
+                android:textColor="#3b3b3b"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="● 如有需要，请拨打客服电话：400-0984006"
+                android:textColor="#3b3b3b"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/binding_again_btn"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/login_btn_bg"
+            android:text="再次识别"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+
 </RelativeLayout>
