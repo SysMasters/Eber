@@ -207,7 +207,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
         @Override
         public void onYear() {
             // 年
-            timeT = 1;
+            timeT = 3;
             setValue();
         }
     };

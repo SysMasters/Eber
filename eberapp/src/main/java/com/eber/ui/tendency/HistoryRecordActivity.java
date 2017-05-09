@@ -109,7 +109,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
     private void initData() {
         bodyInfos = new ArrayList<>();
         param = new HashMap<>();
-        param.put("memberId",/*String.valueOf(EBERApp.nowUser.id)*/"163");
+        param.put("memberId",String.valueOf(EBERApp.nowUser.id));
         netUtils.get(HttpUrls.FINDRECORDDATE, true, param, new StringCallback2("memberRecordArray", "dateArray") {
             @Override
             public void onSuccess(String... result) {
