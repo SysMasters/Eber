@@ -40,5 +40,7 @@ public class HttpUrls {
     public final static String FINDQAALL = BASEURL + "QAAPP/findQAAll.shtml";
     // 获取微信公众号信息
     public final static String GETPUBLICMUMBER = BASEURL + "dictionaryAPP/getPublicMumber.shtml";
+    /**提交称重记录**/
+    public final static String ADDRECORD = BASEURL + "memberRecordAPP/addRecord.shtml";
 
 }

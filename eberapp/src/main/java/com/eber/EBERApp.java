@@ -1,5 +1,6 @@
 package com.eber;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
@@ -8,6 +9,7 @@ import com.eber.bean.User;
 import com.eber.utils.SDCardUtils;
 import com.eber.utils.SPUtil;
 import com.eber.utils.VersionUtil;
+import com.inuker.bluetooth.library.BluetoothContext;
 import com.qxinli.umeng.UmengUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -24,15 +26,23 @@ public class EBERApp extends MultiDexApplication {
     public static User user;
     public static User nowUser;
 
+    private static EBERApp instance;
+
+    public static Application getInstance() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         sContext = this;
+        instance = this;
         spUtil = new SPUtil(getApplicationContext());
         versionUtil = new VersionUtil(getApplicationContext());
 
         umengInit();
         clearShareImagePath();
+        BluetoothContext.set(this);
     }
 
     /**
