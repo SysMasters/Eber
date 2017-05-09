@@ -333,9 +333,10 @@ public class BluetoothUtil {
                 if (data.matches("^080704B001.*")) {
 //                    if (connectType == MeasureActivity.TYPE_MEASURE){// 测量
 //                        startMeasure();
-//                    }else if(connectType == BindDeviceActivity2.TYPE_MEASURE){// 绑定设备
-//                        readScaleInfo();
-//                    }
+//                    }else 
+                     if(connectType == BindDeviceActivity2.TYPE_MEASURE){// 绑定设备
+                        readScaleInfo();
+                    }
                     // 上秤
                     if (null != onBluetoothMeasureListener) {
                         onBluetoothMeasureListener.onWeigh();
