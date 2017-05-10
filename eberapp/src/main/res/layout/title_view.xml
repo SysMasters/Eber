@@ -6,12 +6,12 @@
 
     <ImageView
         android:id="@+id/title_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/title_content"
-        android:layout_alignTop="@+id/title_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="18dp"
+        android:clickable="true"
+        android:background="@drawable/sl_title_click_bg"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
         android:onClick="titleBackClick"
         android:src="@mipmap/ico_back"/>
 
