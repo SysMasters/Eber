@@ -131,6 +131,7 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
      */
     private void submitRecord() {
         param.clear();
+        Log.i("msg=======", "请求" );
         param.put("memberId", EBERApp.nowUser.id + "");
         param.put("weight", mBodyInfo.weight);
         param.put("fatRate", mBodyInfo.fatRate);
@@ -145,6 +146,7 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
         netUtils.get(HttpUrls.ADDRECORD, false, param, new StringCallback2("memberRecord") {
             @Override
             public void onSuccess(String... result) {
+                Log.i("msg=======", "返回");
                 Intent intent = new Intent();
                 intent.putExtra("memberRecord", result[0]);
                 setResult(11, intent);

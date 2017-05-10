@@ -204,6 +204,7 @@ public class BluetoothUtil {
     private java.util.UUID mCharacter;
     private boolean isSendOne = true;
     private boolean isSendTow = true;
+    private boolean isBindDivice = true;
 
     /**
      * 开始测量
@@ -258,6 +259,8 @@ public class BluetoothUtil {
 
     private String deviceVersion;// 秤体软件版本
     private String bluetoothVersion;// 蓝牙版本
+    private boolean isAddSuccess = false;
+    private boolean isSelSuccess = false;
 
     private final BleNotifyResponse mNotifyRsp = new BleNotifyResponse() {
         @Override
@@ -288,9 +291,11 @@ public class BluetoothUtil {
                     System.arraycopy(mac, 0, sendByte, addUser.length, mac.length);
                     System.arraycopy(userInfo, 0, sendByte, addUser.length + mac.length, userInfo.length);
                     ClientManager.getClient().write(mMac, mService, mCharacter, sendByte, mWriteRsp);
+                    isAddSuccess = false;
                 }
-                if (data.matches("^080504A0.*")) {
+                else if (data.matches("^080504A0.*")) {
                     if (parseInt(data.substring(8, 10), 16) < 10) {
+                        isAddSuccess = true;
                         // 新建成功
                         Log.i("msg=======", "新建成功");
                         mac = hexStringToByte(mMac.replace(":", ""));
@@ -301,48 +306,58 @@ public class BluetoothUtil {
                         System.arraycopy(mac, 0, sendByte, selUser.length, mac.length);
                         System.arraycopy(info, 0, sendByte, selUser.length + mac.length, info.length);
                         ClientManager.getClient().write(mMac, mService, mCharacter, sendByte, mWriteRsp);
+                        isSelSuccess = false;
                     } else {
-                        // 新建失败
-                        Log.i("msg=======", "新建失败");
-                        mac = hexStringToByte(mMac.replace(":", ""));
-                        byte[] addUser = new byte[]{0x09, 0x0E, 0x04, (byte) 0xA0};
-                        byte[] userInfo = pingUserInfo(172, 25, 0);
-                        sendByte = new byte[addUser.length + mac.length + userInfo.length];
-                        System.arraycopy(addUser, 0, sendByte, 0, addUser.length);
-                        System.arraycopy(mac, 0, sendByte, addUser.length, mac.length);
-                        System.arraycopy(userInfo, 0, sendByte, addUser.length + mac.length, userInfo.length);
-                        ClientManager.getClient().write(mMac, mService, mCharacter, sendByte, mWriteRsp);
+                        if (!isAddSuccess) {
+                            // 新建失败
+                            Log.i("msg=======", "新建失败");
+                            mac = hexStringToByte(mMac.replace(":", ""));
+                            byte[] addUser = new byte[]{0x09, 0x0E, 0x04, (byte) 0xA0};
+                            byte[] userInfo = pingUserInfo(172, 25, 0);
+                            sendByte = new byte[addUser.length + mac.length + userInfo.length];
+                            System.arraycopy(addUser, 0, sendByte, 0, addUser.length);
+                            System.arraycopy(mac, 0, sendByte, addUser.length, mac.length);
+                            System.arraycopy(userInfo, 0, sendByte, addUser.length + mac.length, userInfo.length);
+                            ClientManager.getClient().write(mMac, mService, mCharacter, sendByte, mWriteRsp);
+                        }
                     }
                 }
-                if (data.matches("^080504A5.*")) {
+                else if (data.matches("^080504A5.*")) {
                     if (parseInt(data.substring(8, 10)) != 1) {
-                        Log.i("msg=======", "选择用户测量失败");
-                        mac = hexStringToByte(mMac.replace(":", ""));
-                        byte[] selUser = new byte[]{0x0F, 0x04, (byte) 0xA5};
-                        byte[] info = pingInfo(172, 25, 0);
-                        sendByte = new byte[selUser.length + mac.length + info.length];
-                        System.arraycopy(selUser, 0, sendByte, 0, selUser.length);
-                        System.arraycopy(mac, 0, sendByte, selUser.length, mac.length);
-                        System.arraycopy(info, 0, sendByte, selUser.length + mac.length, info.length);
-                        String addUserStr = ByteUtils.byteToString(sendByte);
-                        ClientManager.getClient().write(mMac, mService, mCharacter, sendByte, mWriteRsp);
+                        if (!isSelSuccess) {
+                            Log.i("msg=======", "选择用户测量失败");
+                            mac = hexStringToByte(mMac.replace(":", ""));
+                            byte[] selUser = new byte[]{0x0F, 0x04, (byte) 0xA5};
+                            byte[] info = pingInfo(172, 25, 0);
+                            sendByte = new byte[selUser.length + mac.length + info.length];
+                            System.arraycopy(selUser, 0, sendByte, 0, selUser.length);
+                            System.arraycopy(mac, 0, sendByte, selUser.length, mac.length);
+                            System.arraycopy(info, 0, sendByte, selUser.length + mac.length, info.length);
+                            String addUserStr = ByteUtils.byteToString(sendByte);
+                            ClientManager.getClient().write(mMac, mService, mCharacter, sendByte, mWriteRsp);
+                        }
                     } else {
+                        isSelSuccess = true;
                         Log.i("msg=======", "选择用户测量成功");
                     }
                 }
-                if (data.matches("^080704B001.*")) {
+                else if (data.matches("^080704B001.*")) {
 //                    if (connectType == MeasureActivity.TYPE_MEASURE){// 测量
+//                        Log.i("msg=======", "测量");
 //                        startMeasure();
-//                    }else 
+//                    }else
                      if(connectType == BindDeviceActivity2.TYPE_MEASURE){// 绑定设备
-                        readScaleInfo();
+                         if (isBindDivice) {
+                             readScaleInfo();
+                             isBindDivice = !isBindDivice;
+                         }
                     }
                     // 上秤
                     if (null != onBluetoothMeasureListener) {
                         onBluetoothMeasureListener.onWeigh();
                     }
                 }
-                if (data.matches("^080704B0.*")) {
+                else if (data.matches("^080704B0.*")) {
                     if (parseInt(data.substring(8, 10)) == 0) {
                         Log.i("msg=======", "测量结束");
                         isSendOne = true;
@@ -350,7 +365,7 @@ public class BluetoothUtil {
                         ClientManager.getClient().write(mMac, mService, mCharacter, end, mWriteRsp);
                     }
                 }
-                if (data.matches("^081104B102.*")) {
+                else if (data.matches("^081104B102.*")) {
                     if (parseInt(data.substring(10, 12)) == 1) {
                         Log.i("msg=======ONE", "" + data);
                         // 储存data为第1包数据
@@ -361,7 +376,7 @@ public class BluetoothUtil {
                         }
                     }
                 }
-                if (data.matches("^081004B102.*")) {
+                else if (data.matches("^081004B102.*")) {
                     if (parseInt(data.substring(10, 12)) == 2) {
                         Log.i("msg=======TWO", "" + data);
                         // 储存data为第2包数据
@@ -388,14 +403,15 @@ public class BluetoothUtil {
 
     private void analysisData(String data1, String data2) {
         String data = data1.substring(14) + data2.substring(14);
+        Log.i("msg=======结果", "" + data);
         //        00003635 38 E0 00 D2 02 60 02 1A 1E 05 AC 00 C7 06 17
-        int weight = Integer.parseInt(data.substring(8, 12), 16) / 200;
-        int bf = Integer.parseInt(data.substring(12, 16), 16) / 10 / 10;
-        int watrer = Integer.parseInt(data.substring(16, 20), 16) / 10;
-        int Muscle = Integer.parseInt(data.substring(20, 24), 16) / 10;
-        int bone = Integer.parseInt(data.substring(24, 26), 16) / 10;
+        double weight = Integer.parseInt(data.substring(8, 12), 16) / 200D;
+        double bf = Integer.parseInt(data.substring(12, 16), 16) / 10D;
+        double watrer = Integer.parseInt(data.substring(16, 20), 16) / 10D;
+        double Muscle = Integer.parseInt(data.substring(20, 24), 16) / 10D;
+        double bone = Integer.parseInt(data.substring(24, 26), 16) / 10D;
         int BMR = Integer.parseInt(data.substring(26, 30), 16);
-        int SFat = Integer.parseInt(data.substring(30, 34), 16) / 10;
+        double SFat = Integer.parseInt(data.substring(30, 34), 16) / 10D;
         int fat = Integer.parseInt(data.substring(34, 36), 16);
         int age = Integer.parseInt(data.substring(36, 38), 16);
 
@@ -454,8 +470,8 @@ public class BluetoothUtil {
     /**
      * 收到第一包和第二包反馈给设备的数据
      */
-    private byte[] resOne = new byte[]{0x05, 0x04, (byte) 0xB1, 0x01};
-    private byte[] resTwo = new byte[]{0x05, 0x04, (byte) 0xB1, 0x02};
+    private byte[] resOne = new byte[]{0x09, 0x05, 0x04, (byte) 0xB1, 0x01};
+    private byte[] resTwo = new byte[]{0x09, 0x05, 0x04, (byte) 0xB1, 0x02};
     /**
      * 实时测量结束向设备发送的数据
      */

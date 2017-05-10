@@ -88,12 +88,9 @@ public class MyFragment extends BaseFragment {
     }
 
     private void getMyData() {
-        if (param ==null){
-            return;
-        }
         param = new HashMap<>();
         param.put("memberId", String.valueOf(EBERApp.nowUser.id));
-        netUtils.get(HttpUrls.TOMYPAGE, false, param, new BaseCallback() {
+        netUtils.get(HttpUrls.TOMYPAGE, true, param, new BaseCallback() {
             @Override
             public void onResponse(String response) {
                 super.onResponse(response);
@@ -101,7 +98,7 @@ public class MyFragment extends BaseFragment {
                 if (jo.getInteger("sex") == 1){
                     imgPhoto.setImageResource(R.mipmap.ico_man);
                 }else{
-                    imgPhoto.setImageResource(R.mipmap.ico_woman);
+                    imgPhoto.setImageResource(R.mipmap.ic_info_sex_woman_seleted);
                 }
                 tvName.setText(jo.getString("userName"));
                 tvID.setText(jo.getString("cellphone"));
