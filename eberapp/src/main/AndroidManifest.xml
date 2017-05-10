@@ -103,6 +103,16 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
+        <receiver
+            android:name=".ui.my.AutoReceiver"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5909ea80677baa78a200163b"/>

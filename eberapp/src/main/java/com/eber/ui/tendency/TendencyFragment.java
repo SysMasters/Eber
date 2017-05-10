@@ -34,9 +34,6 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
     @ViewInject(R.id.tendency_group)
     private BMIBtnGroup mBmiBtnGroup;
 
-
-    List<View> views = new ArrayList<>();
-
     @Override
     public int bindLayout() {
         return R.layout.fragment_tendency;
@@ -60,6 +57,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
         texts.add("12-24");
         texts.add("12-25");
         line.setNums(nums)      // 数据集
+                .setUnitText("%")
                 .setTexts(texts)    // 坐标文字集合
                 .setTextSize(16)
                 .setDivideHeight(5)     // 文字图标间距
@@ -91,6 +89,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
     private void setViewVaule(int property, List<Trend> trends) {
         int[] colors = new int[3];
         List<Float> nums = new ArrayList<>();
+        String unit = "%";
         if (property == 1){
             colors = new int[]{
                     R.color.start_color_1, R.color.end_color_1, R.color.line_color_1
@@ -98,6 +97,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
             for (Trend t : trends){
                 nums.add(t.weightAverage);
             }
+            unit = "kg";
         }else if (property == 2){
             colors = new int[]{
                     R.color.start_color_2, R.color.end_color_2, R.color.line_color_2
@@ -136,6 +136,7 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
             }
         }
         line.setNums(nums)      // 数据集
+                .setUnitText(unit)
                 .setTexts(texts)    // 坐标文字集合
                 .setTextSize(16)
                 .setDivideHeight(5)     // 文字图标间距

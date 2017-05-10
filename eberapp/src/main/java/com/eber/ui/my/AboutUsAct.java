@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -35,6 +36,8 @@ public class AboutUsAct extends BaseActivity {
     TextView title;
     @ViewInject(R.id.lly_weixin)
     LinearLayout ll;
+    @ViewInject(R.id.lly_kefu)
+    LinearLayout call;
     @ViewInject(R.id.about_version_name)
     TextView tvVersionName;
 
@@ -78,6 +81,14 @@ public class AboutUsAct extends BaseActivity {
                         }
                     }
                 });
+            }
+        });
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:4000984006"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }

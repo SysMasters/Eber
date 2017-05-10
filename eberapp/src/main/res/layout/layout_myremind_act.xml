@@ -187,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="(中午称重)"
+                android:text="(晚上称重)"
                 android:textColor="#000000"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -241,7 +241,7 @@
             android:layout_marginBottom="13dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="13dp"
-            android:text="建议：晚餐一小时后至睡觉前"
+            android:text="收到来自系统的评论消息"
             android:textColor="#000000"
             android:textSize="12sp" />
 

@@ -9,6 +9,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Shader;
+import android.icu.math.BigDecimal;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -18,6 +19,7 @@ import android.view.View;
 
 import com.eber.R;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class BrokenLineView extends View {
     private Path brokenPath;
     private Path circelPath;
     private Path gradientPath;
+    private String unit;
 
     public BrokenLineView(Context context) {
         this(context, null);
@@ -108,6 +111,11 @@ public class BrokenLineView extends View {
         } else {
             this.texts.clear();
         }
+        return this;
+    }
+
+    public BrokenLineView setUnitText(String unit){
+        this.unit = unit;
         return this;
     }
 
@@ -253,8 +261,9 @@ public class BrokenLineView extends View {
             } else {
                 brokenPath.lineTo(x, y);
             }
-
-            String text = String.format("%.1f%%", nums.get(i));
+            DecimalFormat fnum = new DecimalFormat("##0.0");
+            String dd=fnum.format(nums.get(i));
+            String text = dd + unit;
             textPaint.setColor(brokenLineColor);
             float textWidth = textPaint.measureText(text);
             canvas.drawText(text, x - textWidth / 2, y - 20, textPaint);
