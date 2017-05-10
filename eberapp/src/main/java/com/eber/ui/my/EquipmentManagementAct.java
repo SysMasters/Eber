@@ -69,9 +69,23 @@ public class EquipmentManagementAct extends BaseActivity implements View.OnClick
                 Intent in = new Intent(EquipmentManagementAct.this, EquipmentInfoAct.class);
                 String name = equipmentAdapter.getData().get(position).typename;
                 in.putExtra("name", name);
-                startActivity(in);
+                in.putExtra("equipId", equipmentAdapter.getData().get(position).equipId);
+                startActivityForResult(in, 11);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 11 && resultCode == 11 && data != null){
+            for (int i  = 0; i < alls.size(); i++) {
+                if (data.getStringExtra("equipId").equals(alls.get(i).equipId)) {
+                    equipmentAdapter.getData().remove(i);
+                }
+            }
+            equipmentAdapter.notifyDataSetChanged();
+        }
     }
 
     private void loadData() {
@@ -79,8 +93,8 @@ public class EquipmentManagementAct extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(String... result) {
                 JSONArray ja = JSON.parseArray(result[0]);
-                List<Equipment> list = JSON.parseArray(result[0], Equipment.class);
-                equipmentAdapter.getData().addAll(list);
+                alls = JSON.parseArray(result[0], Equipment.class);
+                equipmentAdapter.getData().addAll(alls);
                 equipmentAdapter.notifyDataSetChanged();
             }
         });

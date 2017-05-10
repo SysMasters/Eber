@@ -59,6 +59,6 @@ public class HttpUrls {
     // 忘记密码获取验证码
     public final static String GETVCODEONLY = BASEURL + "memberLoginAPP/getVCodeOnly.shtml";
     // 修改密码
-    public final static String FORGETPASSWORD = BASEURL + "memberAPP/forgetPassword.shtml";
+    public final static String FORGETPASSWORD = BASEURL + "memberLoginAPP/forgetPassword.shtml";
 
 }
