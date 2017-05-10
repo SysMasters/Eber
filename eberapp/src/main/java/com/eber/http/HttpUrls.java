@@ -56,5 +56,9 @@ public class HttpUrls {
     public final static String FINDMEMBERAIM = BASEURL + "memberAimAPP/findMemberAim.shtml";
     // 确定目标
     public final static String ADDORUPDATEAIM = BASEURL + "memberAimAPP/addOrUpdateAim.shtml";
+    // 忘记密码获取验证码
+    public final static String GETVCODEONLY = BASEURL + "memberLoginAPP/getVCodeOnly.shtml";
+    // 修改密码
+    public final static String FORGETPASSWORD = BASEURL + "memberAPP/forgetPassword.shtml";
 
 }

@@ -117,7 +117,7 @@
         <TextView android:layout_width="0dp"
             android:layout_weight="6"
             android:layout_height="wrap_content"
-            android:text="EBEF智能生活"
+            android:text="EBER智能生活"
             android:layout_marginRight="15dp"
             android:gravity="right"
             android:textSize="15sp"

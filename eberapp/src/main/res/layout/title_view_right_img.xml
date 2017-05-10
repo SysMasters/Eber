@@ -29,12 +29,11 @@
     <ImageView
         android:id="@+id/title_right"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:padding="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_index_share"
-        android:clickable="true"
-        android:background="@drawable/sl_title_click_bg"
+        android:paddingBottom="14dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="14dp"
         android:textColor="@android:color/white" />
 </RelativeLayout>

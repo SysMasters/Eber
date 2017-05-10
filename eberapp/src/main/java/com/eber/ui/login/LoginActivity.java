@@ -50,6 +50,8 @@ public class LoginActivity extends BaseActivity {
     private ImageView imgWXLogin;
     @ViewInject(R.id.login_wb_img)
     private ImageView imgWBLogin;
+    @ViewInject(R.id.login_forget_password)
+    private TextView tvForgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +66,22 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setListener() {
+        tvForgetPassword.setOnClickListener(clickLis);
         etPhone.setText(EBERApp.spUtil.getStringData(SPKey.USER_NAME));
         etPassword.setText(EBERApp.spUtil.getStringData(SPKey.PASS_WORD));
     }
+
+    private View.OnClickListener clickLis = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.login_forget_password:
+                    Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+        }
+    };
 
     public void loginBtnClick(View view) {
         switch (view.getId()) {
@@ -114,13 +129,13 @@ public class LoginActivity extends BaseActivity {
     private void toHomePage(String... result) {
         User user = JSON.parseObject(result[0], User.class);
         user.sessionId = result[1];
+        EBERApp.user = user;
+        EBERApp.nowUser = user;
         if (user.birthday == null || user.birthday.equals("")){
             Intent intent = new Intent(LoginActivity.this, FillInformationActivity.class);
             startActivity(intent);
             return;
         }
-        EBERApp.user = user;
-        EBERApp.nowUser = user;
         EBERApp.spUtil.putData(SPKey.USER, JSON.toJSONString(user));
         // 登录操作
         EBERApp.spUtil.putData(SPKey.USER_NAME, etPhone.getText().toString());
