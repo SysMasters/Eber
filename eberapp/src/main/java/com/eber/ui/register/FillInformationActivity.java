@@ -65,6 +65,7 @@ public class FillInformationActivity extends BaseActivity {
     private boolean isEdit = false;
     private Calendar mCalendar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_fill_information);
@@ -177,9 +178,9 @@ public class FillInformationActivity extends BaseActivity {
                 param = new HashMap<>();
                 param.put("memberId", EBERApp.user.id + "");
                 param.put("userName", etUserName.getText().toString().trim());
-                param.put("birthday", tvYearText.getText() + "-" + tvMonthText.getText());
+                param.put("birthday", tvYearText.getText().toString() + "-" + tvMonthText.getText().toString());
                 param.put("sex", sex + "");
-                param.put("height", tvHeightText.getText() + "");
+                param.put("height", tvHeightText.getText().toString() + "");
                 netUtils.get(HttpUrls.MODIFYMEMBERINFO, true, param, new StringCallback("member") {
                     @Override
                     public void onSuccess(String resultJson) {
@@ -188,6 +189,7 @@ public class FillInformationActivity extends BaseActivity {
                         EBERApp.user.sex = sex;
                         EBERApp.user.height = Integer.parseInt(tvHeightText.getText() + "");
                         String userJson = JSON.toJSONString(EBERApp.user);
+                        EBERApp.nowUser = EBERApp.user;
                         EBERApp.spUtil.putData(SPKey.USER, userJson);
                         startActivity(BindDeviceActivity1.class);
                     }

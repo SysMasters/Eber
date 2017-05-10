@@ -82,12 +82,22 @@
         android:layout_marginLeft="37dp"
         android:layout_marginRight="37dp"
         android:background="#888"/>
+    <TextView
+        android:id="@+id/login_forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="37dp"
+        android:textSize="14sp"
+        android:textColor="#03a9f4"
+        android:text="忘记密码？"/>
     <Button
         android:id="@+id/login_login_btn"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:onClick="loginBtnClick"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="25dp"
         android:layout_gravity="center_horizontal"
         android:background="@mipmap/ico_login_btn"/>
     <TextView
