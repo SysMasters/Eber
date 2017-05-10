@@ -230,4 +230,10 @@ public class HistoryDataActivity extends BaseActivity {
         tvNeizang.setText(bodyInfo.organfat + "级");
         tvBasis.setText(bodyInfo.basicmetabolism + "cal");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UmengUtil.onDestroy(this);
+    }
 }

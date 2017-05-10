@@ -88,7 +88,7 @@
                         android:layout_marginLeft="7dp"
                         android:layout_marginTop="5dp"
                         android:text="签到次数"
-                        android:textColor="#888"
+                        android:textColor="#888888"
                         android:textSize="12sp" />
 
                     <TextView
@@ -156,7 +156,7 @@
                         android:layout_marginLeft="7dp"
                         android:layout_marginTop="5dp"
                         android:text="我的徽章"
-                        android:textColor="#888"
+                        android:textColor="#888888"
                         android:textSize="12sp" />
 
                     <LinearLayout
@@ -194,10 +194,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
                 android:id="@+id/f_my_remind"
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -229,9 +231,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_target"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -264,9 +268,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_account_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -299,9 +305,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_device_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -334,9 +342,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_update_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -369,9 +379,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -404,10 +416,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
                 android:id="@+id/f_my_faq"
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -439,10 +453,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
                 android:id="@+id/f_my_about"
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -474,10 +490,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
 
             <LinearLayout
                 android:id="@+id/f_my_un_login"
+                android:clickable="true"
+                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -510,7 +528,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="45dp"
-                android:background="#888" />
+                android:background="#ECECEC" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

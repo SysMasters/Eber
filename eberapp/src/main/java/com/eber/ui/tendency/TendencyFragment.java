@@ -90,48 +90,48 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
         int[] colors = new int[3];
         List<Float> nums = new ArrayList<>();
         String unit = "%";
-        if (property == 1){
+        if (property == 1) {
             colors = new int[]{
                     R.color.start_color_1, R.color.end_color_1, R.color.line_color_1
             };
-            for (Trend t : trends){
+            for (Trend t : trends) {
                 nums.add(t.weightAverage);
             }
             unit = "kg";
-        }else if (property == 2){
+        } else if (property == 2) {
             colors = new int[]{
                     R.color.start_color_2, R.color.end_color_2, R.color.line_color_2
             };
-            for (Trend t : trends){
+            for (Trend t : trends) {
                 nums.add(t.fatRateAverage);
             }
-        }else if (property == 3){
+        } else if (property == 3) {
             colors = new int[]{
                     R.color.start_color_3, R.color.end_color_3, R.color.line_color_3
             };
-            for (Trend t : trends){
+            for (Trend t : trends) {
                 nums.add(t.muscleAverage);
             }
-        }else if (property == 4){
+        } else if (property == 4) {
             colors = new int[]{
                     R.color.start_color_4, R.color.end_color_4, R.color.line_color_4
             };
-            for (Trend t : trends){
+            for (Trend t : trends) {
                 nums.add(t.bodywaterAverage);
             }
-        }else if (property == 5){
+        } else if (property == 5) {
             colors = new int[]{
                     R.color.start_color_5, R.color.end_color_5, R.color.line_color_5
             };
-            for (Trend t : trends){
+            for (Trend t : trends) {
                 nums.add(t.proteinAverage);
             }
         }
         List<String> texts = new ArrayList<>();
-        for (Trend t : trends){
-            if (t.updateTime.length() >= 10){
+        for (Trend t : trends) {
+            if (t.updateTime.length() >= 10) {
                 texts.add(t.updateTime.substring(5));
-            }else {
+            } else {
                 texts.add(t.updateTime);
             }
         }
@@ -216,9 +216,9 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
     private void setValue() {
         if (timeT == 1) {
             setViewVaule(property, weekTrendArray);
-        }else if (timeT == 2){
+        } else if (timeT == 2) {
             setViewVaule(property, monthTrendArray);
-        }else{
+        } else {
             setViewVaule(property, yearTrendArray);
         }
     }
@@ -238,6 +238,13 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        UmengUtil.onActivityResult(mActivity,requestCode,resultCode,data);
+        UmengUtil.onActivityResult(mActivity, requestCode, resultCode, data);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        UmengUtil.onDestroy(mActivity);
     }
 }
