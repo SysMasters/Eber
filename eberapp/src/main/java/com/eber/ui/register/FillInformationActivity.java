@@ -87,9 +87,15 @@ public class FillInformationActivity extends BaseActivity {
         String name = getIntent().getStringExtra("name");
 
         if (isEdit) {
-            if (!TextUtils.equals(height, "- cm")) {
-                tvHeightText.setText(height);
-                rvHeight.setValue(Integer.parseInt(height));
+            try {
+                String h = height.replace("", "").replace("cm", "").replace("-", "");
+                if (!TextUtils.isEmpty(h)) {
+                    tvHeightText.setText(h);
+                    rvHeight.setValue(Integer.parseInt(h));
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
             }
             if (TextUtils.equals("男", sex) || TextUtils.isEmpty(sex)) {
                 sexRg.check(R.id.fill_info_male);
@@ -169,7 +175,7 @@ public class FillInformationActivity extends BaseActivity {
         public void onClick(View v) {
             if (!isEdit) {
                 param = new HashMap<>();
-                param.put("memberId", EBERApp.nowUser.id + "");
+                param.put("memberId", EBERApp.user.id + "");
                 param.put("userName", etUserName.getText().toString().trim());
                 param.put("birthday", tvYearText.getText() + "-" + tvMonthText.getText());
                 param.put("sex", sex + "");
