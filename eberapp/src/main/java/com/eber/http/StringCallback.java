@@ -38,6 +38,7 @@ public abstract class StringCallback extends BaseCallback {
 
     @Override
     public void onError(Exception e) {
+        super.onError(e);
         onFaile(e);
     }
 

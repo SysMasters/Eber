@@ -19,7 +19,9 @@ import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback;
+import com.eber.ui.login.ForgetPasswordActivity;
 import com.eber.ui.register.FillInformationActivity;
+import com.eber.utils.Base64;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
@@ -73,6 +75,7 @@ public class ModifyDataAct extends BaseActivity {
         userNameLayout.setOnClickListener(clickLis);
         userSexLayout.setOnClickListener(clickLis);
         userBirthdayLayout.setOnClickListener(clickLis);
+        userHeightLayout.setOnClickListener(clickLis);
         param = new HashMap<>();
         param.put("memberId", String.valueOf(EBERApp.nowUser.id));
         netUtils.get(HttpUrls.GETMEMBERINFO, true, param, new StringCallback("member") {
@@ -86,7 +89,7 @@ public class ModifyDataAct extends BaseActivity {
                     tvSex.setText("男");
                 else
                     tvSex.setText("女");
-                tvHeight.setText((TextUtils.isEmpty(jo.getString("height")) ? "- " : jo.getString("height")) + "cm");
+                tvHeight.setText((TextUtils.isEmpty(jo.getString("height")) ? "- " : jo.getString("height")));
                 tvBirthdy.setText(jo.getString("birthday"));
             }
         });
@@ -114,10 +117,10 @@ public class ModifyDataAct extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.up_info_up_password:      // 修改密码
-
+                    startActivity(ForgetPasswordActivity.class);
                     break;
                 case R.id.up_info_ok_btn:       // 最下方完成按钮
-
+                    editUserInfo();
                     break;
                 case R.id.user_name_layout:// 跳转修改资料
                 case R.id.user_sex_layout:
@@ -128,12 +131,37 @@ public class ModifyDataAct extends BaseActivity {
                     intent.putExtra("sex", tvSex.getText().toString());
                     intent.putExtra("birthday", tvBirthdy.getText().toString());
                     intent.putExtra("height", tvHeight.getText().toString());
-                    intent.putExtra("isEdit",true);
+                    intent.putExtra("isEdit", true);
                     startActivityForResult(intent, FillInformationActivity.REQUEST_CODE);
                     break;
             }
         }
     };
+
+    /**
+     * 修改個人資料
+     */
+    private void editUserInfo() {
+        param = new HashMap<>();
+        param.put("memberId", EBERApp.nowUser.id + "");
+        param.put("userName", Base64.getEncodeStr(etUserName.getText().toString().trim()));
+        param.put("birthday", tvBirthdy.getText().toString());
+        param.put("sex", TextUtils.equals(tvSex.getText().toString(), "男") ? "1" : "2");
+        param.put("height", tvHeight.getText().toString());
+        param.put("description", Base64.getEncodeStr(etDescription.getText().toString()));
+        netUtils.get(HttpUrls.MODIFYMEMBERINFO, true, param, new StringCallback("member") {
+            @Override
+            public void onSuccess(String resultJson) {
+                EBERApp.nowUser.userName = etUserName.getText().toString().trim();
+                EBERApp.nowUser.birthday = tvBirthdy.getText().toString();
+                EBERApp.nowUser.sex = TextUtils.equals(tvSex.getText().toString(), "男") ? 1 : 2;
+                EBERApp.nowUser.height = Integer.parseInt(tvHeight.getText().toString());
+
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+    }
 
     public void updateInfo2(View v) {
         // 进入修改资料第二页面

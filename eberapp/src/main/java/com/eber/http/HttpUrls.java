@@ -60,5 +60,7 @@ public class HttpUrls {
     public final static String GETVCODEONLY = BASEURL + "memberLoginAPP/getVCodeOnly.shtml";
     // 修改密码
     public final static String FORGETPASSWORD = BASEURL + "memberAPP/forgetPassword.shtml";
+    // 修改密码
+    public final static String MODIFYLOGININFO = BASEURL + "memberAPP/modifyLoginInfo.shtml";
 
 }

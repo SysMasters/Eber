@@ -231,7 +231,15 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="31dp"
                     android:layout_toRightOf="@+id/text_shengao"
-                    android:text="165cm"
+                    android:text="165"
+                    android:textColor="#000000"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/up_info_height"
+                    android:text=" cm"
                     android:textColor="#000000"
                     android:textSize="15sp"/>
 

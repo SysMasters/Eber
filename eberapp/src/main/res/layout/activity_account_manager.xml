@@ -1,190 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f3f3f3"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f3f3f3"
+              android:orientation="vertical">
 
-    <include layout="@layout/title_view" />
+    <include layout="@layout/title_view"/>
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center_vertical"
+    <LinearLayout
         android:id="@+id/mobile_area"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:background="#ffffff"
+        android:gravity="center_vertical"
         >
-        <TextView android:layout_width="0dp"
+
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="手机"
-            android:layout_weight="4"
             android:layout_marginLeft="15dp"
+            android:layout_weight="4"
+            android:text="手机"
             />
-        <TextView android:layout_width="0dp"
-            android:layout_weight="6"
+
+        <TextView
+            android:id="@+id/mobile"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="13600056221"
             android:layout_marginRight="15dp"
+            android:layout_weight="6"
             android:gravity="right"
             android:textColor="#4d4a4a"
-            android:id="@+id/mobile"
-            />
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/right_arrows"
-            android:layout_marginRight="26dp"
-            />
-    </LinearLayout>
-    <View android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#bebebe" />
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#ffffff"
-        android:gravity="center_vertical"
-        android:id="@+id/update_pwd"
-        >
-        <TextView android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="修改密码"
-            android:layout_weight="4"
-            android:layout_marginLeft="15dp"
             />
 
-        <ImageView android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/right_arrows"
             android:layout_marginRight="26dp"
+            android:src="@mipmap/right_arrows"
+            android:visibility="invisible"
             />
     </LinearLayout>
-    <View android:layout_width="match_parent"
+
+    <View
+        android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#bebebe"/>
-    <LinearLayout android:layout_width="match_parent"
+        android:background="#ECECEC"/>
+
+    <LinearLayout
+        android:id="@+id/update_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/click_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="4"
+            android:text="修改密码"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="26dp"
+            android:src="@mipmap/right_arrows"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECECEC"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="47dp"
         android:gravity="center_vertical"
         >
-        <TextView android:layout_width="match_parent"
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:text="第三方登录"
-            android:layout_marginLeft="15dp"
             />
 
     </LinearLayout>
-    <View android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#bebebe"/>
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center_vertical"
-        android:background="#ffffff"
-        android:id="@+id/lly_qq"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ico_login_qq"
-            android:layout_marginLeft="15dp"
-            />
-        <TextView android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="QQ"
-            android:layout_weight="4"
-            android:layout_marginLeft="15dp"
-            />
-        <TextView android:layout_width="0dp"
-            android:layout_weight="6"
-            android:layout_height="wrap_content"
-            android:text="+ 绑定"
-            android:layout_marginRight="15dp"
-            android:gravity="right"
-            android:textColor="#4d4a4a"
-            />
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/right_arrows"
-            android:layout_marginRight="26dp"
-            />
-    </LinearLayout>
-    <View android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#bebebe"/>
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center_vertical"
-        android:background="#ffffff"
-        android:id="@+id/lly_weixin"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ico_login_wx"
-            android:layout_marginLeft="15dp"
-            />
-        <TextView android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="微信"
-            android:layout_weight="4"
-            android:layout_marginLeft="15dp"
-            />
-        <TextView android:layout_width="0dp"
-            android:layout_weight="6"
-            android:layout_height="wrap_content"
-            android:text="+ 绑定"
-            android:layout_marginRight="15dp"
-            android:gravity="right"
-            android:textColor="#4d4a4a"
-            />
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/right_arrows"
-            android:layout_marginRight="26dp"
-            />
-    </LinearLayout>
-    <View android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#bebebe"/>
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center_vertical"
-        android:background="#ffffff"
-        android:id="@+id/lly_weibo"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ico_login_wb"
-            android:layout_marginLeft="15dp"
-            />
-        <TextView android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="新浪微博"
-            android:layout_weight="4"
-            android:layout_marginLeft="7dp"
-            />
-        <TextView android:layout_width="0dp"
-            android:layout_weight="6"
-            android:layout_height="wrap_content"
-            android:text="+ 绑定"
-            android:layout_marginRight="15dp"
-            android:gravity="right"
-            android:textColor="#4d4a4a"
-            />
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/right_arrows"
-            android:layout_marginRight="26dp"
-            />
-    </LinearLayout>
-    <View android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#bebebe"/>
-    <TextView
-        android:layout_marginTop="18dp"
-        android:text="第三方账号的权利说明"
-        android:gravity="right"
-        android:textColor="#824e00"
-        android:layout_marginRight="27dp"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp"
+        android:background="#ECECEC"/>
+
+    <LinearLayout
+        android:id="@+id/lly_qq"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/click_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/ico_login_qq"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="4"
+            android:text="QQ"
+            />
+
+        <TextView
+            android:id="@+id/tv_qq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_weight="6"
+            android:gravity="right"
+            android:text="+ 绑定"
+            android:textColor="#4d4a4a"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="26dp"
+            android:src="@mipmap/right_arrows"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECECEC"/>
+
+    <LinearLayout
+        android:id="@+id/lly_weixin"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/click_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/ico_login_wx"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="4"
+            android:text="微信"
+            />
+
+        <TextView
+            android:id="@+id/tv_wechat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_weight="6"
+            android:gravity="right"
+            android:text="+ 绑定"
+            android:textColor="#4d4a4a"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="26dp"
+            android:src="@mipmap/right_arrows"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECECEC"/>
+
+    <LinearLayout
+        android:id="@+id/lly_weibo"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/click_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/ico_login_wb"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_weight="4"
+            android:text="新浪微博"
+            />
+
+        <TextView
+            android:id="@+id/tv_sina"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_weight="6"
+            android:gravity="right"
+            android:text="+ 绑定"
+            android:textColor="#4d4a4a"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="26dp"
+            android:src="@mipmap/right_arrows"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECECEC"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="18dp"
+        android:gravity="right"
+        android:text="第三方账号的权利说明"
+        android:textColor="#824e00"/>
 </LinearLayout>

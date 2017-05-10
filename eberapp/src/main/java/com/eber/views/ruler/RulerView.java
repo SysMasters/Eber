@@ -363,7 +363,7 @@ public class RulerView extends View {
     }
 
     public void setValue(int value) {
-        currentPosition = value / valuesInterval * intervalsBetweenValues;
+        currentPosition = value ;
         invalidate();
     }
 

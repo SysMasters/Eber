@@ -68,6 +68,7 @@
         <activity android:name=".ui.my.QATActivity" />
         <activity android:name=".ui.my.MyRemindAct" />
         <activity android:name=".ui.check.MeasureActivity" />
+        <activity android:name=".ui.my.AccountManagerActivity" android:launchMode="singleTop" />
         <activity android:name=".ui.login.ForgetPasswordActivity" />
         <activity
             android:name=".ui.my.ModifyDataAct"

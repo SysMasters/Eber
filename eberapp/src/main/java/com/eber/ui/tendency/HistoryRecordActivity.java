@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -28,7 +27,6 @@ import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -184,5 +182,12 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UmengUtil.onActivityResult(this,requestCode,resultCode,data);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UmengUtil.onDestroy(this);
     }
 }

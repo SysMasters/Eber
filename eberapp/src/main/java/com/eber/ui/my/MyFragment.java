@@ -1,5 +1,6 @@
 package com.eber.ui.my;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,11 +20,14 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 
+import static com.eber.ui.register.FillInformationActivity.REQUEST_CODE;
+
 /**
  * Created by wxd on 2017/4/29.
  */
 
 public class MyFragment extends BaseFragment {
+
 
     @ViewInject(R.id.f_my_photo_img)
     private ImageView imgPhoto;
@@ -43,7 +47,6 @@ public class MyFragment extends BaseFragment {
     private TextView tvSignIn;
     @ViewInject(R.id.f_my_integral_tv)
     private TextView tvIntegral;
-
 
 
     @ViewInject(R.id.f_my_remind)
@@ -85,6 +88,7 @@ public class MyFragment extends BaseFragment {
         llFaq.setOnClickListener(clickLis);
         llAbout.setOnClickListener(clickLis);
         llUnlogin.setOnClickListener(clickLis);
+        imgPhoto.setOnClickListener(clickLis);
     }
 
     private void getMyData() {
@@ -95,23 +99,23 @@ public class MyFragment extends BaseFragment {
             public void onResponse(String response) {
                 super.onResponse(response);
                 JSONObject jo = JSON.parseObject(response);
-                if (jo.getInteger("sex") == 1){
+                if (jo.getInteger("sex") == 1) {
                     imgPhoto.setImageResource(R.mipmap.ico_man);
-                }else{
+                } else {
                     imgPhoto.setImageResource(R.mipmap.ic_info_sex_woman_seleted);
                 }
                 tvName.setText(jo.getString("userName"));
                 tvID.setText(jo.getString("cellphone"));
                 tvSignature.setText(jo.getString("description"));
-                tvSignIn.setText(jo.getString("signTime")+"次");
-                tvIntegral.setText(jo.getString("sumScore")+"积分");
-                if (jo.getInteger("flag") >= 1){
+                tvSignIn.setText(jo.getString("signTime") + "次");
+                tvIntegral.setText(jo.getString("sumScore") + "积分");
+                if (jo.getInteger("flag") >= 1) {
                     imgBadge1.setImageResource(R.mipmap.ico_my_badge_1);
                 }
-                if (jo.getInteger("flag") >= 2){
+                if (jo.getInteger("flag") >= 2) {
                     imgBadge2.setImageResource(R.mipmap.ico_my_badge_1);
                 }
-                if (jo.getInteger("flag") >= 3){
+                if (jo.getInteger("flag") >= 3) {
                     imgBadge3.setImageResource(R.mipmap.ico_my_badge_1);
                 }
             }
@@ -121,7 +125,7 @@ public class MyFragment extends BaseFragment {
     private View.OnClickListener clickLis = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.f_my_remind:// 提醒
                     Intent in9 = new Intent(mActivity, MyRemindAct.class);
                     startActivity(in9);
@@ -131,12 +135,13 @@ public class MyFragment extends BaseFragment {
                     startActivity(in8);
                     break;
                 case R.id.f_my_account_manager:// 账号管理
-
+                    startActivity(AccountManagerActivity.class);
                     break;
                 case R.id.f_my_device_manager:// 设备管理
                     Intent in6 = new Intent(mActivity, EquipmentManagementAct.class);
                     startActivity(in6);
                     break;
+                case R.id.f_my_photo_img:
                 case R.id.f_my_update_info:// 修改资料
                     Intent in7 = new Intent(mActivity, ModifyDataAct.class);
                     in7.putExtra("description", tvSignature.getText().toString());
@@ -173,7 +178,7 @@ public class MyFragment extends BaseFragment {
                 super.onResponse(response);
                 JSONObject jo = JSON.parseObject(response);
                 Toast.makeText(mActivity, jo.getString("msg"), Toast.LENGTH_SHORT).show();
-                if (jo.getInteger("retcode") == 1){
+                if (jo.getInteger("retcode") == 1) {
                     // 跳转登录
                     startActivity(new Intent(mActivity, LoginActivity.class));
                     // 关闭
@@ -193,11 +198,20 @@ public class MyFragment extends BaseFragment {
                 super.onResponse(response);
                 JSONObject jo = JSON.parseObject(response);
                 Toast.makeText(mActivity, jo.getString("msg"), Toast.LENGTH_SHORT).show();
-                if (jo.getInteger("retcode") == 1){
-                    tvSignIn.setText(jo.getString("signTime")+"次");
-                    tvIntegral.setText(jo.getString("sumScore")+"积分");
-                };
+                if (jo.getInteger("retcode") == 1) {
+                    tvSignIn.setText(jo.getString("signTime") + "次");
+                    tvIntegral.setText(jo.getString("sumScore") + "积分");
+                }
+                ;
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == UPDATE_INFO) {
+            getMyData();
+        }
     }
 }

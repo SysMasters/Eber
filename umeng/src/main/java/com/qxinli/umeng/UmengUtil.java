@@ -74,10 +74,46 @@ public class UmengUtil {
         UMShareAPI.get(activity).release();
     }
 
+
     public static void shareTxt(Activity activity, final String uid,
                                 String title, String desc, String thumbUrl,
                                 String targetUrl, final ShareCallback callback) {
         share(0, activity, uid, title, desc, "", thumbUrl, targetUrl, callback);
+    }
+
+    public static void bind(Activity activity,SHARE_MEDIA platfrom, AuthCallback callback) {
+        deleteAuth(activity, platfrom, callback);
+    }
+
+    public static void bindQQ(Activity activity, AuthCallback callback) {
+        deleteAuth(activity, SHARE_MEDIA.QQ, callback);
+    }
+
+    public static void bindWeChat(Activity activity, AuthCallback callback) {
+        deleteAuth(activity, SHARE_MEDIA.WEIXIN, callback);
+    }
+
+    public static void bindSina(Activity activity, AuthCallback callback) {
+        deleteAuth(activity, SHARE_MEDIA.SINA, callback);
+    }
+
+    private static void deleteAuth(final Activity activity, final SHARE_MEDIA platfrom, final AuthCallback callback) {
+        umShareAPI.deleteOauth(activity, platfrom, new UMAuthListener() {
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                login(activity, platfrom, callback);
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                callback.onError(i, throwable);
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                callback.onCancel(i);
+            }
+        });
     }
 
 
