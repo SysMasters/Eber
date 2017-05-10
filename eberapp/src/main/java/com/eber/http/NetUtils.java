@@ -41,7 +41,6 @@ public class NetUtils {
                 .execute(callback);
     }
 
-
     private StringCallback callback = new StringCallback() {
         @Override
         public void onError(Call call, Exception e, int id) {

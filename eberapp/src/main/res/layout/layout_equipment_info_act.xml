@@ -66,4 +66,16 @@
             android:layout_marginRight="26dp"
             android:src="@mipmap/right_arrows" />
     </LinearLayout>
+    <Button
+        android:id="@+id/remove_device_btn"
+        android:layout_gravity="center"
+        android:layout_marginTop="110dp"
+        android:text="删除设备"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="88dp"
+        android:layout_marginRight="88dp"
+        android:textSize="15sp"
+        android:background="@drawable/login_btn_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

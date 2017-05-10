@@ -131,6 +131,11 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == 11) {
             String recoid = data.getStringExtra("memberRecord");
+            if (mFragHome == null) {
+                mFragHome = new HomeFragment();
+            }
+            switchContent(mFragHome);
+
             mFragHome.setRecordValue(recoid);
         }
     }
