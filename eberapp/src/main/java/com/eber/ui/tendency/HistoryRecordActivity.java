@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.dsw.calendar.component.MonthView;
 import com.dsw.calendar.entity.CalendarInfo;
 import com.dsw.calendar.views.CircleCalendarView;
@@ -18,6 +20,7 @@ import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.BodyInfo;
+import com.eber.http.BaseCallback;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback2;
 import com.eber.views.decoration.RecycleViewDivider;
@@ -78,7 +81,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 20, Color.TRANSPARENT));
         recyclerView.setAdapter(mAdapter = new CommonAdapter<BodyInfo>(mContext, R.layout.view_history_item, bodyInfos) {
             @Override
-            protected void convert(final com.zhy.adapter.recyclerview.base.ViewHolder holder, BodyInfo bodyInfo, int position) {
+            protected void convert(final com.zhy.adapter.recyclerview.base.ViewHolder holder, final BodyInfo bodyInfo, int position) {
                 TextView tvWeight = holder.getView(R.id.history_weight);
                 TextView tvZhifang = holder.getView(R.id.history_zhifang);
                 ImageView ivDel = holder.getView(R.id.history_del);
@@ -89,14 +92,14 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                 ivDel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        bodyInfos.remove(holder.getAdapterPosition());
-                        mAdapter.notifyItemRemoved(holder.getAdapterPosition());
+                        deleteRecord(bodyInfo.id, holder.getAdapterPosition());
                     }
                 });
                 holder.setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(HistoryDataActivity.class);
+                        // TODO: 2017/5/11 跳转历史记录 
+                        //                        startActivity(HistoryDataActivity.class);
                     }
                 });
 
@@ -104,24 +107,41 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+    /**
+     * 删除用户记录
+     */
+    private void deleteRecord(String recordid, final int position) {
+        param = new HashMap<>();
+        param.put("recordId", recordid);
+        netUtils.get(HttpUrls.DELETEENTITY, true, param, new StringCallback2() {
+            @Override
+            public void onSuccess(String... result) {
+                Toast.makeText(mContext, "记录删除成功", Toast.LENGTH_SHORT).show();
+                bodyInfos.remove(position);
+                mAdapter.notifyItemRemoved(position);
+            }
+        });
+    }
+
     private void initData() {
         bodyInfos = new ArrayList<>();
         param = new HashMap<>();
-        param.put("memberId",String.valueOf(EBERApp.nowUser.id));
+        param.put("memberId", String.valueOf(EBERApp.nowUser.id));
         netUtils.get(HttpUrls.FINDRECORDDATE, true, param, new StringCallback2("memberRecordArray", "dateArray") {
             @Override
             public void onSuccess(String... result) {
                 List<BodyInfo> datas = JSONArray.parseArray(result[0], BodyInfo.class);
-                bodyInfos.addAll(datas);
+                mAdapter.refresh2(datas);
                 JSONArray ja = JSON.parseArray(result[1]);
-                for (int i = 0; i < ja.size(); i++){
+                for (int i = 0; i < ja.size(); i++) {
                     date.add(ja.getString(i));
                 }
                 List<CalendarInfo> list = new ArrayList<>();
-                for (int i = 0; i < date.size(); i++){
-                    list.add(new CalendarInfo(Integer.parseInt(date.get(i).substring(0, 4)),
-                            Integer.parseInt(date.get(i).substring(5, 7)),
-                            Integer.parseInt(date.get(i).substring(9, 11)), ""));
+                for (int i = 0; i < date.size(); i++) {
+                    int year = Integer.parseInt(date.get(i).substring(0, 4));
+                    int month = Integer.parseInt(date.get(i).substring(5, 7));
+                    int day = Integer.parseInt(date.get(i).substring(8, date.get(i).length()));
+                    list.add(new CalendarInfo(year, month, day, ""));
                 }
                 circleCalendarView.setCalendarInfos(list);
             }
@@ -133,17 +153,39 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         circleCalendarView.setDateClick(dateClickLis);
         ivRight.setOnClickListener(this);
 
-//        Calendar calendar = Calendar.getInstance();
-//        int currYear = calendar.get(Calendar.YEAR);
-//        int currMonth = calendar.get(Calendar.MONTH) + 1;
-//        List<CalendarInfo> list = new ArrayList<CalendarInfo>();
-//        list.add(new CalendarInfo(currYear, currMonth, 4, ""));
-//        list.add(new CalendarInfo(currYear, currMonth, 6, ""));
-//        list.add(new CalendarInfo(currYear, currMonth, 12, ""));
-//        list.add(new CalendarInfo(currYear, currMonth, 16, ""));
-//        list.add(new CalendarInfo(currYear, currMonth, 28, ""));
-//        circleCalendarView.setCalendarInfos(list);
+        //        Calendar calendar = Calendar.getInstance();
+        //        int currYear = calendar.get(Calendar.YEAR);
+        //        int currMonth = calendar.get(Calendar.MONTH) + 1;
+        //        List<CalendarInfo> list = new ArrayList<CalendarInfo>();
+        //        list.add(new CalendarInfo(currYear, currMonth, 4, ""));
+        //        list.add(new CalendarInfo(currYear, currMonth, 6, ""));
+        //        list.add(new CalendarInfo(currYear, currMonth, 12, ""));
+        //        list.add(new CalendarInfo(currYear, currMonth, 16, ""));
+        //        list.add(new CalendarInfo(currYear, currMonth, 28, ""));
+        //        circleCalendarView.setCalendarInfos(list);
 
+    }
+
+    private void getRecordByDate() {
+        param = new HashMap<>();
+        param.put("memberId", EBERApp.nowUser.id + "");
+        param.put("date", circleCalendarView.getDateStr());
+        netUtils.get(HttpUrls.FINDRECORDBYDATE, true, param, new BaseCallback() {
+            @Override
+            public void onResponse(String response) {
+                super.onResponse(response);
+                JSONObject jo = JSON.parseObject(response);
+                int resultCode = jo.getInteger("retcode");
+                if (resultCode == 1) {
+                    List<BodyInfo> data = JSON.parseArray(jo.getString("memberRecordArray"), BodyInfo.class);
+                    mAdapter.refresh2(data);
+                } else {
+                    String msg = jo.getString("msg");
+                    Toast.makeText(EBERApp.sContext, msg, Toast.LENGTH_SHORT).show();
+                    mAdapter.refresh2(new ArrayList<BodyInfo>());
+                }
+            }
+        });
     }
 
 
@@ -153,10 +195,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
             circleCalendarView.setDate();
             tvDate.setText(circleCalendarView.getDateStr());
             tvMonth.setText(circleCalendarView.getMonthStr() + "月");
-//            param = new HashMap<>();
-//            param.put("memberId","163");
-//            param.put("month","163");
-//            netUtils.get(HttpUrls.LOGIN, true, param, new );
+            getRecordByDate();
         }
     };
 
@@ -181,7 +220,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        UmengUtil.onActivityResult(this,requestCode,resultCode,data);
+        UmengUtil.onActivityResult(this, requestCode, resultCode, data);
     }
 
 
