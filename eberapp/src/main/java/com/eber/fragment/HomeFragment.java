@@ -1,5 +1,6 @@
 package com.eber.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ import com.eber.bean.User;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback;
 import com.eber.ui.home.LocalMemberActivity;
+import com.eber.ui.register.FillInformationActivity;
 import com.eber.ui.slideinfo.SlideInfoActivity;
 import com.eber.utils.DateUtil;
 import com.eber.utils.DisplayUtil;
@@ -113,8 +115,8 @@ public class HomeFragment extends BaseFragment {
         loadMemberData();// 成员列表
         initBodyInfoData();
     }
-    
-    public void setRecordValue(String memberRecordStr){
+
+    public void setRecordValue(String memberRecordStr) {
         if (null != memberRecordStr && !memberRecordStr.equals("")) {
             memberRecord = JSON.parseObject(memberRecordStr, MemberRecord.class);
             setViewValues(memberRecord);
@@ -246,8 +248,7 @@ public class HomeFragment extends BaseFragment {
             mGridView.setAdapter(mAdapter);
         }
     }
-    
-    
+
 
     private void initBodyInfoData() {
         indicates = new ArrayList<>();
@@ -267,7 +268,7 @@ public class HomeFragment extends BaseFragment {
         ;
         try {
             String format = "yyyy-MM-dd HH:mm:ss";
-            tvTitleLabel.setText(DateUtil.showTime(new SimpleDateFormat(format).parse(m.updateTime),format));
+            tvTitleLabel.setText(DateUtil.showTime(new SimpleDateFormat(format).parse(m.updateTime), format));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -320,7 +321,7 @@ public class HomeFragment extends BaseFragment {
             protected void convert(final ViewHolder holder, final Member member, final int position) {
                 holder.setImageResource(R.id.index_user_head, (TextUtils.equals("1", member.sex) ? R.mipmap.ic_index_head_male : R.mipmap.ic_index_head_woman));
                 holder.setText(R.id.index_user_name, getDatas().get(position).userName);
-                if (Integer.parseInt(getDatas().get(position).id) == EBERApp.nowUser.id){
+                if (Integer.parseInt(getDatas().get(position).id) == EBERApp.nowUser.id) {
                     holder.getView(R.id.index_user_name).setSelected(true);
                 }
                 holder.setOnClickListener(R.id.index_user_root, new View.OnClickListener() {
@@ -328,7 +329,7 @@ public class HomeFragment extends BaseFragment {
                     public void onClick(View v) {
                         EBERApp.nowUser.id = Integer.parseInt(member.id);
                         EBERApp.nowUser.sex = Integer.parseInt(member.sex);
-                        EBERApp.nowUser.height = (int)Double.parseDouble(member.height);
+                        EBERApp.nowUser.height = (int) Double.parseDouble(member.height);
                         EBERApp.nowUser.birthday = member.birthday;
                         findLastRecord();
                         mPopupWindow.dismiss();
@@ -356,10 +357,10 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    private void findLastRecord() {
-        if (EBERApp.nowUser.sex == 1){
+    public void findLastRecord() {
+        if (EBERApp.nowUser.sex == 1) {
             ivHead.setImageResource(R.mipmap.ic_index_head_male);
-        }else{
+        } else {
             ivHead.setImageResource(R.mipmap.ic_index_head_woman);
         }
         param = new HashMap<>();
@@ -380,10 +381,12 @@ public class HomeFragment extends BaseFragment {
                     showUserPopupWindow();
                     break;
                 case R.id.index_user_create:// 创建新成员
-
+                    Intent intent = new Intent(mActivity, FillInformationActivity.class);
+                    intent.putExtra("isCreateChidUser", true);
+                    startActivityForResult(intent, 111);
                     break;
                 case R.id.index_user_many:// 更多成员
-                    Intent intent = new Intent(mActivity, LocalMemberActivity.class);
+                    intent = new Intent(mActivity, LocalMemberActivity.class);
                     String jsonmembers = JSONArray.toJSONString(members);
                     intent.putExtra("members", jsonmembers);
                     startActivityForResult(intent, 12);
@@ -399,9 +402,9 @@ public class HomeFragment extends BaseFragment {
     private void loadMemberData() {
         members = new ArrayList<>();
         showMembers = new ArrayList<>();
-        if (EBERApp.nowUser.sex == 1){
+        if (EBERApp.nowUser.sex == 1) {
             ivHead.setImageResource(R.mipmap.ic_index_head_male);
-        }else{
+        } else {
             ivHead.setImageResource(R.mipmap.ic_index_head_woman);
         }
         String jsonMembers = getActivity().getIntent().getStringExtra("memberArray");
@@ -417,7 +420,11 @@ public class HomeFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UmengUtil.onActivityResult(mActivity, requestCode, resultCode, data);
-        if (requestCode == 12 && resultCode == 12){
+        if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
+            Member member = data.getParcelableExtra("member");
+            members.add(member);
+        }
+        if (requestCode == 12 && resultCode == 12) {
             findLastRecord();
         }
     }
