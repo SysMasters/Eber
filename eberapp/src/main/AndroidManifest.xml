@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.MainActivity" android:launchMode="singleTask"></activity>
         <activity android:name=".ui.launcher.GuideActivity"></activity>
         <activity android:name=".ui.login.LoginActivity"></activity>
         <activity android:name=".ui.register.EnrollActivity"></activity>

@@ -54,6 +54,7 @@ public class BindDeviceActivity3 extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.bind_begin:
                 startActivity(MeasureActivity.class);
+                finish();
                 break;
             case R.id.bind_again:
                 unBind();

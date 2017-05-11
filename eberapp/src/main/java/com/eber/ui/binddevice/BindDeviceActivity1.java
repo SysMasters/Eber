@@ -32,5 +32,6 @@ public class BindDeviceActivity1 extends BaseActivity {
     public void bindClick1(View v) {
         Intent intent = new Intent(BindDeviceActivity1.this, BindDeviceActivity2.class);
         startActivity(intent);
+        finish();
     }
 }

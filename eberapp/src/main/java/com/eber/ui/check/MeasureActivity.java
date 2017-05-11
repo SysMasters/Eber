@@ -16,9 +16,8 @@ import com.eber.base.BaseActivity;
 import com.eber.bean.BodyInfo;
 import com.eber.bluetooth.BluetoothUtil;
 import com.eber.bluetooth.ClientManager;
-import com.eber.http.HttpUrls;
-import com.eber.http.StringCallback2;
 import com.eber.interfaces.BluetoothMeasure;
+import com.eber.ui.MainActivity;
 import com.eber.utils.StatusBarUtil;
 import com.inuker.bluetooth.library.BluetoothClient;
 import com.inuker.bluetooth.library.connect.listener.BluetoothStateListener;
@@ -108,10 +107,10 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
                 return;
             }
             mBodyInfo = data;
-            Intent intent = new Intent();
+            Intent intent = new Intent(mContext, MainActivity.class);
             intent.putExtra("BodyInfo", data);
             intent.putExtra("mac", bluetoothUtil.getMAC());
-            setResult(11, intent);
+            startActivity(intent);
             finish();
         }
 
