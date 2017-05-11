@@ -20,10 +20,24 @@ public class Member implements Parcelable {
      * userName : 我
      */
 
+//    public String id;
+//    public String parentId;
+//    public String sex;
+//    public String userName;
+
     public String id;
     public String parentId;
+    public String birthday;
     public String sex;
+    public String height;
+    public String waistline;
+    public String cellphone;
+    public String description;
+    public String hipline;
     public String userName;
+    public String pregnate;
+    public String rigesterIP;
+    public String password;
 
     public Member(String id, String parentId, String sex, String userName) {
         this.id = id;

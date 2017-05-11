@@ -1,5 +1,6 @@
 package com.eber.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.Member;
@@ -55,7 +57,7 @@ public class LocalMemberActivity extends BaseActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(mAdapter = new CommonAdapter<Member>(this, R.layout.view_local_member_item, members) {
             @Override
-            protected void convert(final ViewHolder holder, Member member, int position) {
+            protected void convert(final ViewHolder holder, final Member member, int position) {
                 ImageView headImage = holder.getView(R.id.local_member_head);
                 TextView tvName = holder.getView(R.id.local_member_name);
                 ImageView ivDel = holder.getView(R.id.local_member_del);
@@ -76,29 +78,36 @@ public class LocalMemberActivity extends BaseActivity {
                         notifyItemRemoved(holder.getAdapterPosition());
                     }
                 });
-                if (TextUtils.equals("1", member.sex)) {// 1:男
-                    headImage.setImageResource(R.mipmap.ic_local_member_man);
-                } else if (TextUtils.equals("2", member.sex)) {
-                    headImage.setImageResource(R.mipmap.ic_local_member_woman);
-                } else {
+                if (TextUtils.isEmpty(member.sex)){
                     headImage.setImageResource(R.mipmap.ic_local_member_add);
                     headImage.setTag("add");
                     headImage.setOnClickListener(clickListener);
+                }else {
+                    if (TextUtils.equals("1", member.sex)) {// 1:男
+                        headImage.setImageResource(R.mipmap.ic_local_member_man);
+                    } else if (TextUtils.equals("2", member.sex)) {
+                        headImage.setImageResource(R.mipmap.ic_local_member_woman);
+                    }
+                    holder.setOnClickListener(R.id.local_member_head, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EBERApp.nowUser.id = Integer.parseInt(member.id);
+                            EBERApp.nowUser.sex = Integer.parseInt(member.sex);
+                            EBERApp.nowUser.height = (int)Double.parseDouble(member.height);
+                            EBERApp.nowUser.birthday = member.birthday;
+                            setResult(12, new Intent());
+                            finish();
+                        }
+                    });
                 }
                 tvName.setText(member.userName);
+
             }
         });
     }
 
     private void initData() {
-        members = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Member member = new Member("" + i, "" + i, "1", "成员" + (i + 1));
-            if (i == 2 || i == 4 || i == 7) {
-                member.sex = "2";
-            }
-            members.add(member);
-        }
+        members = (List<Member>) getIntent().getSerializableExtra("members");
         members.add(new Member("", "", "-1", "添加成员"));
     }
 

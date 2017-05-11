@@ -1,9 +1,11 @@
 package com.eber.ui.register;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -92,9 +94,8 @@ public class FillInformationActivity extends BaseActivity {
             try {
                 String h = height.replace("", "").replace("cm", "").replace("-", "");
                 if (!TextUtils.isEmpty(h)) {
-                    int hei = (int) Double.parseDouble(h);
-                    rvHeight.setValue(hei);
-                    tvHeightText.setText(hei+"");
+                    tvHeightText.setText(h);
+                    rvHeight.setValue(Integer.parseInt(h));
                 }
             } catch (Exception e) {
 
@@ -108,9 +109,9 @@ public class FillInformationActivity extends BaseActivity {
             if (!TextUtils.isEmpty(birthday)) {
                 mCalendar = Calendar.getInstance();
                 try {
-                    mCalendar.setTime(new SimpleDateFormat("yyyy-MM").parse(birthday));
-                    tvYearText.setText(mCalendar.get(Calendar.YEAR)+"");
-                    tvMonthText.setText((mCalendar.get(Calendar.MONTH) + 1)+"");
+                    mCalendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
+                    tvYearText.setText(mCalendar.get(Calendar.YEAR));
+                    tvMonthText.setText((mCalendar.get(Calendar.MONTH) + 1));
                     rvMonth.setValue((mCalendar.get(Calendar.MONTH) + 1));
                     rvYear.setValue(mCalendar.get(Calendar.YEAR));
                 } catch (ParseException e) {
@@ -179,7 +180,7 @@ public class FillInformationActivity extends BaseActivity {
             if (!isEdit) {
                 param = new HashMap<>();
                 param.put("memberId", EBERApp.user.id + "");
-                param.put("userName", Base64.getEncodeStr(etUserName.getText().toString().trim()));
+                param.put("userName", etUserName.getText().toString().trim());
                 param.put("birthday", tvYearText.getText().toString() + "-" + tvMonthText.getText().toString());
                 param.put("sex", sex + "");
                 param.put("height", tvHeightText.getText().toString() + "");
@@ -204,7 +205,16 @@ public class FillInformationActivity extends BaseActivity {
                 if (month.length() != 2) {
                     month = "0" + month;
                 }
-                intent.putExtra("birthday", tvYearText.getText() + "-" + month);
+                String dateStr = "";
+                if (mCalendar != null) {
+                    int date = mCalendar.get(Calendar.DATE);
+                    if (date < 10) {
+                        dateStr = "-0" + date;
+                    } else {
+                        dateStr = "-" + date;
+                    }
+                }
+                intent.putExtra("birthday", tvYearText.getText() + "-" + month + dateStr);
                 intent.putExtra("height", tvHeightText.getText().toString());
                 setResult(Activity.RESULT_OK, intent);
                 finish();

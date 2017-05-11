@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.eber.EBERApp;
 import com.eber.bean.BodyInfo;
 import com.eber.ui.binddevice.BindDeviceActivity2;
 import com.eber.ui.check.MeasureActivity;
@@ -206,10 +207,13 @@ public class BluetoothUtil {
     private boolean isSendTow = true;
     private boolean isBindDivice = true;
 
+    private int year;
+
     /**
      * 开始测量
      */
-    public void startMeasure() {
+    public void startMeasure(int year) {
+        this.year = year;
         connectType = MeasureActivity.TYPE_MEASURE;
         if (mService == null && mCharacter == null) {
             return;
@@ -285,7 +289,8 @@ public class BluetoothUtil {
                     Log.i("msg=======", "删除成功");
                     mac = hexStringToByte(mMac.replace(":", ""));
                     byte[] addUser = new byte[]{0x09, 0x0E, 0x04, (byte) 0xA0};
-                    byte[] userInfo = pingUserInfo(172, 25, 0);
+                    byte[] userInfo = pingUserInfo(EBERApp.nowUser.height, year - Integer.parseInt(EBERApp.nowUser.birthday.substring(0, 4)),
+                            EBERApp.nowUser.sex == 1 ? 0 : 1);
                     sendByte = new byte[addUser.length + mac.length + userInfo.length];
                     System.arraycopy(addUser, 0, sendByte, 0, addUser.length);
                     System.arraycopy(mac, 0, sendByte, addUser.length, mac.length);
@@ -300,7 +305,8 @@ public class BluetoothUtil {
                         Log.i("msg=======", "新建成功");
                         mac = hexStringToByte(mMac.replace(":", ""));
                         byte[] selUser = new byte[]{0x09, 0x0F, 0x04, (byte) 0xA5};
-                        byte[] info = pingInfo(172, 25, 0);
+                        byte[] info = pingInfo(EBERApp.nowUser.height, year - Integer.parseInt(EBERApp.nowUser.birthday.substring(0, 4)),
+                                EBERApp.nowUser.sex == 1 ? 0 : 1);
                         sendByte = new byte[selUser.length + mac.length + info.length];
                         System.arraycopy(selUser, 0, sendByte, 0, selUser.length);
                         System.arraycopy(mac, 0, sendByte, selUser.length, mac.length);
@@ -313,7 +319,8 @@ public class BluetoothUtil {
                             Log.i("msg=======", "新建失败");
                             mac = hexStringToByte(mMac.replace(":", ""));
                             byte[] addUser = new byte[]{0x09, 0x0E, 0x04, (byte) 0xA0};
-                            byte[] userInfo = pingUserInfo(172, 25, 0);
+                            byte[] userInfo = pingUserInfo(EBERApp.nowUser.height, year - Integer.parseInt(EBERApp.nowUser.birthday.substring(0, 4)),
+                                    EBERApp.nowUser.sex == 1 ? 0 : 1);
                             sendByte = new byte[addUser.length + mac.length + userInfo.length];
                             System.arraycopy(addUser, 0, sendByte, 0, addUser.length);
                             System.arraycopy(mac, 0, sendByte, addUser.length, mac.length);
@@ -328,7 +335,8 @@ public class BluetoothUtil {
                             Log.i("msg=======", "选择用户测量失败");
                             mac = hexStringToByte(mMac.replace(":", ""));
                             byte[] selUser = new byte[]{0x0F, 0x04, (byte) 0xA5};
-                            byte[] info = pingInfo(172, 25, 0);
+                            byte[] info = pingInfo(EBERApp.nowUser.height, year - Integer.parseInt(EBERApp.nowUser.birthday.substring(0, 4)),
+                                    EBERApp.nowUser.sex == 1 ? 0 : 1);
                             sendByte = new byte[selUser.length + mac.length + info.length];
                             System.arraycopy(selUser, 0, sendByte, 0, selUser.length);
                             System.arraycopy(mac, 0, sendByte, selUser.length, mac.length);

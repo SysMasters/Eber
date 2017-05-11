@@ -23,6 +23,8 @@ import com.eber.utils.StatusBarUtil;
 import com.inuker.bluetooth.library.BluetoothClient;
 import com.inuker.bluetooth.library.connect.listener.BluetoothStateListener;
 
+import java.util.Calendar;
+
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -106,7 +108,11 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
                 return;
             }
             mBodyInfo = data;
-            submitRecord();
+            Intent intent = new Intent();
+            intent.putExtra("BodyInfo", data);
+            intent.putExtra("mac", bluetoothUtil.getMAC());
+            setResult(11, intent);
+            finish();
         }
 
         @Override
@@ -119,41 +125,14 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         public void onConnectSuccess() {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
             // 开始测量
-            bluetoothUtil.startMeasure();
+            bluetoothUtil.startMeasure(year);
         }
 
 
     };
-
-    /**
-     * 提交称重记录
-     */
-    private void submitRecord() {
-        param.clear();
-        Log.i("msg=======", "请求" );
-        param.put("memberId", EBERApp.nowUser.id + "");
-        param.put("weight", mBodyInfo.weight);
-        param.put("fatRate", mBodyInfo.fatRate);
-        param.put("subcutaneousfat", mBodyInfo.subcutaneousfat);
-        param.put("bodywater", mBodyInfo.bodywater);
-        param.put("organfat", mBodyInfo.organfat);
-        param.put("basicmetabolism", mBodyInfo.basicmetabolism);
-        param.put("muscle", mBodyInfo.muscle);
-        param.put("bodyAge", mBodyInfo.bodyAge);
-        param.put("MAC", bluetoothUtil.getMAC());
-        param.put("bone", mBodyInfo.bone);
-        netUtils.get(HttpUrls.ADDRECORD, false, param, new StringCallback2("memberRecord") {
-            @Override
-            public void onSuccess(String... result) {
-                Log.i("msg=======", "返回");
-                Intent intent = new Intent();
-                intent.putExtra("memberRecord", result[0]);
-                setResult(11, intent);
-                finish();
-            }
-        });
-    }
 
     @Override
     public void onClick(View v) {

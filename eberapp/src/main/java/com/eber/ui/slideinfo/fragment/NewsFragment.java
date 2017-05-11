@@ -275,7 +275,7 @@ public class NewsFragment extends Fragment {
 					else if (si.name.equals("危险"))
 						ndsb.setThumb(getActivity().getResources().getDrawable(R.mipmap.ico_severity_face));
 				}
-				if (channelName.equals("骨质酥松风险")) {
+				if (channelName.equals("骨质疏松风险")) {
 					img.setImageResource(R.mipmap.ico_guzhisusong);
 					ndsb.setProgressDrawable(getActivity().getResources()
 							.getDrawable(R.mipmap.ico_guzhisusong_sb_bg));
