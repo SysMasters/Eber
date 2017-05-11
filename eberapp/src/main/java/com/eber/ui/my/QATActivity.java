@@ -53,9 +53,6 @@ public class QATActivity extends BaseActivity {
                 JSONArray ja = JSON.parseArray(response);
                 for (int i = 0; i < ja.size(); i++){
                     JSONObject jo = JSON.parseObject(JSON.toJSONString(ja.get(i)));
-                    QAT q = new QAT();
-                    q.typeName = jo.getString("name");
-                    qatList.add(q);
                     List<QAT> qats = JSONArray.parseArray(jo.getString("array"), QAT.class);
                     for (QAT qat : qats){
                         qatList.add(qat);

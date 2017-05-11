@@ -1,16 +1,25 @@
 package com.eber.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.base.BaseFragment;
+import com.eber.bean.BodyInfo;
 import com.eber.fragment.HomeFragment;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback2;
 import com.eber.ui.check.MeasureActivity;
 import com.eber.ui.find.FindFragment;
 import com.eber.ui.my.MyFragment;
@@ -129,14 +138,72 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == 11) {
-            String recoid = data.getStringExtra("memberRecord");
-            if (mFragHome == null) {
-                mFragHome = new HomeFragment();
-            }
-            switchContent(mFragHome);
-
-            mFragHome.setRecordValue(recoid);
+        if (requestCode == 0 && resultCode == 11){
+            BodyInfo mBodyInfo = (BodyInfo) data.getSerializableExtra("BodyInfo");
+            String mac = data.getStringExtra("mac");
+            submitRecord(mBodyInfo, mac);
         }
+        if (requestCode == 12 && resultCode == 12){
+            mFragHome.findLastRecord();
+        }
+    }
+
+    /**
+     * 提交称重记录
+     */
+    private void submitRecord(final BodyInfo mBodyInfo, final String mac) {
+        if (mFragHome == null) {
+            mFragHome = new HomeFragment();
+        }
+        switchContent(mFragHome);
+        double re;
+        try{
+            re = Double.parseDouble(mFragHome.tvWeight.getText().toString());
+        }catch (Exception e){
+            re = 0;
+        }
+        if (Math.abs(Double.parseDouble(mBodyInfo.weight) - re) > 5){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("提示");
+            builder.setMessage("本次测量与您数据差距较大，请确认是否本人？");
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+            builder.setNeutralButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    updateMainData(mBodyInfo, mac);
+                }
+            });
+            builder.show();
+        }else{
+            updateMainData(mBodyInfo, mac);
+        }
+    }
+
+    private void updateMainData(BodyInfo mBodyInfo, String mac){
+        param.clear();
+        Log.i("msg=======", "请求" );
+        param.put("memberId", EBERApp.nowUser.id + "");
+        param.put("weight", mBodyInfo.weight);
+        param.put("fatRate", mBodyInfo.fatRate);
+        param.put("subcutaneousfat", mBodyInfo.subcutaneousfat);
+        param.put("bodywater", mBodyInfo.bodywater);
+        param.put("organfat", mBodyInfo.organfat);
+        param.put("basicmetabolism", mBodyInfo.basicmetabolism);
+        param.put("muscle", mBodyInfo.muscle);
+        param.put("bodyAge", mBodyInfo.bodyAge);
+        param.put("MAC", mac);
+        param.put("bone", mBodyInfo.bone);
+        netUtils.get(HttpUrls.ADDRECORD, true, param, new StringCallback2("memberRecord") {
+            @Override
+            public void onSuccess(String... result) {
+                Log.i("msg=======", "返回");
+                mFragHome.setRecordValue(result[0]);
+            }
+        });
     }
 }

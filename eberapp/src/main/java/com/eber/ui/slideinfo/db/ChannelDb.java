@@ -19,7 +19,7 @@ public class ChannelDb {
 		selectedChannel.add(new Channel("","骨量",0,"",""));
 		selectedChannel.add(new Channel("","内脏脂肪等级",0,"",""));
 		selectedChannel.add(new Channel("","基础代谢",0,"",""));
-		selectedChannel.add(new Channel("","骨质酥松风险",0,"",""));
+		selectedChannel.add(new Channel("","骨质疏松风险",0,"",""));
 	}
 
 	public static  List<Channel> getSelectedChannel(){

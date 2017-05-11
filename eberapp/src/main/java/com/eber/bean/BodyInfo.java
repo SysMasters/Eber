@@ -1,10 +1,12 @@
 package com.eber.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by WangLibo on 2017/5/1.
  */
 
-public class BodyInfo {
+public class BodyInfo implements Serializable {
 
 
     /**

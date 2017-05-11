@@ -104,7 +104,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/weibo"
+            android:src="@mipmap/weixin"
             android:layout_marginLeft="23dp"
             />
         <TextView android:layout_width="0dp"

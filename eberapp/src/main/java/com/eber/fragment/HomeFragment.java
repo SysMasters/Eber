@@ -20,13 +20,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseFragment;
 import com.eber.bean.Indicate;
 import com.eber.bean.Member;
 import com.eber.bean.MemberRecord;
 import com.eber.bean.User;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback;
 import com.eber.ui.home.LocalMemberActivity;
 import com.eber.ui.slideinfo.SlideInfoActivity;
 import com.eber.utils.DateUtil;
@@ -40,6 +44,7 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -55,7 +60,7 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.index_title_label)
     private TextView tvTitleLabel;
     @ViewInject(R.id.index_weight)
-    private TextView tvWeight;// 体重
+    public TextView tvWeight;// 体重
     @ViewInject(R.id.index_bmi)
     private TextView tvBMI;// BMI
     @ViewInject(R.id.index_score)
@@ -83,6 +88,7 @@ public class HomeFragment extends BaseFragment {
 
     private CommonAdapter<Member> mMembersAdapter;
     private List<Member> members;// 成员列表
+    private List<Member> showMembers;// 显示的成员列表
     private MemberRecord memberRecord;      // 称重记录
     private List<User> users;      // 用户与子用户集合
 
@@ -104,7 +110,7 @@ public class HomeFragment extends BaseFragment {
         }
         ivHead.setOnClickListener(clickLis);
         ivShare.setOnClickListener(clickLis);
-        setData();
+        loadMemberData();// 成员列表
         initBodyInfoData();
     }
     
@@ -300,19 +306,6 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-
-    private void setData() {
-        //        String weight = "48.1";
-        //        String bmi = "25.6";
-        //        SpannableString weightSpannableString = TextViewUtil.getSizeSpanSpToPx(mActivity, weight, weight.length() - 1, weight.length(), 35);
-        //        tvWeight.setText(weightSpannableString);
-        //        SpannableString bmiSpannableString = TextViewUtil.getSizeSpanSpToPx(mActivity, weight, bmi.length() - 1, bmi.length(), 18);
-        //        tvBMI.setText(bmiSpannableString);
-
-        loadMemberData();// 成员列表
-    }
-
-
     private void showUserPopupWindow() {
         View popupView = mActivity.getLayoutInflater().inflate(R.layout.popup_index_user, null);
         mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
@@ -322,13 +315,22 @@ public class HomeFragment extends BaseFragment {
         mPopupWindow.showAtLocation(rlRoot, 0, 0, DisplayUtil.dp2px(mActivity, 25));
         RecyclerView recyclerView = (RecyclerView) popupView.findViewById(R.id.popup_index_user_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        recyclerView.setAdapter(mMembersAdapter = new CommonAdapter<Member>(mActivity, R.layout.view_popup_index_user_item, members) {
+        recyclerView.setAdapter(mMembersAdapter = new CommonAdapter<Member>(mActivity, R.layout.view_popup_index_user_item, showMembers) {
             @Override
-            protected void convert(ViewHolder holder, Member member, int position) {
+            protected void convert(final ViewHolder holder, final Member member, final int position) {
                 holder.setImageResource(R.id.index_user_head, (TextUtils.equals("1", member.sex) ? R.mipmap.ic_index_head_male : R.mipmap.ic_index_head_woman));
+                holder.setText(R.id.index_user_name, getDatas().get(position).userName);
+                if (Integer.parseInt(getDatas().get(position).id) == EBERApp.nowUser.id){
+                    holder.getView(R.id.index_user_name).setSelected(true);
+                }
                 holder.setOnClickListener(R.id.index_user_root, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        EBERApp.nowUser.id = Integer.parseInt(member.id);
+                        EBERApp.nowUser.sex = Integer.parseInt(member.sex);
+                        EBERApp.nowUser.height = (int)Double.parseDouble(member.height);
+                        EBERApp.nowUser.birthday = member.birthday;
+                        findLastRecord();
                         mPopupWindow.dismiss();
                     }
                 });
@@ -354,6 +356,17 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    public void findLastRecord() {
+        param = new HashMap<>();
+        param.put("memberId", String.valueOf(EBERApp.nowUser.id));
+        netUtils.get(HttpUrls.FINDLASTRECORD, false, param, new StringCallback("memberRecord") {
+            @Override
+            public void onSuccess(String resultJson) {
+                setRecordValue(resultJson);
+            }
+        });
+    }
+
     private View.OnClickListener clickLis = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -365,7 +378,9 @@ public class HomeFragment extends BaseFragment {
 
                     break;
                 case R.id.index_user_many:// 更多成员
-                    startActivity(LocalMemberActivity.class);
+                    Intent intent = new Intent(mActivity, LocalMemberActivity.class);
+                    intent.putExtra("members", (ArrayList)members);
+                    startActivityForResult(intent, 12);
                     mPopupWindow.dismiss();
                     break;
                 case R.id.index_title_share:// 分享
@@ -377,14 +392,12 @@ public class HomeFragment extends BaseFragment {
 
     private void loadMemberData() {
         members = new ArrayList<>();
+        showMembers = new ArrayList<>();
+        String jsonMembers = getActivity().getIntent().getStringExtra("memberArray");
+        members = JSON.parseArray(jsonMembers, Member.class);
         for (int i = 0; i < 5; i++) {
-            Member member = new Member("" + i, "" + i, "男", "成员" + (i + 1));
-            if (i == 2 || i == 4 || i == 7) {
-                member.sex = "女";
-            }
-            members.add(member);
+            showMembers.add(members.get(i));
         }
-
     }
 
 
