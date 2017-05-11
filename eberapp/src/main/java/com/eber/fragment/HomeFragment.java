@@ -356,7 +356,12 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    public void findLastRecord() {
+    private void findLastRecord() {
+        if (EBERApp.nowUser.sex == 1){
+            ivHead.setImageResource(R.mipmap.ic_index_head_male);
+        }else{
+            ivHead.setImageResource(R.mipmap.ic_index_head_woman);
+        }
         param = new HashMap<>();
         param.put("memberId", String.valueOf(EBERApp.nowUser.id));
         netUtils.get(HttpUrls.FINDLASTRECORD, false, param, new StringCallback("memberRecord") {
@@ -379,7 +384,8 @@ public class HomeFragment extends BaseFragment {
                     break;
                 case R.id.index_user_many:// 更多成员
                     Intent intent = new Intent(mActivity, LocalMemberActivity.class);
-                    intent.putExtra("members", (ArrayList)members);
+                    String jsonmembers = JSONArray.toJSONString(members);
+                    intent.putExtra("members", jsonmembers);
                     startActivityForResult(intent, 12);
                     mPopupWindow.dismiss();
                     break;
@@ -393,10 +399,16 @@ public class HomeFragment extends BaseFragment {
     private void loadMemberData() {
         members = new ArrayList<>();
         showMembers = new ArrayList<>();
+        if (EBERApp.nowUser.sex == 1){
+            ivHead.setImageResource(R.mipmap.ic_index_head_male);
+        }else{
+            ivHead.setImageResource(R.mipmap.ic_index_head_woman);
+        }
         String jsonMembers = getActivity().getIntent().getStringExtra("memberArray");
         members = JSON.parseArray(jsonMembers, Member.class);
-        for (int i = 0; i < 5; i++) {
-            showMembers.add(members.get(i));
+        for (int i = 0; i < members.size(); i++) {
+            if (i < 5)
+                showMembers.add(members.get(i));
         }
     }
 
@@ -405,5 +417,8 @@ public class HomeFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UmengUtil.onActivityResult(mActivity, requestCode, resultCode, data);
+        if (requestCode == 12 && resultCode == 12){
+            findLastRecord();
+        }
     }
 }
