@@ -51,7 +51,7 @@ public class HttpUrls {
     // 趋势
     public final static String RECORDTREND = BASEURL + "memberRecordAPP/recordTrend.shtml";
 
-    public final static String FINDRECORDDATE = BASEURL + "memberRecordAPP/findRecordDate.shtml";
+    public final static String FINDRECORDDATE = BASEURL + "memberRecordAPP/findRecordDate.shtm";
     // 进入我的目标
     public final static String FINDMEMBERAIM = BASEURL + "memberAimAPP/findMemberAim.shtml";
     // 确定目标
@@ -59,7 +59,9 @@ public class HttpUrls {
     // 忘记密码获取验证码
     public final static String GETVCODEONLY = BASEURL + "memberLoginAPP/getVCodeOnly.shtml";
     // 修改密码
-    public final static String FORGETPASSWORD = BASEURL + "memberAPP/forgetPassword.shtml";
+    
+    public final static String FORGETPASSWORD = BASEURL + "memberLoginAPP/forgetPassword.shtml";
+
     // 修改密码
     public final static String MODIFYLOGININFO = BASEURL + "memberAPP/modifyLoginInfo.shtml";
     // 取得用户某天的所有记录（点击日历上的某一天或点击记录上的某一条）
