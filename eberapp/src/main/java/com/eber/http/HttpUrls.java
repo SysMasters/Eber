@@ -71,5 +71,9 @@ public class HttpUrls {
     public final static String FINDRECORDBYDATE = BASEURL + "memberRecordAPP/findRecordByDate.shtml";
     // 删除某条记录
     public final static String DELETEENTITY = BASEURL + "memberRecordAPP/deleteEntity.shtml";
+    // 新子用户注册
+    public final static String REGISTERMEMBER = BASEURL + "memberLoginAPP/registerMember.shtml";
+    // 删除子用户
+    public final static String DELETEMEMBER = BASEURL + "memberAPP/deleteMember.shtml";
 
 }

@@ -1,5 +1,6 @@
 package com.eber.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,19 +9,20 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.Member;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback2;
+import com.eber.ui.register.FillInformationActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
-import com.zhy.http.okhttp.utils.Exceptions;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -76,15 +78,14 @@ public class LocalMemberActivity extends BaseActivity {
                 ivDel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        members.remove(holder.getAdapterPosition());
-                        notifyItemRemoved(holder.getAdapterPosition());
+                        deleteUser(member.id, holder.getAdapterPosition());
                     }
                 });
-                if (TextUtils.isEmpty(member.sex)){
+                if (TextUtils.equals("-1", member.sex)) {
                     headImage.setImageResource(R.mipmap.ic_local_member_add);
                     headImage.setTag("add");
                     headImage.setOnClickListener(clickListener);
-                }else {
+                } else {
                     if (TextUtils.equals("1", member.sex)) {// 1:男
                         headImage.setImageResource(R.mipmap.ic_local_member_man);
                     } else if (TextUtils.equals("2", member.sex)) {
@@ -119,13 +120,27 @@ public class LocalMemberActivity extends BaseActivity {
                 Member m = members.get(i);
                 members.remove(i);
                 members.add(1,m);
+                break;
             }
         }
-        members.add(new Member("", "", "", "添加成员"));
+        members.add(new Member("", "", "-1", "添加成员"));
     }
 
     @Override
     public void setListener() {
+
+    }
+
+    private void deleteUser(String memberId, final int position) {
+        param = new HashMap<>();
+        param.put("memberId", memberId);
+        netUtils.get(HttpUrls.DELETEMEMBER, true, param, new StringCallback2() {
+            @Override
+            public void onSuccess(String... result) {
+                members.remove(position);
+                mAdapter.notifyItemRemoved(position);
+            }
+        });
 
     }
 
@@ -154,11 +169,23 @@ public class LocalMemberActivity extends BaseActivity {
                     break;
                 case R.id.local_member_head:// 添加成员
                     if (TextUtils.equals("add", v.getTag() + "")) {
-                        Toast.makeText(LocalMemberActivity.this, "添加成员", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, FillInformationActivity.class);
+                        intent.putExtra("isCreateChidUser", true);
+                        startActivityForResult(intent, 111);
                     }
                     break;
             }
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
+            Member member = data.getParcelableExtra("member");
+            mAdapter.getDatas().add(members.size()-1,member);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 
 }
