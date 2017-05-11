@@ -4,6 +4,7 @@ package com.eber.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.os.ParcelableCompat;
 
 /**
  * 主页成员信息

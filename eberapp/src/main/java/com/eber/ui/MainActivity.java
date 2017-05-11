@@ -51,15 +51,6 @@ public class MainActivity extends BaseActivity {
         init();
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        BodyInfo info = (BodyInfo) intent.getSerializableExtra("BodyInfo");
-        String mac = intent.getStringExtra("mac");
-        submitRecord(info, mac);
-        
-    }
-
     private void init() {
         initContent();
     }
@@ -145,12 +136,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 0 && resultCode == 11) {
-//            BodyInfo mBodyInfo = (BodyInfo) data.getSerializableExtra("BodyInfo");
-//            String mac = data.getStringExtra("mac");
-//            submitRecord(mBodyInfo, mac);
-//        }
-        if (requestCode == 12 && resultCode == 12) {
+        if (requestCode == 0 && resultCode == 11){
+            BodyInfo mBodyInfo = (BodyInfo) data.getSerializableExtra("BodyInfo");
+            String mac = data.getStringExtra("mac");
+            submitRecord(mBodyInfo, mac);
+        }
+        if (requestCode == 12 && resultCode == 12){
             mFragHome.findLastRecord();
         }
     }
@@ -164,12 +155,12 @@ public class MainActivity extends BaseActivity {
         }
         switchContent(mFragHome);
         double re;
-        try {
+        try{
             re = Double.parseDouble(mFragHome.tvWeight.getText().toString());
-        } catch (Exception e) {
+        }catch (Exception e){
             re = 0;
         }
-        if (Math.abs(Double.parseDouble(mBodyInfo.weight) - re) > 5) {
+        if (Math.abs(Double.parseDouble(mBodyInfo.weight) - re) > 5){
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("提示");
             builder.setMessage("本次测量与您数据差距较大，请确认是否本人？");
@@ -186,14 +177,14 @@ public class MainActivity extends BaseActivity {
                 }
             });
             builder.show();
-        } else {
+        }else{
             updateMainData(mBodyInfo, mac);
         }
     }
 
-    private void updateMainData(BodyInfo mBodyInfo, String mac) {
+    private void updateMainData(BodyInfo mBodyInfo, String mac){
         param.clear();
-        Log.i("msg=======", "请求");
+        Log.i("msg=======", "请求" );
         param.put("memberId", EBERApp.nowUser.id + "");
         param.put("weight", mBodyInfo.weight);
         param.put("fatRate", mBodyInfo.fatRate);

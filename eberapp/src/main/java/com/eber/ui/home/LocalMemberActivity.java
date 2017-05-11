@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
 import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
@@ -17,6 +18,7 @@ import com.eber.bean.Member;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
+import com.zhy.http.okhttp.utils.Exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +95,11 @@ public class LocalMemberActivity extends BaseActivity {
                         public void onClick(View v) {
                             EBERApp.nowUser.id = Integer.parseInt(member.id);
                             EBERApp.nowUser.sex = Integer.parseInt(member.sex);
-                            EBERApp.nowUser.height = (int)Double.parseDouble(member.height);
+                            try {
+                                EBERApp.nowUser.height = (int) Double.parseDouble(member.height);
+                            }catch (Exception e){
+                                EBERApp.nowUser.height = 0;
+                            }
                             EBERApp.nowUser.birthday = member.birthday;
                             setResult(12, new Intent());
                             finish();
@@ -107,8 +113,15 @@ public class LocalMemberActivity extends BaseActivity {
     }
 
     private void initData() {
-        members = (List<Member>) getIntent().getSerializableExtra("members");
-        members.add(new Member("", "", "-1", "添加成员"));
+        members = JSONArray.parseArray(getIntent().getStringExtra("members"), Member.class);
+        for (int i = 0; i < members.size(); i++) {
+            if (TextUtils.equals(members.get(i).id,EBERApp.nowUser.id+"")){
+                Member m = members.get(i);
+                members.remove(i);
+                members.add(1,m);
+            }
+        }
+        members.add(new Member("", "", "", "添加成员"));
     }
 
     @Override
