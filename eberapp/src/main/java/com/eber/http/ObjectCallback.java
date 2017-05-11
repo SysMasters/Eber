@@ -14,6 +14,7 @@ import java.util.List;
  * Created by WangLibo on 2017/4/29.
  */
 
+@Deprecated
 public abstract class ObjectCallback<E> extends BaseCallback {
 
     private String paramArray;

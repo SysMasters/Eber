@@ -64,6 +64,9 @@ public class HttpUrls {
 
     // 修改密码
     public final static String MODIFYLOGININFO = BASEURL + "memberAPP/modifyLoginInfo.shtml";
-    
+    // 取得用户某天的所有记录（点击日历上的某一天或点击记录上的某一条）
+    public final static String FINDRECORDBYDATE = BASEURL + "memberRecordAPP/findRecordByDate.shtml";
+    // 删除某条记录
+    public final static String DELETEENTITY = BASEURL + "memberRecordAPP/deleteEntity.shtml";
 
 }
