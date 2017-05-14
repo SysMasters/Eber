@@ -108,6 +108,8 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
             }
             mBodyInfo = data;
             Intent intent = new Intent(mContext, MainActivity.class);
+            MainActivity.mBodyInfo = data;
+            MainActivity.mac = bluetoothUtil.getMAC();
             intent.putExtra("BodyInfo", data);
             intent.putExtra("mac", bluetoothUtil.getMAC());
             startActivity(intent);

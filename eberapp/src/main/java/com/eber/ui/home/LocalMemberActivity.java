@@ -11,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.Member;
+import com.eber.fragment.HomeFragment;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback2;
 import com.eber.ui.register.FillInformationActivity;
@@ -139,6 +141,8 @@ public class LocalMemberActivity extends BaseActivity {
             public void onSuccess(String... result) {
                 members.remove(position);
                 mAdapter.notifyItemRemoved(position);
+                HomeFragment.members.remove(position);
+                HomeFragment.reMembers();
             }
         });
 
@@ -182,9 +186,11 @@ public class LocalMemberActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
-            Member member = data.getParcelableExtra("member");
+            Member member = JSONObject.parseObject(data.getStringExtra("member"), Member.class);
             mAdapter.getDatas().add(members.size()-1,member);
             mAdapter.notifyDataSetChanged();
+            HomeFragment.members.add(member);
+            HomeFragment.reMembers();
         }
     }
 
