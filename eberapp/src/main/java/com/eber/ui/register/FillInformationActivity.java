@@ -200,9 +200,8 @@ public class FillInformationActivity extends BaseActivity {
                         JSONObject jo = JSON.parseObject(response);
                         int retcode = jo.getInteger("retcode");
                         if (retcode == 1) {
-                            Member member = JSON.parseObject(jo.getString("member"), Member.class);
                             Intent intent = new Intent();
-                            intent.putExtra("member", member);
+                            intent.putExtra("member", jo.getString("member"));
                             setResult(Activity.RESULT_OK, intent);
                             finish();
                         }
@@ -213,7 +212,7 @@ public class FillInformationActivity extends BaseActivity {
                 if (!isEdit) {
                     param = new HashMap<>();
                     param.put("memberId", EBERApp.user.id + "");
-                    param.put("userName", etUserName.getText().toString().trim());
+                    param.put("userName", Base64.getEncodeStr(etUserName.getText().toString().trim()));
                     param.put("birthday", tvYearText.getText().toString() + "-" + getFormatMonth(tvMonthText.getText().toString()));
                     param.put("sex", sex + "");
                     param.put("height", tvHeightText.getText().toString() + "");

@@ -55,6 +55,19 @@ public class MainActivity extends BaseActivity {
         initContent();
     }
 
+    public static BodyInfo mBodyInfo;
+    public static String mac;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        mBodyInfo = (BodyInfo) getIntent().getSerializableExtra("BodyInfo");
+//        mac = getIntent().getStringExtra("mac");
+        if (null != mac && !mac.equals("")) {
+            submitRecord(mBodyInfo, mac);
+            mac = "";
+        }
+    }
 
     @Override
     public void setListener() {
@@ -68,32 +81,49 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private int id;
 
     private RadioGroup.OnCheckedChangeListener checkedLis = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
                 case R.id.index_home:// 首页
+                    if (id != EBERApp.nowUser.id){
+                        mFragHome = new HomeFragment();
+                        id = EBERApp.nowUser.id;
+                    }
                     if (mFragHome == null) {
                         mFragHome = new HomeFragment();
+                        id = EBERApp.nowUser.id;
                     }
                     switchContent(mFragHome);
                     break;
                 case R.id.index_tendency:// 趋势
+                    if (id != EBERApp.nowUser.id){
+                        mFragTendency = new TendencyFragment();
+                        id = EBERApp.nowUser.id;
+                    }
                     if (mFragTendency == null) {
                         mFragTendency = new TendencyFragment();
+                        id = EBERApp.nowUser.id;
                     }
                     switchContent(mFragTendency);
                     break;
                 case R.id.index_discover:// 发现
                     if (mFragFind == null) {
                         mFragFind = new FindFragment();
+                        id = EBERApp.nowUser.id;
                     }
                     switchContent(mFragFind);
                     break;
                 case R.id.index_setting:// 我的
+                    if (id != EBERApp.nowUser.id){
+                        mFragMy = new MyFragment();
+                        id = EBERApp.nowUser.id;
+                    }
                     if (mFragMy == null) {
                         mFragMy = new MyFragment();
+                        id = EBERApp.nowUser.id;
                     }
                     switchContent(mFragMy);
                     break;

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -89,8 +90,8 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView mGridView;
 
     private CommonAdapter<Member> mMembersAdapter;
-    private List<Member> members;// 成员列表
-    private List<Member> showMembers;// 显示的成员列表
+    public static List<Member> members;// 成员列表
+    private static List<Member> showMembers;// 显示的成员列表
     private MemberRecord memberRecord;      // 称重记录
     private List<User> users;      // 用户与子用户集合
 
@@ -154,8 +155,7 @@ public class HomeFragment extends BaseFragment {
                             break;
                         case "骨质疏松风险":
                             ivImage.setImageResource(R.mipmap.ic_index_rarefaction);
-                            tvDesc.setEms(6);
-                            tvDesc.setText(item.indicateName + item.value + "");
+                            tvDesc.setText(item.indicateName + "\n" + item.value);
                             if (item.name.equals("低风险")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
                             } else if (item.name.equals("中风险")) {
@@ -188,8 +188,7 @@ public class HomeFragment extends BaseFragment {
                             break;
                         case "内脏脂肪等级":
                             ivImage.setImageResource(R.mipmap.ic_index_viscera);
-                            tvDesc.setEms(6);
-                            tvDesc.setText(item.indicateName + item.value + "级");
+                            tvDesc.setText(item.indicateName + "\n" + item.value + "级");
                             if (item.name.equals("标准")) {
                                 gd.setColor(Color.parseColor("#69d55f"));// 设置颜色
                             } else if (item.name.equals("偏高")) {
@@ -219,7 +218,7 @@ public class HomeFragment extends BaseFragment {
                             } else if (item.name.equals("微胖")) {
                                 gd.setColor(Color.parseColor("#ff7485"));// 设置颜色
                             } else if (item.name.equals("肥胖")) {
-                                gd.setColor(Color.parseColor("#2aac18"));// 设置颜色
+                                gd.setColor(Color.parseColor("#F5495D"));// 设置颜色
                             }
                             break;
                         case "基础代谢":
@@ -238,8 +237,13 @@ public class HomeFragment extends BaseFragment {
                         @Override
                         public void onClick(View v) {
                             // 跳转至滑屏页
-                            Intent intent = new Intent(mActivity, SlideInfoActivity.class);
-                            mActivity.startActivity(intent);
+                            try {
+                                Double.parseDouble(tvWeight.getText().toString());
+                                Intent intent = new Intent(mActivity, SlideInfoActivity.class);
+                                mActivity.startActivity(intent);
+                            }catch (Exception e){
+                                Toast.makeText(mActivity, "您还没有检测数据，快去检测吧！", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
 
@@ -384,6 +388,7 @@ public class HomeFragment extends BaseFragment {
                     Intent intent = new Intent(mActivity, FillInformationActivity.class);
                     intent.putExtra("isCreateChidUser", true);
                     startActivityForResult(intent, 111);
+                    mPopupWindow.dismiss();
                     break;
                 case R.id.index_user_many:// 更多成员
                     intent = new Intent(mActivity, LocalMemberActivity.class);
@@ -398,6 +403,14 @@ public class HomeFragment extends BaseFragment {
             }
         }
     };
+
+    public static void reMembers(){
+        showMembers.clear();
+        for (int i = 0; i < members.size(); i++) {
+            if (i < 5)
+                showMembers.add(members.get(i));
+        }
+    }
 
     private void loadMemberData() {
         members = new ArrayList<>();
@@ -421,8 +434,9 @@ public class HomeFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         UmengUtil.onActivityResult(mActivity, requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
-            Member member = data.getParcelableExtra("member");
+            Member member = JSON.parseObject(data.getStringExtra("member"), Member.class);
             members.add(member);
+            reMembers();
         }
         if (requestCode == 12 && resultCode == 12) {
             findLastRecord();

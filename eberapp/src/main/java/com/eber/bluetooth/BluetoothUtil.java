@@ -269,6 +269,7 @@ public class BluetoothUtil {
     private final BleNotifyResponse mNotifyRsp = new BleNotifyResponse() {
         @Override
         public void onNotify(UUID service, UUID character, byte[] value) {
+            Log.i("qqqqqqqqqq","");
             if (service.equals(mService) && character.equals(mCharacter)) {
                 String data = ByteUtils.byteToString(value);
                 if (data.matches("^080504AE.*")) {
@@ -350,11 +351,13 @@ public class BluetoothUtil {
                     }
                 }
                 else if (data.matches("^080704B001.*")) {
+                    Log.i("aaaaaaaaaa", "");
 //                    if (connectType == MeasureActivity.TYPE_MEASURE){// 测量
 //                        Log.i("msg=======", "测量");
 //                        startMeasure();
 //                    }else
                      if(connectType == BindDeviceActivity2.TYPE_MEASURE){// 绑定设备
+                         Log.i("fffffffff", "");
                          if (isBindDivice) {
                              readScaleInfo();
                              isBindDivice = !isBindDivice;

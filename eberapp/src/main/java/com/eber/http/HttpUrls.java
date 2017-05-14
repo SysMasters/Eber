@@ -7,8 +7,9 @@ package com.eber.http;
 
 public class HttpUrls {
 
-    public final static String IP = "http://112.74.62.116:8080/";
-    public final static String BASEURL = IP + "ieber/";
+    public final static String IP = "http://120.27.114.43";
+    public final static String BASEURL = IP + "/";
+
 
 
     public final static String FINDEQUIPARRAY = BASEURL + "equipTypeAPP/findEquipArray.shtml";
@@ -51,7 +52,7 @@ public class HttpUrls {
     // 趋势
     public final static String RECORDTREND = BASEURL + "memberRecordAPP/recordTrend.shtml";
 
-    public final static String FINDRECORDDATE = BASEURL + "memberRecordAPP/findRecordDate.shtm";
+    public final static String FINDRECORDDATE = BASEURL + "memberRecordAPP/findRecordDate.shtml";
     // 进入我的目标
     public final static String FINDMEMBERAIM = BASEURL + "memberAimAPP/findMemberAim.shtml";
     // 确定目标
