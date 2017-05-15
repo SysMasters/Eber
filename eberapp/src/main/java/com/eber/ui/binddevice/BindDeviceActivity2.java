@@ -1,7 +1,12 @@
 package com.eber.ui.binddevice;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -65,6 +71,18 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
         btnAgain.setOnClickListener(this);
         discernLayout.setVisibility(View.VISIBLE);
         bindAgainLayout.setVisibility(View.GONE);
+        //判断是否有权限
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //请求权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            //判断是否需要 向用户解释，为什么要申请该权限
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+                Toast.makeText(this, "shouldShowRequestPermissionRationale", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         bluetoothUtil = new BluetoothUtil(this);
         mClient = ClientManager.getClient();
@@ -74,6 +92,13 @@ public class BindDeviceActivity2 extends BaseActivity implements View.OnClickLis
             mClient.registerBluetoothStateListener(mBluetoothStateListener);
             mClient.openBluetooth();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
+            grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 
     private void connect() {
