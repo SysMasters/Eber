@@ -1,5 +1,7 @@
 package com.eber.ui.tendency;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.BodyInfo;
@@ -22,6 +25,7 @@ import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -68,6 +72,8 @@ public class HistoryDataActivity extends BaseActivity {
     private CommonAdapter<BodyInfo> mAdapter;
     private List<BodyInfo> bodyInfos;
     
+    private String mDate;
+    
 
 
     @Override
@@ -76,9 +82,16 @@ public class HistoryDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         init();
     }
+    
+    public static void startActivity(Context context,String date){
+        Intent intent = new Intent(context,HistoryDataActivity.class);
+        intent.putExtra("date",date);
+        context.startActivity(intent);
+    }
 
 
     private void init() {
+        mDate = getIntent().getStringExtra("date");
         shareUtil = new ShareUtil(this);
         tvContent.setText("历史记录");
         tvRight.setImageResource(R.mipmap.ic_index_share);
@@ -123,6 +136,11 @@ public class HistoryDataActivity extends BaseActivity {
     }
 
     private void initData() {
+        
+        param = new HashMap<>();
+        param.put("memberId", EBERApp.nowUser.id+"");
+        param.put("date",mDate);
+//        netUtils.get(HttpUrls);
         String json = "[\n" +
                 "    {\n" +
                 "        \"subcutaneousfat\": 29,\n" +

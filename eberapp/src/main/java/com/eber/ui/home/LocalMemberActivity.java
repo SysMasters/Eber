@@ -16,7 +16,6 @@ import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.Member;
-import com.eber.fragment.HomeFragment;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback2;
 import com.eber.ui.register.FillInformationActivity;
@@ -24,6 +23,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class LocalMemberActivity extends BaseActivity {
     @ViewInject(R.id.recyclerView)
     private RecyclerView recyclerView;
 
-    private List<Member> members;
+    private ArrayList<Member> members;
     private CommonAdapter<Member> mAdapter;
 
 
@@ -68,14 +68,15 @@ public class LocalMemberActivity extends BaseActivity {
                 TextView tvName = holder.getView(R.id.local_member_name);
                 ImageView ivDel = holder.getView(R.id.local_member_del);
                 ImageView ivSelected = holder.getView(R.id.local_member_selected);
-                boolean flag = (boolean) tvRight.getTag();
-                if (position < 2 || position == members.size() - 1) {
+                final boolean flag = (boolean) tvRight.getTag();
+                // 当前用户、父用户、添加成员，不能删除
+                if (position == 1 ||TextUtils.equals(EBERApp.nowUser.id+"",member.id) || position == members.size() - 1) {
                     ivDel.setVisibility(View.GONE);
                 } else {
                     ivDel.setVisibility(flag ? View.VISIBLE : View.INVISIBLE);
                 }
                 // 默认第二项为当前选中用户(前边需要集合排序，第一为主账户，第二位当前用户)
-                ivSelected.setVisibility(position == 1 ? View.VISIBLE : View.INVISIBLE);
+                ivSelected.setVisibility(position == 1 && !TextUtils.isEmpty(member.id) ? View.VISIBLE : View.INVISIBLE);
                 ivDel.setTag(position);
                 ivDel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -96,15 +97,11 @@ public class LocalMemberActivity extends BaseActivity {
                     holder.setOnClickListener(R.id.local_member_head, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            EBERApp.nowUser.id = Integer.parseInt(member.id);
-                            EBERApp.nowUser.sex = Integer.parseInt(member.sex);
-                            try {
-                                EBERApp.nowUser.height = (int) Double.parseDouble(member.height);
-                            }catch (Exception e){
-                                EBERApp.nowUser.height = 0;
+                            if (flag){
+                                return;
                             }
-                            EBERApp.nowUser.birthday = member.birthday;
-                            setResult(12, new Intent());
+                            setNowuser(member);
+                            setResult();
                             finish();
                         }
                     });
@@ -115,22 +112,47 @@ public class LocalMemberActivity extends BaseActivity {
         });
     }
 
-    private void initData() {
-        members = JSONArray.parseArray(getIntent().getStringExtra("members"), Member.class);
-        for (int i = 0; i < members.size(); i++) {
-            if (TextUtils.equals(members.get(i).id,EBERApp.nowUser.id+"")){
-                Member m = members.get(i);
-                members.remove(i);
-                members.add(1,m);
-                break;
-            }
+    /**
+     * 设置当前用户
+     */
+    private void setNowuser(Member member) {
+        EBERApp.nowUser.id = Integer.parseInt(member.id);
+        EBERApp.nowUser.sex = Integer.parseInt(member.sex);
+        try {
+            EBERApp.nowUser.height = (int) Double.parseDouble(member.height);
+        } catch (Exception e) {
+            EBERApp.nowUser.height = 0;
         }
+        EBERApp.nowUser.birthday = member.birthday;
+    }
+
+    private void initData() {
+        members = (ArrayList<Member>) JSONArray.parseArray(getIntent().getStringExtra("members"), Member.class);
+        if (members == null) {
+            return;
+        }
+        setNowuserForSecond(members);
         members.add(new Member("", "", "-1", "添加成员"));
+
     }
 
     @Override
     public void setListener() {
 
+    }
+
+    /**
+     * 设置当前用户为第二个
+     */
+    private void setNowuserForSecond(List<Member> members) {
+        for (int i = 0; i < members.size(); i++) {
+            if (TextUtils.equals(members.get(i).id, EBERApp.nowUser.id + "") && members.size() >= 2) {
+                Member m = members.get(i);
+                members.remove(i);
+                members.add(1, m);
+                break;
+            }
+        }
     }
 
     private void deleteUser(String memberId, final int position) {
@@ -141,8 +163,6 @@ public class LocalMemberActivity extends BaseActivity {
             public void onSuccess(String... result) {
                 members.remove(position);
                 mAdapter.notifyItemRemoved(position);
-                HomeFragment.members.remove(position);
-                HomeFragment.reMembers();
             }
         });
 
@@ -153,6 +173,7 @@ public class LocalMemberActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.title_back:
+                    setResult();
                     finish();
                     break;
                 case R.id.title_right:
@@ -187,11 +208,25 @@ public class LocalMemberActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
             Member member = JSONObject.parseObject(data.getStringExtra("member"), Member.class);
-            mAdapter.getDatas().add(members.size()-1,member);
+            setNowuser(member);
+            if (mAdapter.getDatas().size() >= 2) {
+                mAdapter.getDatas().add(1, member);
+            } else {
+                mAdapter.getDatas().add(member);
+            }
             mAdapter.notifyDataSetChanged();
-            HomeFragment.members.add(member);
-            HomeFragment.reMembers();
         }
     }
+    
+    private void setResult(){
+        Intent intent = new Intent();
+        intent.putExtra("members",  members);
+        setResult(12,intent);
+    }
 
+    @Override
+    public void onBackPressed() {
+        setResult();
+        finish();
+    }
 }

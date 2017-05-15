@@ -16,7 +16,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
-import com.eber.bean.Member;
 import com.eber.http.BaseCallback;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback;
@@ -183,6 +182,10 @@ public class FillInformationActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             if (isCreateChidUser) {
+                if (TextUtils.isEmpty(etUserName.getText().toString().trim())){
+                    Toast.makeText(mContext, "用户名不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.equals(etUserName.getText().toString().trim(), EBERApp.user.userName)) {
                     Toast.makeText(mContext, "用户名不可重复", Toast.LENGTH_SHORT).show();
                     return;
@@ -210,6 +213,10 @@ public class FillInformationActivity extends BaseActivity {
                 });
             } else {
                 if (!isEdit) {
+                    if (TextUtils.isEmpty(etUserName.getText().toString().trim())){
+                        Toast.makeText(mContext, "用户名不能为空", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     param = new HashMap<>();
                     param.put("memberId", EBERApp.user.id + "");
                     param.put("userName", Base64.getEncodeStr(etUserName.getText().toString().trim()));
@@ -230,6 +237,10 @@ public class FillInformationActivity extends BaseActivity {
                         }
                     });
                 } else {
+                    if (TextUtils.isEmpty(etUserName.getText().toString().trim())){
+                        Toast.makeText(mContext, "用户名不能为空", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Intent intent = new Intent();
                     intent.putExtra("name", etUserName.getText().toString());
                     intent.putExtra("sex", sex == 1 ? "男" : "女");

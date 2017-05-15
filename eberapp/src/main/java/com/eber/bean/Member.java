@@ -4,14 +4,15 @@ package com.eber.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.os.ParcelableCompat;
+
+import java.io.Serializable;
 
 /**
  * 主页成员信息
  * Created by WangLibo on 2017/4/29.
  */
 
-public class Member implements Parcelable {
+public class Member implements Parcelable,Serializable {
 
 
     /**

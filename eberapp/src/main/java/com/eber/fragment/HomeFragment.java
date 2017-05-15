@@ -90,8 +90,8 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView mGridView;
 
     private CommonAdapter<Member> mMembersAdapter;
-    public static List<Member> members;// 成员列表
-    private static List<Member> showMembers;// 显示的成员列表
+    public List<Member> members = new ArrayList<>();// 成员列表
+    private List<Member> showMembers = new ArrayList<>();// 显示的成员列表
     private MemberRecord memberRecord;      // 称重记录
     private List<User> users;      // 用户与子用户集合
 
@@ -241,7 +241,7 @@ public class HomeFragment extends BaseFragment {
                                 Double.parseDouble(tvWeight.getText().toString());
                                 Intent intent = new Intent(mActivity, SlideInfoActivity.class);
                                 mActivity.startActivity(intent);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 Toast.makeText(mActivity, "您还没有检测数据，快去检测吧！", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -331,11 +331,15 @@ public class HomeFragment extends BaseFragment {
                 holder.setOnClickListener(R.id.index_user_root, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EBERApp.nowUser.id = Integer.parseInt(member.id);
-                        EBERApp.nowUser.sex = Integer.parseInt(member.sex);
-                        EBERApp.nowUser.height = (int) Double.parseDouble(member.height);
-                        EBERApp.nowUser.birthday = member.birthday;
-                        findLastRecord();
+                        try {
+                            EBERApp.nowUser.id = Integer.parseInt(member.id);
+                            EBERApp.nowUser.sex = Integer.parseInt(member.sex);
+                            EBERApp.nowUser.height = (int) Double.parseDouble(member.height);
+                            EBERApp.nowUser.birthday = member.birthday;
+                            findLastRecord();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         mPopupWindow.dismiss();
                     }
                 });
@@ -362,11 +366,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void findLastRecord() {
-        if (EBERApp.nowUser.sex == 1) {
-            ivHead.setImageResource(R.mipmap.ic_index_head_male);
-        } else {
-            ivHead.setImageResource(R.mipmap.ic_index_head_woman);
-        }
+        setSex();
         param = new HashMap<>();
         param.put("memberId", String.valueOf(EBERApp.nowUser.id));
         netUtils.get(HttpUrls.FINDLASTRECORD, false, param, new StringCallback("memberRecord") {
@@ -404,7 +404,7 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
-    public static void reMembers(){
+    public void reMembers() {
         showMembers.clear();
         for (int i = 0; i < members.size(); i++) {
             if (i < 5)
@@ -413,18 +413,20 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadMemberData() {
-        members = new ArrayList<>();
-        showMembers = new ArrayList<>();
+        setSex();
+        String jsonMembers = getActivity().getIntent().getStringExtra("memberArray");
+        members = JSON.parseArray(jsonMembers, Member.class);
+        reMembers();
+    }
+
+    /**
+     * 设置性别
+     */
+    private void setSex() {
         if (EBERApp.nowUser.sex == 1) {
             ivHead.setImageResource(R.mipmap.ic_index_head_male);
         } else {
             ivHead.setImageResource(R.mipmap.ic_index_head_woman);
-        }
-        String jsonMembers = getActivity().getIntent().getStringExtra("memberArray");
-        members = JSON.parseArray(jsonMembers, Member.class);
-        for (int i = 0; i < members.size(); i++) {
-            if (i < 5)
-                showMembers.add(members.get(i));
         }
     }
 
@@ -435,11 +437,38 @@ public class HomeFragment extends BaseFragment {
         UmengUtil.onActivityResult(mActivity, requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
             Member member = JSON.parseObject(data.getStringExtra("member"), Member.class);
-            members.add(member);
+            setNowuser(member);
+            if (this.members.size() >= 1) {
+                members.add(1, member);
+            } else {
+                members.add(member);
+            }
+
             reMembers();
         }
         if (requestCode == 12 && resultCode == 12) {
-            findLastRecord();
+            setSex();
+            List<Member> members = (List<Member>) data.getSerializableExtra("members");
+            if (members != null) {
+                members.remove(members.size() - 1);
+                this.members = members;
+                reMembers();
+            }
         }
+    }
+
+
+    /**
+     * 设置当前用户
+     */
+    private void setNowuser(Member member) {
+        EBERApp.nowUser.id = Integer.parseInt(member.id);
+        EBERApp.nowUser.sex = Integer.parseInt(member.sex);
+        try {
+            EBERApp.nowUser.height = (int) Double.parseDouble(member.height);
+        } catch (Exception e) {
+            EBERApp.nowUser.height = 0;
+        }
+        EBERApp.nowUser.birthday = member.birthday;
     }
 }

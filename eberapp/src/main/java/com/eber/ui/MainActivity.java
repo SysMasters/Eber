@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -61,8 +62,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        mBodyInfo = (BodyInfo) getIntent().getSerializableExtra("BodyInfo");
-//        mac = getIntent().getStringExtra("mac");
+        //        mBodyInfo = (BodyInfo) getIntent().getSerializableExtra("BodyInfo");
+        //        mac = getIntent().getStringExtra("mac");
         if (null != mac && !mac.equals("")) {
             submitRecord(mBodyInfo, mac);
             mac = "";
@@ -88,7 +89,7 @@ public class MainActivity extends BaseActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
                 case R.id.index_home:// 首页
-                    if (id != EBERApp.nowUser.id){
+                    if (id != EBERApp.nowUser.id) {
                         mFragHome = new HomeFragment();
                         id = EBERApp.nowUser.id;
                     }
@@ -99,7 +100,7 @@ public class MainActivity extends BaseActivity {
                     switchContent(mFragHome);
                     break;
                 case R.id.index_tendency:// 趋势
-                    if (id != EBERApp.nowUser.id){
+                    if (id != EBERApp.nowUser.id) {
                         mFragTendency = new TendencyFragment();
                         id = EBERApp.nowUser.id;
                     }
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity {
                     switchContent(mFragFind);
                     break;
                 case R.id.index_setting:// 我的
-                    if (id != EBERApp.nowUser.id){
+                    if (id != EBERApp.nowUser.id) {
                         mFragMy = new MyFragment();
                         id = EBERApp.nowUser.id;
                     }
@@ -166,12 +167,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == 11){
+        if (requestCode == 0 && resultCode == 11) {
             BodyInfo mBodyInfo = (BodyInfo) data.getSerializableExtra("BodyInfo");
             String mac = data.getStringExtra("mac");
             submitRecord(mBodyInfo, mac);
         }
-        if (requestCode == 12 && resultCode == 12){
+        if (requestCode == 12 && resultCode == 12) {
             mFragHome.findLastRecord();
         }
     }
@@ -184,13 +185,14 @@ public class MainActivity extends BaseActivity {
             mFragHome = new HomeFragment();
         }
         switchContent(mFragHome);
+        radioGroup.check(R.id.index_home);
         double re;
-        try{
+        try {
             re = Double.parseDouble(mFragHome.tvWeight.getText().toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             re = 0;
         }
-        if (Math.abs(Double.parseDouble(mBodyInfo.weight) - re) > 5){
+        if (!TextUtils.isEmpty(mBodyInfo.weight) && re != 0 && Math.abs(Double.parseDouble(mBodyInfo.weight) - re) > 5) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("提示");
             builder.setMessage("本次测量与您数据差距较大，请确认是否本人？");
@@ -207,14 +209,14 @@ public class MainActivity extends BaseActivity {
                 }
             });
             builder.show();
-        }else{
+        } else {
             updateMainData(mBodyInfo, mac);
         }
     }
 
-    private void updateMainData(BodyInfo mBodyInfo, String mac){
+    private void updateMainData(BodyInfo mBodyInfo, String mac) {
         param.clear();
-        Log.i("msg=======", "请求" );
+        Log.i("msg=======", "请求");
         param.put("memberId", EBERApp.nowUser.id + "");
         param.put("weight", mBodyInfo.weight);
         param.put("fatRate", mBodyInfo.fatRate);

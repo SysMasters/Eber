@@ -65,6 +65,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/f_my_sign_in_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
