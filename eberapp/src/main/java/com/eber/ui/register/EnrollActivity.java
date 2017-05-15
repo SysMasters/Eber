@@ -77,6 +77,7 @@ public class EnrollActivity extends BaseActivity {
                     netUtils.get(HttpUrls.GETVCODE, true, param, new StringCallback("") {
                                 @Override
                                 public void onSuccess(String resultJson) {
+                                    Toast.makeText(EnrollActivity.this, "验证码已发送成功", Toast.LENGTH_SHORT).show();
                                     timer.start();
                                 }
                             });

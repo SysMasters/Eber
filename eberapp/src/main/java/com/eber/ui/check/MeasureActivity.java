@@ -1,7 +1,13 @@
 package com.eber.ui.check;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.icu.util.Measure;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eber.EBERApp;
 import com.eber.R;
@@ -62,7 +69,18 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
 
         btnClose.setOnClickListener(this);
         btnAgain.setOnClickListener(this);
-
+        // 判断是否有权限
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // 请求权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            // 判断是否需要 向用户解释，为什么要申请该权限
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+                Toast.makeText(this, "shouldShowRequestPermissionRationale", Toast.LENGTH_SHORT).show();
+            }
+        }
         bluetoothUtil = new BluetoothUtil(this);
 
         mClient = ClientManager.getClient();
@@ -103,6 +121,8 @@ public class MeasureActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         public void onMeasureData(BodyInfo data) {// 返回测量数据
+            MediaPlayer mp = MediaPlayer.create(MeasureActivity.this, R.raw.iphone_glasses);
+            mp.start();
             if (mBodyInfo != null) {
                 return;
             }

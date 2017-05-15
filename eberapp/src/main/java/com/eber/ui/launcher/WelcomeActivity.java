@@ -17,6 +17,7 @@ import com.eber.http.StringCallback2;
 import com.eber.ui.MainActivity;
 import com.eber.R;
 import com.eber.ui.login.LoginActivity;
+import com.eber.ui.register.FillInformationActivity;
 import com.eber.utils.SPKey;
 
 import java.util.HashMap;
@@ -55,12 +56,14 @@ public class WelcomeActivity extends Activity {
         parm.put("memberId", String.valueOf(user.id));
         parm.put("sessionId", user.sessionId);
         Log.i("====url: ", HttpUrls.CHECKSESSIONID+"?memberId="+String.valueOf(user.id)+"&sessionId="+user.sessionId);
-        netUtils.get(HttpUrls.CHECKSESSIONID, false, parm, new StringCallback2("member", "sessionId", "indicateType", "memberArray") {
+        netUtils.get(HttpUrls.CHECKSESSIONID, false, parm, new StringCallback2("member", "sessionId", "memberRecord", "memberArray") {
             @Override
             public void onSuccess(String... result) {
                 User user = JSON.parseObject(result[0], User.class);
                 user.sessionId = result[1];
                 EBERApp.spUtil.putData(SPKey.USER, JSON.toJSONString(user));
+                EBERApp.user = user;
+                EBERApp.nowUser = user;
                 isLogin = true;
                 memberRecord = result[2];
                 memberArray = result[3];
@@ -75,8 +78,12 @@ public class WelcomeActivity extends Activity {
             if (versionCode < EBERApp.versionUtil.getVersionCode())       // 当前版本第一次启动，跳转滑屏页
                 intent = new Intent(WelcomeActivity.this, GuideActivity.class);
             else{
-                isLogin = false;
                 if (isLogin){
+                    if (EBERApp.user.birthday == null || EBERApp.user.birthday.equals("")){
+                        Intent in = new Intent(WelcomeActivity.this, FillInformationActivity.class);
+                        startActivity(in);
+                        return;
+                    }
                     intent = new Intent(WelcomeActivity.this, MainActivity.class);
                     intent.putExtra("memberRecord", memberRecord);
                     intent.putExtra("memberArray", memberArray);

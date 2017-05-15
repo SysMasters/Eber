@@ -1,7 +1,12 @@
 package com.eber.bluetooth;
 
+import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -43,6 +48,7 @@ public class BluetoothUtil {
     public int connectType = -1;// 判断类型是绑定设备还是测量
 
     public final static String UUIDStr = "0000ffe1-0000-1000-8000-00805f9b34fb";
+//    public final static String UUIDStr = "00060001-F8CE-11E4-ABF4-0002A5D5C51B";
     private final static String TAG = "bluetooth";
     private Context mContext;
     private BluetoothDevice mDevice;

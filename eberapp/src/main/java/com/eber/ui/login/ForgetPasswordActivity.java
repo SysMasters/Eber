@@ -86,6 +86,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                             super.onResponse(response);
                             JSONObject jo = JSON.parseObject(response);
                             if (jo.getInteger("retcode") == 1){
+                                Toast.makeText(ForgetPasswordActivity.this, "验证码已发送成功", Toast.LENGTH_SHORT).show();
                                 timer.start();
                             }else{
                                 Toast.makeText(ForgetPasswordActivity.this, jo.getString("msg"), Toast.LENGTH_SHORT).show();
