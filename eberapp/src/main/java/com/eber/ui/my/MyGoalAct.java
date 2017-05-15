@@ -103,7 +103,7 @@ public class MyGoalAct extends BaseActivity {
     
     private void rulerData(){
         List<String> list = new ArrayList<>();
-        for (int i = 20; i < 200; i += 1) {
+        for (int i = 30; i <= 150; i += 1) {
             list.add(i + "");
             for (int j = 1; j < 10; j++) {
                 list.add(i + "." + j);
@@ -111,7 +111,7 @@ public class MyGoalAct extends BaseActivity {
         }
         rulerView = (RulerWheel) findViewById(R.id.ruler_view);
         rulerView.setData(list);
-        rulerView.setSelectedValue("20.4");
+        rulerView.setSelectedValue("60");
         rulerView.setScrollingListener(new RulerWheel.OnWheelScrollListener<String>() {
             @Override
             public void onChanged(RulerWheel wheel, String oldValue, String newValue) {

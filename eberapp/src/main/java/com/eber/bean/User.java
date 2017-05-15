@@ -22,4 +22,16 @@ public class User implements Serializable {
     public int hipline;
     public int pregnate;
 
+    /**
+     * 判断当前用户是否为父用户
+     *
+     * @return
+     */
+    public boolean isParentUser() {
+        if (id == parentId) {
+            return true;
+        }
+        return false;
+    }
+
 }

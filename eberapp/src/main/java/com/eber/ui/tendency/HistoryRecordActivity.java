@@ -99,7 +99,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onClick(View v) {
                         // TODO: 2017/5/11 跳转历史记录 
-                        //                        startActivity(HistoryDataActivity.class);
+                        startActivity(HistoryDataActivity.class);
                     }
                 });
 

@@ -49,6 +49,8 @@ public class MyFragment extends BaseFragment {
     private TextView tvIntegral;
 
 
+    @ViewInject(R.id.f_my_sign_in_lay)
+    LinearLayout signInLay;                  
     @ViewInject(R.id.f_my_remind)
     LinearLayout llRemind;                  // 提醒
     @ViewInject(R.id.f_my_target)
@@ -77,6 +79,17 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void onBusiness() {
+        // 当前如果是子用户，只能看到我的目标和我的资料
+        int isVisible = EBERApp.nowUser.isParentUser() ? View.VISIBLE : View.GONE;
+        signInLay.setVisibility(isVisible);
+        llRemind.setVisibility(isVisible);
+        llAccountManager.setVisibility(isVisible);
+        llDeviceManager.setVisibility(isVisible);
+        llClearCache.setVisibility(isVisible);
+        llFaq.setVisibility(isVisible);
+        llAbout.setVisibility(isVisible);
+        llUnlogin.setVisibility(isVisible);
+        
         getMyData();
         tvSignIn.setOnClickListener(clickLis);
         llRemind.setOnClickListener(clickLis);
