@@ -12,7 +12,7 @@ import java.io.Serializable;
  * Created by WangLibo on 2017/4/29.
  */
 
-public class Member implements Parcelable,Serializable {
+public class Member implements Serializable, Parcelable {
 
 
     /**
@@ -41,11 +41,15 @@ public class Member implements Parcelable,Serializable {
     public String rigesterIP;
     public String password;
 
+
     public Member(String id, String parentId, String sex, String userName) {
         this.id = id;
         this.parentId = parentId;
         this.sex = sex;
         this.userName = userName;
+    }
+
+    public Member() {
     }
 
     @Override
@@ -57,18 +61,33 @@ public class Member implements Parcelable,Serializable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.parentId);
+        dest.writeString(this.birthday);
         dest.writeString(this.sex);
+        dest.writeString(this.height);
+        dest.writeString(this.waistline);
+        dest.writeString(this.cellphone);
+        dest.writeString(this.description);
+        dest.writeString(this.hipline);
         dest.writeString(this.userName);
-    }
-
-    public Member() {
+        dest.writeString(this.pregnate);
+        dest.writeString(this.rigesterIP);
+        dest.writeString(this.password);
     }
 
     protected Member(Parcel in) {
         this.id = in.readString();
         this.parentId = in.readString();
+        this.birthday = in.readString();
         this.sex = in.readString();
+        this.height = in.readString();
+        this.waistline = in.readString();
+        this.cellphone = in.readString();
+        this.description = in.readString();
+        this.hipline = in.readString();
         this.userName = in.readString();
+        this.pregnate = in.readString();
+        this.rigesterIP = in.readString();
+        this.password = in.readString();
     }
 
     public static final Parcelable.Creator<Member> CREATOR = new Parcelable.Creator<Member>() {

@@ -38,7 +38,7 @@ import com.eber.ui.register.FillInformationActivity;
 import com.eber.ui.slideinfo.SlideInfoActivity;
 import com.eber.utils.DateUtil;
 import com.eber.utils.DisplayUtil;
-import com.eber.views.decoration.DividerGridItemDecoration;
+import com.eber.views.decoration.HomeGridItemDecoration;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -122,7 +122,9 @@ public class HomeFragment extends BaseFragment {
             memberRecord = JSON.parseObject(memberRecordStr, MemberRecord.class);
             setViewValues(memberRecord);
             mGridView.setLayoutManager(new GridLayoutManager(mActivity, 3));
-            mGridView.addItemDecoration(new DividerGridItemDecoration(mActivity));
+//            mGridView.addItemDecoration(new DividerGridItemDecoration(mActivity));
+            mGridView.addItemDecoration(new HomeGridItemDecoration(mActivity));
+            mGridView.setHasFixedSize(true);
             mAdapter = new CommonAdapter<Indicate>(mActivity, R.layout.view_index_item, indicates) {
                 @Override
                 protected void convert(ViewHolder holder, Indicate item, final int position) {
@@ -422,7 +424,7 @@ public class HomeFragment extends BaseFragment {
     /**
      * 设置性别
      */
-    private void setSex() {
+    public void setSex() {
         if (EBERApp.nowUser.sex == 1) {
             ivHead.setImageResource(R.mipmap.ic_index_head_male);
         } else {

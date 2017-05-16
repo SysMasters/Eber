@@ -16,6 +16,7 @@ import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.base.BaseFragment;
 import com.eber.bean.BodyInfo;
+import com.eber.bean.Member;
 import com.eber.fragment.HomeFragment;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback2;
@@ -24,6 +25,8 @@ import com.eber.ui.find.FindFragment;
 import com.eber.ui.my.MyFragment;
 import com.eber.ui.tendency.TendencyFragment;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
@@ -235,5 +238,23 @@ public class MainActivity extends BaseActivity {
                 mFragHome.setRecordValue(result[0]);
             }
         });
+    }
+
+
+    public void reloadMembers(Member member) {
+        List<Member> members = mFragHome.members;
+        if (members == null) {
+            return;
+        }
+        for (int i = 0; i < members.size(); i++) {
+            Member m = members.get(i);
+            if (TextUtils.equals(m.id,member.id)) {
+                members.remove(i);
+                members.add(i,member);
+                break;
+            }
+        }
+        mFragHome.reMembers();
+        mFragHome.setSex();
     }
 }
