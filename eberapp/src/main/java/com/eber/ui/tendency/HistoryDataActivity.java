@@ -18,6 +18,8 @@ import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
 import com.eber.bean.BodyInfo;
+import com.eber.http.HttpUrls;
+import com.eber.http.StringCallback;
 import com.eber.utils.DisplayUtil;
 import com.eber.utils.ShareUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -25,6 +27,10 @@ import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,10 +76,10 @@ public class HistoryDataActivity extends BaseActivity {
     private TextView tvBoneBad;// 骨质疏松
 
     private CommonAdapter<BodyInfo> mAdapter;
-    private List<BodyInfo> bodyInfos;
-    
+    private List<BodyInfo> bodyInfos = new ArrayList<>();
+
     private String mDate;
-    
+    private Calendar mCalendar;
 
 
     @Override
@@ -82,15 +88,16 @@ public class HistoryDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         init();
     }
-    
-    public static void startActivity(Context context,String date){
-        Intent intent = new Intent(context,HistoryDataActivity.class);
-        intent.putExtra("date",date);
+
+    public static void startActivity(Context context, String date) {
+        Intent intent = new Intent(context, HistoryDataActivity.class);
+        intent.putExtra("date", date);
         context.startActivity(intent);
     }
 
 
     private void init() {
+        mCalendar = Calendar.getInstance();
         mDate = getIntent().getStringExtra("date");
         shareUtil = new ShareUtil(this);
         tvContent.setText("历史记录");
@@ -101,7 +108,24 @@ public class HistoryDataActivity extends BaseActivity {
             protected void convert(ViewHolder holder, BodyInfo item, final int position) {
                 final RelativeLayout rlLineParent = holder.getView(R.id.history_item_line_parent);
                 TextView tvTime = holder.getView(R.id.history_item_time);
-                tvTime.setText(item.updateTime);
+                try {
+                    mCalendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(item.updateTime));
+
+                    int h = mCalendar.get(Calendar.HOUR_OF_DAY);
+                    int m = mCalendar.get(Calendar.MINUTE);
+                    String hh = "" + h;
+                    if (h < 10) {
+                        hh = "0" + h;
+                    }
+                    String mm = "" + m;
+                    if (m < 10) {
+                        mm = "0" + h;
+                    }
+
+                    tvTime.setText(hh + "-" + mm);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 final View vCircle = holder.getView(R.id.history_item_bule);
                 final int dp20 = DisplayUtil.dp2px(mContext, 20);
                 final int dp10 = DisplayUtil.dp2px(mContext, 10);
@@ -136,11 +160,20 @@ public class HistoryDataActivity extends BaseActivity {
     }
 
     private void initData() {
-        
+
         param = new HashMap<>();
-        param.put("memberId", EBERApp.nowUser.id+"");
-        param.put("date",mDate);
-//        netUtils.get(HttpUrls);
+        param.put("memberId", EBERApp.nowUser.id + "");
+        param.put("date", mDate);
+        netUtils.get(HttpUrls.FINDRECORDBYDATE, true, param, new StringCallback("memberRecordArray") {
+            @Override
+            public void onSuccess(String resultJson) {
+                bodyInfos = JSON.parseArray(resultJson, BodyInfo.class);
+                if (bodyInfos != null && bodyInfos.size() > 0) {
+                    mAdapter.refresh(bodyInfos);
+                    setBodyData(bodyInfos.get(0));
+                }
+            }
+        });
         String json = "[\n" +
                 "    {\n" +
                 "        \"subcutaneousfat\": 29,\n" +
@@ -196,10 +229,7 @@ public class HistoryDataActivity extends BaseActivity {
                 "    }\n" +
                 "]";
 
-        bodyInfos = JSON.parseArray(json, BodyInfo.class);
-        if (bodyInfos != null && bodyInfos.size() > 0) {
-            setBodyData(bodyInfos.get(0));
-        }
+
     }
 
     @Override
@@ -235,18 +265,18 @@ public class HistoryDataActivity extends BaseActivity {
      * @param bodyInfo
      */
     private void setBodyData(BodyInfo bodyInfo) {
-        tvWeight.setText(bodyInfo.weight + "kg");
-        tvBMI.setText(bodyInfo.BMI);
+        tvWeight.setText((!TextUtils.isEmpty(bodyInfo.weight) ? bodyInfo.weight : "-") + "kg");
+        tvBMI.setText((!TextUtils.isEmpty(bodyInfo.BMI) ? bodyInfo.BMI : "-"));
         tvBodayAge.setText((!TextUtils.isEmpty(bodyInfo.bodyAge) ? bodyInfo.bodyAge : "-") + "岁");
-        tvFat.setText(bodyInfo.fatRate + "%");
-        tvWater.setText(bodyInfo.bodywater + "%");
-        tvFatDown.setText(bodyInfo.subcutaneousfat + "%");
-        tvProtein.setText(bodyInfo.protein + "%");
-        tvMuscle.setText(bodyInfo.muscle + "%");
-        tvBone.setText(bodyInfo.bone + "%");
+        tvFat.setText((!TextUtils.isEmpty(bodyInfo.fatRate) ? bodyInfo.fatRate : "-") + "%");
+        tvWater.setText((!TextUtils.isEmpty(bodyInfo.bodywater) ? bodyInfo.bodywater : "-") + "%");
+        tvFatDown.setText((!TextUtils.isEmpty(bodyInfo.subcutaneousfat) ? bodyInfo.subcutaneousfat : "-") + "%");
+        tvProtein.setText((!TextUtils.isEmpty(bodyInfo.protein) ? bodyInfo.protein : "-") + "%");
+        tvMuscle.setText((!TextUtils.isEmpty(bodyInfo.muscle) ? bodyInfo.muscle : "-") + "%");
+        tvBone.setText((!TextUtils.isEmpty(bodyInfo.bone) ? bodyInfo.bone : "-") + "%");
         tvBoneBad.setText(bodyInfo.bonerisk);
-        tvNeizang.setText(bodyInfo.organfat + "级");
-        tvBasis.setText(bodyInfo.basicmetabolism + "cal");
+        tvNeizang.setText((!TextUtils.isEmpty(bodyInfo.organfat) ? bodyInfo.organfat : "-") + "级");
+        tvBasis.setText((!TextUtils.isEmpty(bodyInfo.basicmetabolism) ? bodyInfo.basicmetabolism : "-") + "cal");
     }
 
     @Override
