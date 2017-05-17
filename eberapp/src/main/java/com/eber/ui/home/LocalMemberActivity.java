@@ -70,7 +70,7 @@ public class LocalMemberActivity extends BaseActivity {
                 ImageView ivSelected = holder.getView(R.id.local_member_selected);
                 final boolean flag = (boolean) tvRight.getTag();
                 // 当前用户、父用户、添加成员，不能删除
-                if (position == 1 ||TextUtils.equals(EBERApp.nowUser.id+"",member.id) || position == members.size() - 1) {
+                if (position == 1 ||TextUtils.equals(member.parentId,member.id)||TextUtils.equals(EBERApp.nowUser.id+"",member.id) || position == members.size() - 1) {
                     ivDel.setVisibility(View.GONE);
                 } else {
                     ivDel.setVisibility(flag ? View.VISIBLE : View.INVISIBLE);
