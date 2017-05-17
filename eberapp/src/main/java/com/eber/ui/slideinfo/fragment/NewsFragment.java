@@ -26,38 +26,6 @@ public class NewsFragment extends Fragment {
 	private View view;
 	SlideInfo si = null;
 
-//	private void setNotDragSeekBar(NotDragSeekBar ndsb, double[] parm, double value){
-//		ndsb.setMax(100);
-//		int num = 100/(parm.length+1);
-//		int imgNum = 0;
-//		for (int i = 0; i < parm.length; i++){
-//			if (i == 0){		// 第一个值
-//				if (value < parm[i]) {
-//					ndsb.setProgress((int) (num / parm[i] * value));
-//					imgNum ++;
-//					ndsb.setThumb(getActivity().getResources().getDrawable(R.mipmap.ic_launcher));
-//					break;
-//				}
-//			}
-//			if (i != parm.length-1 && i != 0){		// 中间的值
-//				imgNum ++;
-//				if (value > parm[i] && value <parm[i+1]){
-//					ndsb.setProgress((int) ((i+1) * num + num / (parm[i+1]-parm[i]) * (value - parm[i])));
-//					ndsb.setThumb(getActivity().getResources().getDrawable(R.mipmap.ic_launcher));
-//					break;
-//				}
-//			}
-//			if (i == parm.length -1){		// 最后一个值
-//				if (value > parm[i]){
-//					ndsb.setProgress((int) (num * parm.length + num / (100 - parm[i]) * (value - parm[i])));
-//					imgNum ++;
-//					ndsb.setThumb(getActivity().getResources().getDrawable(R.mipmap.ic_launcher));
-//					break;
-//				}
-//			}
-//		}
-//	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

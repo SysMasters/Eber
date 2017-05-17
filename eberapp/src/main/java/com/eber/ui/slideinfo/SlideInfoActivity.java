@@ -42,11 +42,14 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private PageFragmentAdapter adapter=null;
     private List<Fragment> fragmentList=new ArrayList<>();
     private List<SlideInfo> slideInfos;
+    private int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_slide_info);
         super.onCreate(savedInstanceState);
         initView();
+        position = getIntent().getIntExtra("position", 0);
     }
 
     @Override
@@ -98,16 +101,16 @@ public class SlideInfoActivity extends BaseActivity implements ViewPager.OnPageC
     private void initViewPager(List<SlideInfo> slideInfos){
         List<Channel> channelList=ChannelDb.getSelectedChannel();
         for(int i=0;i<slideInfos.size();i++){
-            NewsFragment frag=new NewsFragment();
-            Bundle bundle=new Bundle();
+            NewsFragment frag = new NewsFragment();
+            Bundle bundle = new Bundle();
             bundle.putString("name", channelList.get(i).getName());
             bundle.putSerializable("slide_info", slideInfos.get(i));
             frag.setArguments(bundle);
             fragmentList.add(frag);
         }
-        adapter=new PageFragmentAdapter(super.getSupportFragmentManager(),fragmentList);
+        adapter = new PageFragmentAdapter(super.getSupportFragmentManager(),fragmentList);
         viewPager.setAdapter(adapter);
-        //viewPager.setOffscreenPageLimit(0);
+        viewPager.setCurrentItem(position + 2);
     }
 
 
