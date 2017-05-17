@@ -13,8 +13,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseFragment;
+import com.eber.bean.Member;
 import com.eber.http.BaseCallback;
 import com.eber.http.HttpUrls;
+import com.eber.ui.MainActivity;
 import com.eber.ui.login.LoginActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -225,6 +227,10 @@ public class MyFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == UPDATE_INFO) {
             getMyData();
+            if (data != null){
+                Member member = data.getParcelableExtra("member");
+                ((MainActivity)mActivity).reloadMembers(member);
+            }
         }
     }
 }

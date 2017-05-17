@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +30,10 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.qxinli.umeng.UmengUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,8 +102,27 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                 holder.setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO: 2017/5/11 跳转历史记录 
-                        startActivity(HistoryDataActivity.class);
+                        if (!TextUtils.isEmpty(bodyInfo.updateTime)) {
+                            Calendar calendar = Calendar.getInstance();
+                            try {
+                                calendar.setTime( new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(bodyInfo.updateTime));
+                                String year = String.valueOf(calendar.get(Calendar.YEAR));
+                                int m = calendar.get(Calendar.MONTH)+1;
+                                String month = "-"+m;
+                                if (m <10){
+                                    month = "-0"+m;
+                                }
+                                int d = calendar.get(Calendar.DATE);
+                                String date = "-"+d;
+                                if (d <10){
+                                    date = "-0"+d;
+                                }
+                                HistoryDataActivity.startActivity(mContext,year+month+date);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            
+                        }
                     }
                 });
 

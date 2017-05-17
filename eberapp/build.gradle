@@ -10,8 +10,8 @@ android {
         applicationId "com.eber.bfs"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 20170516
+        versionName "1.0.1"
         multiDexEnabled true
     }
     signingConfigs {
@@ -76,5 +76,7 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.56.android'
     compile project(':calendar-library')
     compile project(':umeng')
+    compile 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:1.0'
     compile 'com.inuker.bluetooth:library:1.4.0'
+
 }

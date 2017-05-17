@@ -3,6 +3,7 @@ package com.eber.ui.my;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eber.EBERApp;
 import com.eber.R;
 import com.eber.base.BaseActivity;
+import com.eber.bean.Member;
 import com.eber.http.HttpUrls;
 import com.eber.http.StringCallback;
 import com.eber.ui.login.ForgetPasswordActivity;
@@ -157,7 +159,10 @@ public class ModifyDataAct extends BaseActivity {
                 EBERApp.nowUser.sex = TextUtils.equals(tvSex.getText().toString(), "男") ? 1 : 2;
                 EBERApp.nowUser.height = Integer.parseInt(tvHeight.getText().toString());
 
-                setResult(Activity.RESULT_OK);
+                Member member = JSON.parseObject(resultJson,Member.class);
+                Intent intent = new Intent();
+                intent.putExtra("member", (Parcelable) member);
+                setResult(Activity.RESULT_OK,intent);
                 finish();
             }
         });
