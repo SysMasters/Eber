@@ -127,7 +127,7 @@ public class HomeFragment extends BaseFragment {
             mGridView.setHasFixedSize(true);
             mAdapter = new CommonAdapter<Indicate>(mActivity, R.layout.view_index_item, indicates) {
                 @Override
-                protected void convert(ViewHolder holder, Indicate item, final int position) {
+                protected void convert(ViewHolder holder, final Indicate item, final int position) {
                     ImageView ivImage = holder.getView(R.id.index_item_image);
                     TextView tvDesc = holder.getView(R.id.index_item_desc);// 脂肪率(14%)
                     TextView tvBody = holder.getView(R.id.index_item_body);//胖瘦
@@ -242,6 +242,7 @@ public class HomeFragment extends BaseFragment {
                             try {
                                 Double.parseDouble(tvWeight.getText().toString());
                                 Intent intent = new Intent(mActivity, SlideInfoActivity.class);
+                                intent.putExtra("position", position);
                                 mActivity.startActivity(intent);
                             } catch (Exception e) {
                                 Toast.makeText(mActivity, "您还没有检测数据，快去检测吧！", Toast.LENGTH_SHORT).show();
