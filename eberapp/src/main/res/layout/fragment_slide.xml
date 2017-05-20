@@ -49,7 +49,7 @@
             android:textSize="13sp"
             android:text=""/>
     </LinearLayout>
-    <com.eber.views.NotDragSeekBar
+    <com.eber.bfs.views.NotDragSeekBar
         android:id="@+id/f_slide_ndsb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

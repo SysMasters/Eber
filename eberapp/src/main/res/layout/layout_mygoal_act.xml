@@ -87,7 +87,7 @@
                     android:textSize="18sp"
                     />
             </RelativeLayout>
-            <com.eber.views.ruler.RulerWheel
+            <com.eber.bfs.views.ruler.RulerWheel
                 android:id="@+id/ruler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.eber"
+<manifest package="com.eber.bfs"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--网络访问权限-->
@@ -145,11 +145,11 @@
             android:theme="@style/Theme.UMDefault"
             />
         <activity
-            android:name=".bfs.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".ui.my.AutoReceiver"

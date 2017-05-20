@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <com.eber.views.NestRadioGroup
+    <com.eber.bfs.views.NestRadioGroup
         android:id="@+id/tendency_navi_root_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             android:paddingTop="6dp"
             android:text="蛋白质"
             android:textSize="15sp"/>
-    </com.eber.views.NestRadioGroup>
+    </com.eber.bfs.views.NestRadioGroup>
 
     <RadioGroup
         android:id="@+id/tendency_navi_date"

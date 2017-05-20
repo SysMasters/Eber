@@ -31,16 +31,16 @@
             android:src="@mipmap/ic_index_share"/>
     </RelativeLayout>
 
-    <com.eber.views.BMIBtnGroup
+    <com.eber.bfs.views.BMIBtnGroup
         android:id="@+id/tendency_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.eber.views.BMIBtnGroup>
+        android:layout_height="wrap_content"></com.eber.bfs.views.BMIBtnGroup>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.eber.views.BrokenLineView
+        <com.eber.bfs.views.BrokenLineView
             android:id="@+id/tendency_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

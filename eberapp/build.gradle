@@ -5,11 +5,10 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "com.eber.bfs"
         minSdkVersion 18
         applicationId "com.eber.bfs"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 22
         versionCode 20170516
         versionName "1.0.1"
         multiDexEnabled true

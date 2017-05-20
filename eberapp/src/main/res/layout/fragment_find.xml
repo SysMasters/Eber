@@ -17,12 +17,12 @@
         android:text="发现"/>
 
 
-    <com.eber.views.LoadMoreListView
+    <com.eber.bfs.views.LoadMoreListView
         android:id="@+id/find_lv"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:paddingBottom="30dp"
         app:sampleSize="6"
         android:layout_height="match_parent">
-    </com.eber.views.LoadMoreListView>
+    </com.eber.bfs.views.LoadMoreListView>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.eber.bfs.wxapi;
 
+
 import com.umeng.weixin.callback.WXCallbackActivity;
 
 /**

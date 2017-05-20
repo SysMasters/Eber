@@ -40,10 +40,8 @@ public class UmengUtil {
     private static UMShareAPI umShareAPI;
     private static SHARE_MEDIA[] shareMedias;//SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN,SHARE_MEDIA.QZONE,SHARE_MEDIA.WEIXIN_CIRCLE
 
-    public static void init(Context context1, String sinaCallbackUrl, boolean degbug, SHARE_MEDIA... shareMediaList) {
+    public static void init(Context context1, boolean degbug, SHARE_MEDIA... shareMediaList) {
         context = context1;
-        // UMShareAPI.get(context1);
-        Config.REDIRECT_URL = sinaCallbackUrl;//http://sns.whalecloud.com/sina2/callback
         shareMedias = shareMediaList;
         Config.isJumptoAppStore = true;
         Config.DEBUG = degbug;
@@ -61,8 +59,8 @@ public class UmengUtil {
         PlatformConfig.setQQZone(key, secret);
     }
 
-    public static void setKeySecretSina(String key, String secret) {
-        PlatformConfig.setSinaWeibo(key, secret);
+    public static void setKeySecretSina(String key, String secret, String auth) {
+        PlatformConfig.setSinaWeibo(key, secret, auth);
     }
 
 
@@ -81,7 +79,7 @@ public class UmengUtil {
         share(0, activity, uid, title, desc, "", thumbUrl, targetUrl, callback);
     }
 
-    public static void bind(Activity activity,SHARE_MEDIA platfrom, AuthCallback callback) {
+    public static void bind(Activity activity, SHARE_MEDIA platfrom, AuthCallback callback) {
         deleteAuth(activity, platfrom, callback);
     }
 
@@ -98,22 +96,7 @@ public class UmengUtil {
     }
 
     private static void deleteAuth(final Activity activity, final SHARE_MEDIA platfrom, final AuthCallback callback) {
-        umShareAPI.deleteOauth(activity, platfrom, new UMAuthListener() {
-            @Override
-            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                login(activity, platfrom, callback);
-            }
-
-            @Override
-            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                callback.onError(i, throwable);
-            }
-
-            @Override
-            public void onCancel(SHARE_MEDIA share_media, int i) {
-                callback.onCancel(i);
-            }
-        });
+        login(activity, platfrom, callback);
     }
 
 
@@ -130,6 +113,7 @@ public class UmengUtil {
      * @param targetUrl
      * @param callback
      */
+
     private static void share(int type, Activity activity, final String uid,
                               String title, String desc, String thumbUrl, String mediaUrl,
                               String targetUrl, final ShareCallback callback) {
@@ -151,11 +135,15 @@ public class UmengUtil {
             music.setDescription(desc);//音乐的描述
             action.withMedia(music);
         }
-        action.withTitle(title)
+        action
                 .withText(desc)
-                .withTargetUrl(targetUrl)
                 .setDisplayList(shareMedias)
                 .setCallback(new UMShareListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+
+                    }
+
                     @Override
                     public void onResult(SHARE_MEDIA share_media) {
                         UMPlatformData.UMedia media = UMPlatformData.UMedia.SINA_WEIBO;
@@ -243,10 +231,16 @@ public class UmengUtil {
      * @param callback
      */
     public static void shareImage(Activity activity, File imageFile, final ShareCallback callback) {
+        //        new ShareAction(activity).withMedia(new UMImage(activity, imageFile) )
+        //                .setCallback(shareListener).share();
         ShareAction action = new ShareAction(activity);
         UMImage umImage = new UMImage(activity, imageFile);
         action.withMedia(umImage)
                 .setCallback(new UMShareListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+                    }
+
                     @Override
                     public void onResult(SHARE_MEDIA share_media) {
                         UMPlatformData.UMedia media = UMPlatformData.UMedia.SINA_WEIBO;
@@ -280,6 +274,7 @@ public class UmengUtil {
                 .open();
     }
 
+
     public static void shareMusic(Activity activity, final String uid,
                                   String title, String desc, String thumbUrl, String musicUrl,
                                   String targetUrl, final ShareCallback callback) {
@@ -304,54 +299,80 @@ public class UmengUtil {
         login(activity, SHARE_MEDIA.QQ, callback);
     }
 
-    private static void login(Activity activity, final SHARE_MEDIA platform, final AuthCallback callback) {
-        umShareAPI.getPlatformInfo(activity, platform, new UMAuthListener() {
+    private static void login(final Activity activity, final SHARE_MEDIA platform, final AuthCallback callback) {
+        umShareAPI.deleteOauth(activity, platform, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
             @Override
             public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                BaseInfo info = null;
-                if (share_media == SHARE_MEDIA.SINA) {
-                    SinaInfo weixinInfo = new SinaInfo();
-                    weixinInfo.followers_count = map.get("followers_count");
-                    weixinInfo.friends_count = map.get("friends_count");
-                    info = weixinInfo;
+                umShareAPI.getPlatformInfo(activity, platform, new UMAuthListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
 
-                } else if (share_media == SHARE_MEDIA.QQ) {
-                    QQInfo weixinInfo = new QQInfo();
-                    weixinInfo.is_yellow_year_vip = map.get("is_yellow_year_vip");
-                    info = weixinInfo;
-                } else if (share_media == SHARE_MEDIA.WEIXIN) {
-                    WeixinInfo weixinInfo = new WeixinInfo();
-                    weixinInfo.openid = map.get("openid");
-                    weixinInfo.country = map.get("country");
-                    info = weixinInfo;
+                    }
 
-                }
-                info.accessToken = map.get("accessToken");
-                info.city = map.get("city");
-                info.expiration = map.get("expiration");
-                info.gender = map.get("gender");
-                info.iconurl = map.get("iconurl");
-                info.name = map.get("name");
-                info.province = map.get("province");
-                info.refreshtoken = map.get("refreshtoken");
-                info.uid = map.get("uid");
+                    @Override
+                    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                        BaseInfo info = null;
+                        if (share_media == SHARE_MEDIA.SINA) {
+                            SinaInfo weixinInfo = new SinaInfo();
+                            weixinInfo.followers_count = map.get("followers_count");
+                            weixinInfo.friends_count = map.get("friends_count");
+                            info = weixinInfo;
+
+                        } else if (share_media == SHARE_MEDIA.QQ) {
+                            QQInfo weixinInfo = new QQInfo();
+                            weixinInfo.is_yellow_year_vip = map.get("is_yellow_year_vip");
+                            info = weixinInfo;
+                        } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                            WeixinInfo weixinInfo = new WeixinInfo();
+                            weixinInfo.openid = map.get("openid");
+                            weixinInfo.country = map.get("country");
+                            info = weixinInfo;
+
+                        }
+                        info.accessToken = map.get("accessToken");
+                        info.city = map.get("city");
+                        info.expiration = map.get("expiration");
+                        info.gender = map.get("gender");
+                        info.iconurl = map.get("iconurl");
+                        info.name = map.get("name");
+                        info.province = map.get("province");
+                        info.refreshtoken = map.get("refreshtoken");
+                        info.uid = map.get("uid");
 
 
-                callback.onComplete(i, info);
+                        callback.onComplete(i, info);
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                        callback.onError(i, throwable);
+
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media, int i) {
+                        callback.onCancel(i);
+
+                    }
+                });
             }
 
             @Override
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
                 callback.onError(i, throwable);
-
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
                 callback.onCancel(i);
-
             }
         });
+        
     }
 
 
