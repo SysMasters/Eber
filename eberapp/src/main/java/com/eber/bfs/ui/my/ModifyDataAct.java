@@ -119,7 +119,9 @@ public class ModifyDataAct extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.up_info_up_password:      // 修改密码
-                    startActivity(ForgetPasswordActivity.class);
+                    Intent in1 = new Intent(ModifyDataAct.this, ForgetPasswordActivity.class);
+                    in1.putExtra("title", "修改密码");
+                    startActivity(in1);
                     break;
                 case R.id.up_info_ok_btn:       // 最下方完成按钮
                     editUserInfo();

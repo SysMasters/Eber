@@ -57,6 +57,8 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
         super.onCreate(savedInstanceState);
+        // 关闭
+        exitAllBarringStackTop();
     }
 
     @Override

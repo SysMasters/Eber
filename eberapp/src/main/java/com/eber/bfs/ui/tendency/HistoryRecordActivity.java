@@ -86,9 +86,11 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         recyclerView.setAdapter(mAdapter = new CommonAdapter<BodyInfo>(mContext, R.layout.view_history_item, bodyInfos) {
             @Override
             protected void convert(final com.zhy.adapter.recyclerview.base.ViewHolder holder, final BodyInfo bodyInfo, int position) {
+                TextView tvTime = holder.getView(R.id.history_time);
                 TextView tvWeight = holder.getView(R.id.history_weight);
                 TextView tvZhifang = holder.getView(R.id.history_zhifang);
                 ImageView ivDel = holder.getView(R.id.history_del);
+                tvTime.setText(bodyInfo.updateTime.split(" ")[1].substring(0, 5));
                 tvWeight.setText(bodyInfo.weight + "");
                 tvZhifang.setText(bodyInfo.fatRate + "");
                 //可以根据自己需求设置一些选项(这里设置了IOS阻塞效果以及item的依次左滑、右滑菜单)
