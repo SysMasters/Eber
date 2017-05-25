@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -159,12 +160,18 @@ public class ModifyDataAct extends BaseActivity {
                 EBERApp.nowUser.userName = etUserName.getText().toString().trim();
                 EBERApp.nowUser.birthday = tvBirthdy.getText().toString();
                 EBERApp.nowUser.sex = TextUtils.equals(tvSex.getText().toString(), "男") ? 1 : 2;
-                EBERApp.nowUser.height = Integer.parseInt(tvHeight.getText().toString());
-
+                int height = 0;
+                try {
+                    height = Integer.parseInt(tvHeight.getText().toString());
+                }catch (Exception e){
+                    height = (int) Double.parseDouble(tvHeight.getText().toString());
+                }
+                EBERApp.nowUser.height = height;
                 Member member = JSON.parseObject(resultJson,Member.class);
                 Intent intent = new Intent();
                 intent.putExtra("member", (Parcelable) member);
                 setResult(Activity.RESULT_OK,intent);
+                Toast.makeText(ModifyDataAct.this, "修改成功", Toast.LENGTH_LONG).show();
                 finish();
             }
         });

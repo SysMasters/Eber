@@ -419,6 +419,11 @@ public class HomeFragment extends BaseFragment {
         setSex();
         String jsonMembers = getActivity().getIntent().getStringExtra("memberArray");
         members = JSON.parseArray(jsonMembers, Member.class);
+        for (Member m : members){
+            if (m.id.equals(m.parentId)){
+                m.userName += "(我)";
+            }
+        }
         reMembers();
     }
 
