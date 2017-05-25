@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eber.bfs.EBERApp;
 import com.eber.bfs.R;
@@ -131,17 +130,18 @@ public class AccountManagerActivity extends BaseActivity implements View.OnClick
                         JSONObject jo = JSON.parseObject(response);
                         String recode = jo.getString("retcode");
                         if (TextUtils.equals(recode, "1")) {// 成功
+                            Toast.makeText(mContext, "绑定成功", Toast.LENGTH_SHORT).show();
                             if (platform == SHARE_MEDIA.QQ) {
                                 linerQQ.setTag(false);
-                                tvQQ.setText("+ 解绑");
+                                tvQQ.setText("- 解绑");
                             }
                             if (platform == SHARE_MEDIA.WEIXIN) {
                                 linerWeChat.setTag(false);
-                                tvWeChat.setText("+ 解绑");
+                                tvWeChat.setText("- 解绑");
                             }
                             if (platform == SHARE_MEDIA.SINA) {
                                 linerSina.setTag(false);
-                                tvSina.setText("+ 解绑");
+                                tvSina.setText("- 解绑");
                             }
                         } else if (TextUtils.equals(recode, "2")) {// 不能绑定
                             Toast.makeText(mContext, jo.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -191,7 +191,7 @@ public class AccountManagerActivity extends BaseActivity implements View.OnClick
                         super.onResponse(response);
                         JSONObject jo = JSON.parseObject(response);
                         String recode = jo.getString("retcode");
-                        JSONArray ja = JSON.parseArray(jo.getString("member"));
+                        JSONObject ja = JSON.parseObject(jo.getString("member"));
                         if (TextUtils.equals(recode, "1")) {// 成功
                             if (platform == SHARE_MEDIA.QQ) {
                                 linerQQ.setTag(true);
@@ -255,21 +255,21 @@ public class AccountManagerActivity extends BaseActivity implements View.OnClick
                         tvQQ.setText("+ 绑定");
                         linerQQ.setTag(true);
                     } else {
-                        tvQQ.setText("+ 解绑");
+                        tvQQ.setText("- 解绑");
                         linerQQ.setTag(false);
                     }
                     if (TextUtils.isEmpty(wechat)) {
                         tvWeChat.setText("+ 绑定");
                         linerWeChat.setTag(true);
                     } else {
-                        tvWeChat.setText("+ 解绑");
+                        tvWeChat.setText("- 解绑");
                         linerWeChat.setTag(false);
                     }
                     if (TextUtils.isEmpty(sina)) {
                         tvSina.setText("+ 绑定");
                         linerSina.setTag(true);
                     } else {
-                        tvSina.setText("+ 解绑");
+                        tvSina.setText("- 解绑");
                         linerSina.setTag(false);
                     }
                 } else {
