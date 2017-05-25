@@ -35,8 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:layout_marginTop="18dp"
-                    android:src="@mipmap/ico_man" />
+                    android:layout_marginTop="18dp" />
 
                 <TextView
                     android:id="@+id/f_my_user_name_tv"

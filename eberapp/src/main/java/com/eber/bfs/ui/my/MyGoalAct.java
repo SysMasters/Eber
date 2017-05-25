@@ -18,6 +18,7 @@ import com.eber.bfs.http.HttpUrls;
 import com.eber.bfs.views.ruler.RulerWheel;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +73,9 @@ public class MyGoalAct extends BaseActivity {
                     tvScope.setText(jo.getString("weightMin")+" - "+jo.getString("weightMax")+ " kg");
                     tvNowWigth.setText(jo.getString("weightNow")+"");
                     tvTargetValue.setText(jo.getString("weightAim"));
-                    rulerView.setSelectedValue(jo.getString("weightAim"));
+                    rulerView.setSelectedValue(Double.parseDouble(jo.getString("weightAim")) % 1 == 0
+                            ? (int)Double.parseDouble(jo.getString("weightAim"))+""
+                            : jo.getString("weightAim"));
                     tvDateLen.setText(jo.getString("needDay")+"天");
                     tvXu.setText(jo.getString("aimType")+jo.getString("needKg"));
                 }
@@ -105,9 +108,10 @@ public class MyGoalAct extends BaseActivity {
         List<String> list = new ArrayList<>();
         for (int i = 30; i <= 150; i += 1) {
             list.add(i + "");
-            for (int j = 1; j < 10; j++) {
-                list.add(i + "." + j);
-            }
+            if(i != 150)
+                for (int j = 1; j < 10; j++) {
+                    list.add(i + "." + j);
+                }
         }
         rulerView = (RulerWheel) findViewById(R.id.ruler_view);
         rulerView.setData(list);
@@ -120,11 +124,13 @@ public class MyGoalAct extends BaseActivity {
                 double nowWigth = Double.parseDouble(tvNowWigth.getText().toString());
                 double cha = nowWigth - Double.parseDouble(newValue);
                 double chaju = Math.abs(cha);
+                BigDecimal b   =   new   BigDecimal(chaju);
+                String   f1   =   b.setScale(1,   BigDecimal.ROUND_HALF_UP).toString();
                 tvDateLen.setText((int) (chaju * 7) +"天");
                 if (cha > 0){
-                    tvXu.setText("减重"+chaju);
+                    tvXu.setText("减重"+f1);
                 }else{
-                    tvXu.setText("增重"+chaju);
+                    tvXu.setText("增重"+f1);
                 }
 
             }

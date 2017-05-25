@@ -46,7 +46,12 @@ public class ForgetPasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_forget_password);
         super.onCreate(savedInstanceState);
-        title.setText("忘记密码");
+        String titleStr = getIntent().getStringExtra("title");
+        if (null != titleStr && !titleStr.equals("")){
+            title.setText(titleStr);
+        }else{
+            title.setText("忘记密码");
+        }
     }
 
     @Override

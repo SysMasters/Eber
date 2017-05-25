@@ -53,9 +53,12 @@ public class QATActivity extends BaseActivity {
                 JSONArray ja = JSON.parseArray(response);
                 for (int i = 0; i < ja.size(); i++){
                     JSONObject jo = JSON.parseObject(JSON.toJSONString(ja.get(i)));
+                    QAT qat = new QAT();
+                    qat.typeName = jo.getString("name");
+                    qatList.add(qat);
                     List<QAT> qats = JSONArray.parseArray(jo.getString("array"), QAT.class);
-                    for (QAT qat : qats){
-                        qatList.add(qat);
+                    for (QAT q : qats){
+                        qatList.add(q);
                     }
                 }
                 adapter = new QatAdapter(QATActivity.this, R.layout.layout_qat_item, qatList);
@@ -68,8 +71,9 @@ public class QATActivity extends BaseActivity {
     private AdapterView.OnItemClickListener itemClickLis = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            qatList.get(position);
-            startWebActivity("常见问题", String.format("http://112.74.62.116:8080/ieber/QAAPP/findQAById.shtml?QAId=%s", qatList.get(position).id));
+            QAT item = qatList.get(position);
+            if (null == item.typeName || item.typeName.equals(""))
+                startWebActivity("常见问题", String.format("http://112.74.62.116:8080/ieber/QAAPP/findQAById.shtml?QAId=%s", qatList.get(position).id));
         }
     };
 }

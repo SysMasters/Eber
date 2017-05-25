@@ -196,8 +196,6 @@ public class MyFragment extends BaseFragment {
                 if (jo.getInteger("retcode") == 1) {
                     // 跳转登录
                     startActivity(new Intent(mActivity, LoginActivity.class));
-                    // 关闭
-                    mActivity.exitAllBarringStackTop();
                 }
             }
         });
