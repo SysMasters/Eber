@@ -2,6 +2,7 @@ package com.eber.bfs.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +12,15 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.util.Util;
 import com.eber.bfs.EBERApp;
 import com.eber.bfs.R;
 import com.eber.bfs.bean.Member;
+import com.eber.bfs.http.HttpUrls;
+import com.eber.bfs.http.StringCallback;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.qxinli.umeng.UmengUtil;
 
@@ -57,12 +64,56 @@ public class MainActivity extends com.eber.bfs.base.BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        netUtils.get(HttpUrls.ADDMEMBEREQUIP, false, param, new StringCallback("versionList") {
+            @Override
+            public void onSuccess(String resultJson) {
+                JSONArray ja = JSON.parseArray(resultJson);
+                JSONObject jo = JSON.parseObject(ja.getString(1));
+                String fVersionName = jo.getString("versionname");
+                String dVersionName = getVersionName();
+                String[] fv = fVersionName.split(".");
+                String[] dv = dVersionName.split(".");
+                int ifv = Integer.parseInt(fv[0]+fv[1]+fv[2].substring(0, 1));
+                int idv = Integer.parseInt(dv[0]+dv[1]+dv[2].substring(0, 1));
+                if (ifv <= idv){
+                    return;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("提示");
+                builder.setMessage("《EBER健康》存在版本更新，为不影响您的正常使用，请您转到应用商城更新最新版本！");
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                builder.setNeutralButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                builder.show();
+            }
+        });
         //        mBodyInfo = (BodyInfo) getIntent().getSerializableExtra("BodyInfo");
         //        mac = getIntent().getStringExtra("mac");
         if (null != mac && !mac.equals("")) {
             submitRecord(mBodyInfo, mac);
             mac = "";
         }
+    }
+
+    private String getVersionName(){
+        String pkName = this.getPackageName();
+        String versionName = "";
+        try {
+            versionName =  this.getPackageManager().getPackageInfo(
+                    pkName, 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 
     @Override

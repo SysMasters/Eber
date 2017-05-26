@@ -42,11 +42,13 @@ public class ForgetPasswordActivity extends BaseActivity {
     @ViewInject(R.id.fgt_pwd_ok)
     private Button btnOK;
 
+    private String titleStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_forget_password);
         super.onCreate(savedInstanceState);
-        String titleStr = getIntent().getStringExtra("title");
+        titleStr = getIntent().getStringExtra("title");
         if (null != titleStr && !titleStr.equals("")){
             title.setText(titleStr);
         }else{
@@ -125,6 +127,10 @@ public class ForgetPasswordActivity extends BaseActivity {
                             super.onResponse(response);
                             JSONObject jo = JSON.parseObject(response);
                             Toast.makeText(ForgetPasswordActivity.this, jo.getString("msg"), Toast.LENGTH_SHORT).show();
+                            if (titleStr.equals("修改密码"))
+                                finish();
+                            else if (titleStr.equals("忘记密码"))
+                                startActivity(LoginActivity.class);
                         }
                     });
                     break;
