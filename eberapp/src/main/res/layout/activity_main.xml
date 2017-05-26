@@ -102,7 +102,7 @@
             android:drawablePadding="5dp"
             android:drawableTop="@drawable/sl_index_tab_setting"
             android:gravity="center"
-            android:text="设置"
+            android:text="我的"
             android:textColor="@color/sl_index_tab_color"/>
     </RadioGroup>
 

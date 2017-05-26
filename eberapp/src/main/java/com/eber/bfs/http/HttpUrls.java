@@ -75,5 +75,7 @@ public class HttpUrls {
     public final static String REGISTERMEMBER = BASEURL + "memberLoginAPP/registerMember.shtml";
     // 删除子用户
     public final static String DELETEMEMBER = BASEURL + "memberAPP/deleteMember.shtml";
+    // 检查更新
+    public final static String GETCURRENTVERSIONCODE = BASEURL + "versionAPP/getCurrentVersionCode.shtml";
 
 }

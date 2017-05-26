@@ -2,6 +2,7 @@ package com.eber.bfs.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.widget.TextView;
 
 import com.eber.bfs.R;
 import com.eber.bfs.bean.QAT;
@@ -26,7 +27,9 @@ public class QatAdapter extends CommonAdapter<QAT> {
             holder.setText(R.id.qat_item_name, item.title);
         }else{
             holder.setText(R.id.qat_item_name, item.typeName+":");
-            holder.setTextColor(R.id.qat_item_name, Color.GRAY);
+            TextView tv = holder.getView(R.id.qat_item_name);
+            holder.setBackgroundColor(R.id.root, Color.LTGRAY);
+            tv.setTextSize(14);
         }
     }
 }

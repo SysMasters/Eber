@@ -9,8 +9,8 @@ android {
         applicationId "com.eber.bfs"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 20170524
-        versionName "1.0.3"
+        versionCode 20170526
+        versionName "1.0.5"
         multiDexEnabled true
     }
     signingConfigs {
