@@ -64,7 +64,7 @@ public class MainActivity extends com.eber.bfs.base.BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        netUtils.get(HttpUrls.ADDMEMBEREQUIP, false, param, new StringCallback("versionList") {
+        netUtils.get(HttpUrls.GETCURRENTVERSIONCODE, false, param, new StringCallback("versionList") {
             @Override
             public void onSuccess(String resultJson) {
                 JSONArray ja = JSON.parseArray(resultJson);
