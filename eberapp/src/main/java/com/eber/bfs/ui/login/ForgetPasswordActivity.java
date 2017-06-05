@@ -52,6 +52,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         if (null != titleStr && !titleStr.equals("")){
             title.setText(titleStr);
         }else{
+            titleStr = "忘记密码";
             title.setText("忘记密码");
         }
     }
@@ -127,10 +128,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                             super.onResponse(response);
                             JSONObject jo = JSON.parseObject(response);
                             Toast.makeText(ForgetPasswordActivity.this, jo.getString("msg"), Toast.LENGTH_SHORT).show();
-                            if (titleStr.equals("修改密码"))
-                                finish();
-                            else if (titleStr.equals("忘记密码"))
-                                startActivity(LoginActivity.class);
+                            finish();
                         }
                     });
                     break;

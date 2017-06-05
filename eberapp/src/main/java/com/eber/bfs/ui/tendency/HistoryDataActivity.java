@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 历史记录2
  * Created by WangLibo on 2017/5/1.
  */
 
@@ -50,6 +51,8 @@ public class HistoryDataActivity extends BaseActivity {
     @ViewInject(R.id.title_right)
     private ImageView tvRight;
 
+    @ViewInject(R.id.history_data_date)
+    private TextView tvDate;
     @ViewInject(R.id.history_data_weight)
     private TextView tvWeight;// 体重
     @ViewInject(R.id.history_data_BMI)
@@ -99,6 +102,7 @@ public class HistoryDataActivity extends BaseActivity {
     private void init() {
         mCalendar = Calendar.getInstance();
         mDate = getIntent().getStringExtra("date");
+        tvDate.setText(mDate);
         shareUtil = new ShareUtil(this);
         tvContent.setText("历史记录");
         tvRight.setImageResource(R.mipmap.ic_index_share);

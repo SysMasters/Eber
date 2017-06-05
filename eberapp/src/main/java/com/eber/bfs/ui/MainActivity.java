@@ -24,6 +24,7 @@ import com.eber.bfs.http.StringCallback;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.qxinli.umeng.UmengUtil;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -52,18 +53,10 @@ public class MainActivity extends com.eber.bfs.base.BaseActivity {
         memberArrayJSON = getIntent().getStringExtra("memberArray");
         memberEquipArrayJSON = getIntent().getStringExtra("memberEquipArray");
         init();
+        getCurrentVersionCode();
     }
 
-    private void init() {
-        initContent();
-    }
-
-    public static com.eber.bfs.bean.BodyInfo mBodyInfo;
-    public static String mac;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void getCurrentVersionCode(){
         netUtils.get(HttpUrls.GETCURRENTVERSIONCODE, false, param, new StringCallback("versionList") {
             @Override
             public void onSuccess(String resultJson) {
@@ -96,6 +89,18 @@ public class MainActivity extends com.eber.bfs.base.BaseActivity {
                 builder.show();
             }
         });
+    }
+
+    private void init() {
+        initContent();
+    }
+
+    public static com.eber.bfs.bean.BodyInfo mBodyInfo;
+    public static String mac;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         //        mBodyInfo = (BodyInfo) getIntent().getSerializableExtra("BodyInfo");
         //        mac = getIntent().getStringExtra("mac");
         if (null != mac && !mac.equals("")) {
@@ -262,7 +267,7 @@ public class MainActivity extends com.eber.bfs.base.BaseActivity {
     }
 
     private void updateMainData(com.eber.bfs.bean.BodyInfo mBodyInfo, String mac) {
-        param.clear();
+        param = new HashMap<>();
         Log.i("msg=======", "请求");
         param.put("memberId", EBERApp.nowUser.id + "");
         param.put("weight", mBodyInfo.weight);
