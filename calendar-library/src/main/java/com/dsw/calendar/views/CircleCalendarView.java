@@ -25,6 +25,10 @@ public class CircleCalendarView extends LinearLayout implements View.OnClickList
     private CircleMonthView circleMonthView;
     public TextView textViewYear;
 
+    public void setSelectDate(int year, int month, int day) {
+        circleMonthView.setSelectDate(year, month, day);
+    }
+
     public CircleCalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(LinearLayout.VERTICAL);
@@ -72,6 +76,14 @@ public class CircleCalendarView extends LinearLayout implements View.OnClickList
         int year = circleMonthView.getSelYear();
         int month = circleMonthView.getSelMonth() + 1;
         int date = circleMonthView.getSelDay();
+        String monthStr = month < 10 ? "0" + month : month + "";
+        String dateStr = date < 10 ? "0" + date : date + "";
+        return year + "." + monthStr + "." + dateStr;
+    }
+    public String getDateStr(int year ,int month,int date) {
+//        int year = circleMonthView.currYear;
+//        int month = circleMonthView.currMonth + 1;
+//        int date = circleMonthView.currDay;
         String monthStr = month < 10 ? "0" + month : month + "";
         String dateStr = date < 10 ? "0" + date : date + "";
         return year + "." + monthStr + "." + dateStr;

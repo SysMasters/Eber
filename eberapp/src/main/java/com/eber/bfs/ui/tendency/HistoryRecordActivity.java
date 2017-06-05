@@ -79,13 +79,14 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         tvCenter.setText("历史记录");
         ivRight.setImageResource(R.mipmap.ic_index_share);
         initData();
+
         tvDate.setText(circleCalendarView.getDateStr());
         tvMonth.setText(circleCalendarView.getMonthStr() + "月");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 20, Color.TRANSPARENT));
         recyclerView.setAdapter(mAdapter = new CommonAdapter<BodyInfo>(mContext, R.layout.view_history_item, bodyInfos) {
             @Override
-            protected void convert(final com.zhy.adapter.recyclerview.base.ViewHolder holder, final BodyInfo bodyInfo, int position) {
+            protected void convert(final com.zhy.adapter.recyclerview.base.ViewHolder holder, final BodyInfo bodyInfo, final int position) {
                 TextView tvTime = holder.getView(R.id.history_time);
                 TextView tvWeight = holder.getView(R.id.history_weight);
                 TextView tvZhifang = holder.getView(R.id.history_zhifang);
@@ -119,7 +120,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                                 if (d <10){
                                     date = "-0"+d;
                                 }
-                                HistoryDataActivity.startActivity(mContext,year+month+date);
+                                HistoryDataActivity.startActivity(mContext,year+month+date,position);
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -156,7 +157,6 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccess(String... result) {
                 List<BodyInfo> datas = JSONArray.parseArray(result[0], BodyInfo.class);
-                mAdapter.refresh2(datas);
                 JSONArray ja = JSON.parseArray(result[1]);
                 String time = "";
                 for (int i = 0; i < ja.size(); i++) {
@@ -171,6 +171,9 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                     int month = Integer.parseInt(date.get(i).substring(5, 7));
                     int day = Integer.parseInt(date.get(i).substring(8, date.get(i).length()));
                     list.add(new CalendarInfo(year, month, day, ""));
+                    if (i == date.size()-1){
+                        getRecordByDate(year+"-"+month+"-"+day);
+                    }
                 }
                 circleCalendarView.setCalendarInfos(list);
             }
@@ -195,10 +198,10 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    private void getRecordByDate() {
+    private void getRecordByDate(String dateStr) {
         param = new HashMap<>();
         param.put("memberId", EBERApp.nowUser.id + "");
-        param.put("date", circleCalendarView.getDateStr());
+        param.put("date", dateStr);
         netUtils.get(HttpUrls.FINDRECORDBYDATE, true, param, new BaseCallback() {
             @Override
             public void onResponse(String response) {
@@ -224,7 +227,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
             circleCalendarView.setDate();
             tvDate.setText(circleCalendarView.getDateStr());
             tvMonth.setText(circleCalendarView.getMonthStr() + "月");
-            getRecordByDate();
+            getRecordByDate(circleCalendarView.getDateStr());
         }
     };
 

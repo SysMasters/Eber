@@ -68,7 +68,9 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.tendency.HistoryRecordActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+            
+        </activity>
         <activity
             android:name=".ui.register.FillInformationActivity"
             android:screenOrientation="portrait"

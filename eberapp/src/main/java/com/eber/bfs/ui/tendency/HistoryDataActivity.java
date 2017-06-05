@@ -83,6 +83,7 @@ public class HistoryDataActivity extends BaseActivity {
 
     private String mDate;
     private Calendar mCalendar;
+    private int mPosition = 0;
 
 
     @Override
@@ -92,9 +93,10 @@ public class HistoryDataActivity extends BaseActivity {
         init();
     }
 
-    public static void startActivity(Context context, String date) {
+    public static void startActivity(Context context, String date, int position) {
         Intent intent = new Intent(context, HistoryDataActivity.class);
         intent.putExtra("date", date);
+        intent.putExtra("position", position);
         context.startActivity(intent);
     }
 
@@ -103,6 +105,7 @@ public class HistoryDataActivity extends BaseActivity {
         mCalendar = Calendar.getInstance();
         mDate = getIntent().getStringExtra("date");
         tvDate.setText(mDate);
+        mPosition = getIntent().getIntExtra("position", 0);
         shareUtil = new ShareUtil(this);
         tvContent.setText("历史记录");
         tvRight.setImageResource(R.mipmap.ic_index_share);
@@ -158,7 +161,8 @@ public class HistoryDataActivity extends BaseActivity {
                 }
             }
         };
-        mAdapter.setSelectedPosition(0);
+
+        mAdapter.setSelectedPosition(mPosition);
         mListView.setAdapter(mAdapter);
 
     }

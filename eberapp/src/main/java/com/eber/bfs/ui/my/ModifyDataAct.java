@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,8 @@ public class ModifyDataAct extends BaseActivity {
     private TextView tvCellPhone;
     @ViewInject(R.id.up_info_sex)
     private TextView tvSex;
+    @ViewInject(R.id.modify_data_head)
+    private ImageView ivHead;
     @ViewInject(R.id.up_info_height)
     private TextView tvHeight;
     @ViewInject(R.id.up_info_birthday)
@@ -88,10 +91,14 @@ public class ModifyDataAct extends BaseActivity {
                 etUserName.setText(jo.getString("userName"));
                 etDescription.setText(getIntent().getStringExtra("description"));
                 tvCellPhone.setText(jo.getString("cellphone"));
-                if (jo.getInteger("sex") == 1)
+                if (jo.getInteger("sex") == 1) {
                     tvSex.setText("男");
-                else
+                    ivHead.setImageResource(R.mipmap.ic_info_sex_male_seleted);
+                }
+                else {
                     tvSex.setText("女");
+                    ivHead.setImageResource(R.mipmap.ic_info_sex_woman_seleted);
+                }
                 tvHeight.setText((TextUtils.isEmpty(jo.getString("height")) ? "- " : jo.getString("height")));
                 tvBirthdy.setText(jo.getString("birthday"));
             }

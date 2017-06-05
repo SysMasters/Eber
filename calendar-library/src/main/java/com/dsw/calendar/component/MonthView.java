@@ -27,7 +27,7 @@ public abstract class MonthView extends View {
     protected IDayTheme theme;
     private IMonthLisener monthLisener;
     private IDateClick dateClick;
-    protected int currYear, currMonth, currDay;
+    public int currYear, currMonth, currDay;
     protected int selYear, selMonth, selDay;
     private int leftYear, leftMonth, leftDay;
     private int rightYear, rightMonth, rightDay;
@@ -52,9 +52,9 @@ public abstract class MonthView extends View {
         currMonth = calendar.get(Calendar.MONTH);
         currDay = calendar.get(Calendar.DATE);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        setSelectDate(currYear, currMonth, currDay);
         setLeftDate();
         setRightDate();
+        setSelectDate(currYear, currMonth, currDay);
         createTheme();
         baseRowSize = rowSize = theme == null ? 70 : theme.dateHeight();
         smoothMode = theme == null ? 0 : theme.smoothMode();
@@ -208,7 +208,7 @@ public abstract class MonthView extends View {
      * @param year
      * @param month
      */
-    protected void setSelectDate(int year, int month, int day) {
+    public void setSelectDate(int year, int month, int day) {
         selYear = year;
         selMonth = month;
         selDay = day;
