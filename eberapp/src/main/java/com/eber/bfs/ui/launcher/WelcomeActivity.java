@@ -81,6 +81,7 @@ public class WelcomeActivity extends Activity {
                 if (isLogin){
                     if (EBERApp.user.birthday == null || EBERApp.user.birthday.equals("")){
                         Intent in = new Intent(WelcomeActivity.this, FillInformationActivity.class);
+                        intent.putExtra("title", "填写信息");
                         startActivity(in);
                         return;
                     }

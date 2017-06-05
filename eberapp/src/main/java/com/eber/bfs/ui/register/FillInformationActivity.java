@@ -23,6 +23,7 @@ import com.eber.bfs.listener.OnValueChangeListener;
 import com.eber.bfs.ui.binddevice.BindDeviceActivity1;
 import com.eber.bfs.utils.Base64;
 import com.eber.bfs.utils.SPKey;
+import com.eber.bfs.views.CustomDialog;
 import com.eber.bfs.views.ruler.RulerView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -76,10 +77,7 @@ public class FillInformationActivity extends BaseActivity {
         setContentView(R.layout.activity_fill_information);
         super.onCreate(savedInstanceState);
         ViewUtils.inject(this);
-
-
-        tvTitle.setText("填写信息");
-
+        tvTitle.setText(getIntent().getStringExtra("title"));
         sexRg.setOnCheckedChangeListener(checkLis);
         rvHeight.setOnValueChangeListener(heightValueLis);
         rvYear.setOnValueChangeListener(yearValueLis);
@@ -168,6 +166,14 @@ public class FillInformationActivity extends BaseActivity {
         @Override
         public void onValueChange(int value) {
             tvYearText.setText(String.valueOf(value));
+            if (value > 2030){
+                rvYear.setValue(2030);
+                tvYearText.setText("2030");
+            }
+            if (value < 1930){
+                rvYear.setValue(1930);
+                tvYearText.setText("1930");
+            }
         }
     };
     private OnValueChangeListener monthValueLis = new OnValueChangeListener() {
@@ -181,6 +187,9 @@ public class FillInformationActivity extends BaseActivity {
     private View.OnClickListener clickLis = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+//            CustomDialog.showAgeDialog(FillInformationActivity.this, "未成年人的身体处于快速成长的阶段，因此测量结果可能有偏差，建议您", "仅关注体重变化", "，其他指标作为参考。");
+
             if (isCreateChidUser) {
                 if (TextUtils.isEmpty(etUserName.getText().toString().trim())){
                     Toast.makeText(mContext, "用户名不能为空", Toast.LENGTH_SHORT).show();

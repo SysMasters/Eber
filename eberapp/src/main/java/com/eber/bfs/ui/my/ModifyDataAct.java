@@ -144,6 +144,7 @@ public class ModifyDataAct extends BaseActivity {
                     intent.putExtra("birthday", tvBirthdy.getText().toString());
                     intent.putExtra("height", tvHeight.getText().toString());
                     intent.putExtra("isEdit", true);
+                    intent.putExtra("title", "修改资料");
                     startActivityForResult(intent, FillInformationActivity.REQUEST_CODE);
                     break;
             }

@@ -135,6 +135,7 @@ public class LoginActivity extends BaseActivity {
         EBERApp.nowUser = user;
         if (user.birthday == null || user.birthday.equals("")){
             Intent intent = new Intent(LoginActivity.this, FillInformationActivity.class);
+            intent.putExtra("title", "填写信息");
             startActivity(intent);
             return;
         }

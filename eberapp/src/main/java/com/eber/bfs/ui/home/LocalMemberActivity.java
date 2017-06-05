@@ -196,6 +196,7 @@ public class LocalMemberActivity extends BaseActivity {
                     if (TextUtils.equals("add", v.getTag() + "")) {
                         Intent intent = new Intent(mContext, FillInformationActivity.class);
                         intent.putExtra("isCreateChidUser", true);
+                        intent.putExtra("title", "新增用户");
                         startActivityForResult(intent, 111);
                     }
                     break;
