@@ -51,11 +51,11 @@ public class TendencyFragment extends BaseFragment implements View.OnClickListen
         nums.add(0f);
         nums.add(0f);
         List<String> texts = new ArrayList<>();
-        texts.add("12-21");
-        texts.add("12-22");
-        texts.add("12-23");
-        texts.add("12-24");
-        texts.add("12-25");
+        texts.add("00-00");
+        texts.add("00-00");
+        texts.add("00-00");
+        texts.add("00-00");
+        texts.add("00-00");
         line.setNums(nums)      // 数据集
                 .setUnitText("%")
                 .setTexts(texts)    // 坐标文字集合

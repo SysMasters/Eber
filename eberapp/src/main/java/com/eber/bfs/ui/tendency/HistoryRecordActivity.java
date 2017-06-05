@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 历史记录
+ * 历史记录1
  * Created by WangLibo on 2017/4/30.
  */
 
@@ -158,9 +158,13 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                 List<BodyInfo> datas = JSONArray.parseArray(result[0], BodyInfo.class);
                 mAdapter.refresh2(datas);
                 JSONArray ja = JSON.parseArray(result[1]);
+                String time = "";
                 for (int i = 0; i < ja.size(); i++) {
                     date.add(ja.getString(i));
+                    time = ja.getString(i);
                 }
+                tvDate.setText(time+"");
+                tvMonth.setText(time.split("-")[1]+"月");
                 List<CalendarInfo> list = new ArrayList<>();
                 for (int i = 0; i < date.size(); i++) {
                     int year = Integer.parseInt(date.get(i).substring(0, 4));
