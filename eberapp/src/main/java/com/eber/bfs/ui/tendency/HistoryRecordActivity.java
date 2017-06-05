@@ -79,7 +79,9 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
         tvCenter.setText("历史记录");
         ivRight.setImageResource(R.mipmap.ic_index_share);
         initData();
-        
+
+        tvDate.setText(circleCalendarView.getDateStr());
+        tvMonth.setText(circleCalendarView.getMonthStr() + "月");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 20, Color.TRANSPARENT));
         recyclerView.setAdapter(mAdapter = new CommonAdapter<BodyInfo>(mContext, R.layout.view_history_item, bodyInfos) {
@@ -170,11 +172,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                     int day = Integer.parseInt(date.get(i).substring(8, date.get(i).length()));
                     list.add(new CalendarInfo(year, month, day, ""));
                     if (i == date.size()-1){
-                        circleCalendarView.setSelectDate(year,month-1,day);
-                        // 初始化时设置选中最后一次测量的日期
                         getRecordByDate(year+"-"+month+"-"+day);
-                        tvDate.setText(circleCalendarView.getDateStr(year,month,day));
-                        tvMonth.setText(month + "月");
                     }
                 }
                 circleCalendarView.setCalendarInfos(list);
