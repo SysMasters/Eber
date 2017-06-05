@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <TextView
         android:id="@+id/title_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
         android:background="#03a9f4"
-        android:textSize="18sp"
+        android:gravity="center"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:text="我的"
         android:textColor="@android:color/white"
-        android:text="我的"/>
+        android:textSize="18sp"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:layout_marginTop="18dp" />
+                    android:layout_marginTop="18dp"/>
 
                 <TextView
                     android:id="@+id/f_my_user_name_tv"
@@ -43,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@android:color/white"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/f_my_user_id_tv"
@@ -52,7 +54,7 @@
                     android:layout_margin="6dp"
                     android:text=""
                     android:textColor="@android:color/white"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/f_my_user_signature_tv"
@@ -60,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="9dp"
                     android:textColor="@android:color/white"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -89,7 +91,7 @@
                         android:layout_marginTop="5dp"
                         android:text="签到次数"
                         android:textColor="#888888"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/f_my_sign_in_tv"
@@ -104,7 +106,7 @@
                         android:paddingTop="4dp"
                         android:text="0次"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,7 +125,7 @@
                         android:layout_marginTop="5dp"
                         android:text="我的积分"
                         android:textColor="#888"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/f_my_integral_tv"
@@ -138,7 +140,7 @@
                         android:paddingTop="4dp"
                         android:text="0积分"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -157,7 +159,7 @@
                         android:layout_marginTop="5dp"
                         android:text="我的徽章"
                         android:textColor="#888888"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -170,7 +172,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:src="@mipmap/ico_my_badge_2" />
+                            android:src="@mipmap/ico_my_badge_2"/>
 
                         <ImageView
                             android:id="@+id/f_my_badge_img2"
@@ -178,7 +180,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="11dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ico_my_badge_2" />
+                            android:src="@mipmap/ico_my_badge_2"/>
 
                         <ImageView
                             android:id="@+id/f_my_badge_img3"
@@ -186,7 +188,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="11dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ico_my_badge_2" />
+                            android:src="@mipmap/ico_my_badge_2"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -194,14 +196,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
                 android:id="@+id/f_my_remind"
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -210,7 +212,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_remind" />
+                    android:src="@mipmap/ico_my_remind"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -219,26 +221,35 @@
                     android:layout_marginTop="15dp"
                     android:text="我的提醒"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_target"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -247,7 +258,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_objective" />
+                    android:src="@mipmap/ico_my_objective"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -256,26 +267,35 @@
                     android:layout_marginTop="15dp"
                     android:text="我的目标"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_account_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -284,7 +304,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_account_manager" />
+                    android:src="@mipmap/ico_my_account_manager"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -293,63 +313,83 @@
                     android:layout_marginTop="15dp"
                     android:text="账号管理"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_device_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_divice_manager" />
+                    android:src="@mipmap/ico_my_divice_manager"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="15dp"
                     android:text="设备管理"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_update_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -358,7 +398,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_up_info" />
+                    android:src="@mipmap/ico_my_up_info"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -367,26 +407,35 @@
                     android:layout_marginTop="15dp"
                     android:text="修改资料"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:id="@+id/f_my_clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -395,7 +444,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_clear_cache" />
+                    android:src="@mipmap/ico_my_clear_cache"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -404,26 +453,42 @@
                     android:layout_marginTop="15dp"
                     android:text="清理缓存"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
+                <TextView
+                    android:id="@+id/my_cache_size"
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
                 android:id="@+id/f_my_faq"
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -432,7 +497,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_faq" />
+                    android:src="@mipmap/ico_my_faq"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -441,26 +506,35 @@
                     android:layout_marginTop="15dp"
                     android:text="常见问题"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
                 android:id="@+id/f_my_about"
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -469,7 +543,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_about" />
+                    android:src="@mipmap/ico_my_about"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -478,26 +552,35 @@
                     android:layout_marginTop="15dp"
                     android:text="关于我们"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
 
             <LinearLayout
                 android:id="@+id/f_my_un_login"
-                android:clickable="true"
-                android:background="@drawable/click_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -506,7 +589,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="6dp"
-                    android:src="@mipmap/ico_my_login_out" />
+                    android:src="@mipmap/ico_my_login_out"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -515,20 +598,29 @@
                     android:layout_marginTop="15dp"
                     android:text="退出登录"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="13dp" />
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="13dp"
+                        android:src="@mipmap/right_arrows"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="45dp"
-                android:background="#ECECEC" />
+                android:background="#ECECEC"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

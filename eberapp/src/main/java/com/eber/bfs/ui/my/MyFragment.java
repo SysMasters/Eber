@@ -2,6 +2,7 @@ package com.eber.bfs.ui.my;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,11 +19,10 @@ import com.eber.bfs.http.BaseCallback;
 import com.eber.bfs.http.HttpUrls;
 import com.eber.bfs.ui.MainActivity;
 import com.eber.bfs.ui.login.LoginActivity;
+import com.eber.bfs.utils.GlideCacheUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
-
-import static com.eber.bfs.ui.register.FillInformationActivity.REQUEST_CODE;
 
 /**
  * Created by wxd on 2017/4/29.
@@ -49,10 +49,12 @@ public class MyFragment extends BaseFragment {
     private TextView tvSignIn;
     @ViewInject(R.id.f_my_integral_tv)
     private TextView tvIntegral;
+    @ViewInject(R.id.my_cache_size)
+    private TextView tvCacheSize;
 
 
     @ViewInject(R.id.f_my_sign_in_lay)
-    LinearLayout signInLay;                  
+    LinearLayout signInLay;
     @ViewInject(R.id.f_my_remind)
     LinearLayout llRemind;                  // 提醒
     @ViewInject(R.id.f_my_target)
@@ -91,7 +93,7 @@ public class MyFragment extends BaseFragment {
         llFaq.setVisibility(isVisible);
         llAbout.setVisibility(isVisible);
         llUnlogin.setVisibility(isVisible);
-        
+
         getMyData();
         tvSignIn.setOnClickListener(clickLis);
         llRemind.setOnClickListener(clickLis);
@@ -104,6 +106,8 @@ public class MyFragment extends BaseFragment {
         llAbout.setOnClickListener(clickLis);
         llUnlogin.setOnClickListener(clickLis);
         imgPhoto.setOnClickListener(clickLis);
+
+        tvCacheSize.setText(GlideCacheUtil.getInstance().getCacheSize(mActivity));
     }
 
     private void getMyData() {
@@ -163,8 +167,17 @@ public class MyFragment extends BaseFragment {
                     startActivityForResult(in7, UPDATE_INFO);
                     break;
                 case R.id.f_my_clear_cache:// 清理缓存
-                    Toast.makeText(mActivity, "正在清理", 4000).show();
-                    Toast.makeText(mActivity, "清理完成", Toast.LENGTH_SHORT).show();
+                    GlideCacheUtil.getInstance().clearImageDiskCache(mActivity);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(mActivity, "清理完成", Toast.LENGTH_SHORT).show();
+                            tvCacheSize.setText(GlideCacheUtil.getInstance().getCacheSize(mActivity));
+                        }
+                    },1500);
+                    
+//                    Toast.makeText(mActivity, "正在清理", 4000).show();
+//                    Toast.makeText(mActivity, "清理完成", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.f_my_faq: // 常见问题
                     Intent in4 = new Intent(mActivity, QATActivity.class);
@@ -183,6 +196,13 @@ public class MyFragment extends BaseFragment {
             }
         }
     };
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        tvCacheSize.setText(GlideCacheUtil.getInstance().getCacheSize(mActivity));
+    }
 
     private void unLogin() {
         param = new HashMap<>();
@@ -225,9 +245,9 @@ public class MyFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == UPDATE_INFO) {
             getMyData();
-            if (data != null){
+            if (data != null) {
                 Member member = data.getParcelableExtra("member");
-                ((MainActivity)mActivity).reloadMembers(member);
+                ((MainActivity) mActivity).reloadMembers(member);
             }
         }
     }
