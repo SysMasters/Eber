@@ -7,9 +7,9 @@ package com.eber.bfs.http;
 
 public class HttpUrls {
 
-    public final static String IP = "http://120.27.114.43";
+//    public final static String IP = "http://120.27.114.43";
+    public final static String IP = "http://112.74.62.116:8080/ieber";     // 测试服务器
     public final static String BASEURL = IP + "/";
-
 
 
     public final static String FINDEQUIPARRAY = BASEURL + "equipTypeAPP/findEquipArray.shtml";
@@ -77,5 +77,6 @@ public class HttpUrls {
     public final static String DELETEMEMBER = BASEURL + "memberAPP/deleteMember.shtml";
     // 检查更新
     public final static String GETCURRENTVERSIONCODE = BASEURL + "versionAPP/getCurrentVersionCode.shtml";
-
+    // 用户协议
+    public static final String GETAGREEMENT = "dictionaryAPP/getAgreement.shtml";
 }

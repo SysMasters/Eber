@@ -37,4 +37,5 @@
     <color name="start_color_5">#ffa3ae</color>
     <color name="end_color_5">#fff5f7</color>
     <color name="line_color_5">#ff7485</color>
+    <color name="tab_def_color">#888888</color>
 </resources>

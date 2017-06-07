@@ -126,7 +126,7 @@ public class HistoryDataActivity extends BaseActivity {
                     }
                     String mm = "" + m;
                     if (m < 10) {
-                        mm = "0" + h;
+                        mm = "0" + mm;
                     }
 
                     tvTime.setText(hh + ":" + mm);
@@ -178,7 +178,7 @@ public class HistoryDataActivity extends BaseActivity {
                 bodyInfos = JSON.parseArray(resultJson, BodyInfo.class);
                 if (bodyInfos != null && bodyInfos.size() > 0) {
                     mAdapter.refresh(bodyInfos);
-                    setBodyData(bodyInfos.get(0));
+                    setBodyData(bodyInfos.get(mPosition));
                 }
             }
         });
