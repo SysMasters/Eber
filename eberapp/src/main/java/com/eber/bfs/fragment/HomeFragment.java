@@ -390,6 +390,7 @@ public class HomeFragment extends BaseFragment {
                 case R.id.index_user_create:// 创建新成员
                     Intent intent = new Intent(mActivity, FillInformationActivity.class);
                     intent.putExtra("isCreateChidUser", true);
+                    intent.putExtra("title", "新增用户");
                     startActivityForResult(intent, 111);
                     mPopupWindow.dismiss();
                     break;

@@ -119,6 +119,7 @@ public class EnrollActivity extends BaseActivity {
                             String userJson = JSON.toJSONString(user);
                             EBERApp.spUtil.putData(SPKey.USER, userJson);
                             Intent intent = new Intent(EnrollActivity.this, FillInformationActivity.class);
+                            intent.putExtra("title", "填写信息");
                             startActivity(intent);
                         }
                     });
