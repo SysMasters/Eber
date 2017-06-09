@@ -189,12 +189,12 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     app:currentValue="1990"
-                    app:fromValue="1915"
+                    app:fromValue="1930"
                     app:interval="10dp"
                     app:intervalsBetweenValues="5"
                     app:linesColor="#33000000"
                     app:linesWidth="4px"
-                    app:toValue="2045"
+                    app:toValue="2030"
                     app:valuesInterval="5"
                     app:valuesTextSize="12sp"/>
             </LinearLayout>

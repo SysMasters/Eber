@@ -126,8 +126,7 @@ public class EnrollActivity extends BaseActivity {
                     break;
                 case R.id.login_agreement_tv:
                     // 服务协议
-                    startWebActivity("用户协议",
-                            "http://112.74.62.116:8080/ieber/dictionaryAPP/getAgreement.shtml");
+                    startWebActivity("用户协议", HttpUrls.GETAGREEMENT);
                     break;
             }
         }

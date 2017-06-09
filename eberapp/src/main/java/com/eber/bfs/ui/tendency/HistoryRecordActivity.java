@@ -110,7 +110,7 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                             try {
                                 calendar.setTime( new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(bodyInfo.updateTime));
                                 String year = String.valueOf(calendar.get(Calendar.YEAR));
-                                int m = calendar.get(Calendar.MONTH)+1;
+                                int m = calendar.get(Calendar.MONTH) + 1;
                                 String month = "-"+m;
                                 if (m <10){
                                     month = "-0"+m;
@@ -158,12 +158,11 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
             public void onSuccess(String... result) {
                 List<BodyInfo> datas = JSONArray.parseArray(result[0], BodyInfo.class);
                 JSONArray ja = JSON.parseArray(result[1]);
-                String time = "";
+                String time = datas.get(0).updateTime;
                 for (int i = 0; i < ja.size(); i++) {
                     date.add(ja.getString(i));
-                    time = ja.getString(i);
                 }
-                tvDate.setText(time+"");
+                tvDate.setText(time.split(" ")[0]);
                 tvMonth.setText(time.split("-")[1]+"月");
                 List<CalendarInfo> list = new ArrayList<>();
                 for (int i = 0; i < date.size(); i++) {
@@ -171,11 +170,12 @@ public class HistoryRecordActivity extends BaseActivity implements View.OnClickL
                     int month = Integer.parseInt(date.get(i).substring(5, 7));
                     int day = Integer.parseInt(date.get(i).substring(8, date.get(i).length()));
                     list.add(new CalendarInfo(year, month, day, ""));
-                    if (i == date.size()-1){
-                        getRecordByDate(year+"-"+month+"-"+day);
-                    }
+//                    if (i == date.size()-1){
+//                        getRecordByDate(year+"-"+month+"-"+day);
+//                    }
                 }
                 circleCalendarView.setCalendarInfos(list);
+                mAdapter.refresh2(datas);
             }
         });
     }
